@@ -206,7 +206,7 @@ private data class ExportPreviewResult(val request:ExportPreviewRequest,val text
                         graph.exportSettings.update(if(next=="outings") selection.copy(outings=true) else selection.copy(outings=false,options=options.copy(kind=DataKind.valueOf(next))))
                     },
                     RecipeToken(recipeFormatName(format),"recipe-format") {graph.exportSettings.update(selection.copy(format=formats[(formats.indexOf(format)+1)%formats.size]))},
-                    RecipeToken(stringResource(if(splitDays) R.string.archive_recipe_split else R.string.archive_recipe_single),"recipe-split") {graph.exportSettings.update(selection.copy(splitDays=!splitDays))},
+                    RecipeToken(stringResource(if(!splitDays) R.string.archive_recipe_single else if(selection.outings) R.string.archive_recipe_split_outing else R.string.archive_recipe_split),"recipe-split") {graph.exportSettings.update(selection.copy(splitDays=!splitDays))},
                 ),enabled=canEdit,Modifier.exportInset().padding(top=8.dp))
             }
             count?.let {stored->Text(pluralStringResource(R.plurals.export_stored_points,stored.coerceAtMost(Int.MAX_VALUE.toLong()).toInt(),number.format(stored)),Modifier.padding(horizontal=24.dp).padding(top=6.dp).testTag("export-history-count"),style=WdType.caption,color=wd.textMuted)}

@@ -17,6 +17,7 @@
     <string name="archive_recipe_sentence">%1$sを%2$s形式で、%3$sでエクスポートします。</string>
     <string name="archive_recipe_single">すべて1ファイル</string>
     <string name="archive_recipe_split">1日1ファイル</string>
+    <string name="archive_recipe_split_outing">1外出1ファイル</string>
     <string name="atlas_add_stay">滞在を追加</string>
     <string name="atlas_all_countries">すべての国</string>
     <string name="atlas_all_years">すべての年</string>
@@ -112,6 +113,7 @@
     <string name="automation_command_cancel">キャンセル</string>
     <string name="automation_command_help">結果が中断された場合は、キャンセルしてジャーナルを確認できます。</string>
     <string name="automation_command_title">Whereday のコマンドを実行中</string>
+    <string name="automation_detail_exports">指定したフィルタで完全なファイルを作成します。</string>
     <string name="automation_detail_exports_plan">指定したフィルタで完全なファイルを作成します。有効な Whereday プランも必要です。</string>
     <string name="automation_detail_manual_visits">保存した場所、座標、または現在地でチェックインし、手動の訪問からチェックアウトします。訪問の名前、住所、時刻を返します。現在地を使うには、Whereday が開いていて、位置情報へのアクセスがすでに許可されている必要があります。</string>
     <string name="automation_detail_outings">記録された外出の名前と開始・終了時刻。</string>
@@ -276,6 +278,7 @@
     <string name="country_period_rolling">過去365日間</string>
     <string name="country_period_year">今年</string>
     <string name="country_preview">国別 CSV をプレビュー</string>
+    <string name="country_preview_help">プレビューには最初の100件のローカル日付が表示されます。国別CSVのエクスポートには選択した期間のすべての日付が含まれます。</string>
     <string name="country_preview_plan_help">プレビューには最初の100件のローカル日付が表示されます。国別CSVのエクスポートには選択した期間のすべての日付が含まれ、有効な Whereday プランが必要です。</string>
     <string name="country_preview_title">国別 CSV のプレビュー</string>
     <string name="country_retry">もう一度試す</string>

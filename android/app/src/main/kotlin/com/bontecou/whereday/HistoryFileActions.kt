@@ -47,6 +47,10 @@ import kotlinx.coroutines.*
     var notice by remember {mutableStateOf<ExportDeliveryNotice?>(null)}
     var savedFiles by remember {mutableStateOf<Int?>(null)}
     var requestId by rememberSaveable {mutableStateOf<String?>(null)}
+    // The picker controller is app-wide. A finished picker's notice belongs to the screen that opened it, so another
+    // screen's export card does not show it; a request still waiting to be resumed stays visible everywhere.
+    var openedPicker by rememberSaveable {mutableStateOf(false)}
+    val pickerNotice=picker.notice?.takeIf {picker.request!=null || openedPicker}
     var job by remember {mutableStateOf<Job?>(null)}
     val lifecycle=LocalLifecycleOwner.current.lifecycle
     DisposableEffect(lifecycle) {
@@ -74,7 +78,7 @@ import kotlinx.coroutines.*
                     }
                     else -> {
                         val request=files.beginPicker(prepared);retained=true;requestId=request.id
-                        pickerController.refresh();sheet=false;saver.launch(files.pickerIntent(request.id))
+                        pickerController.refresh();sheet=false;openedPicker=true;saver.launch(files.pickerIntent(request.id))
                     }
                 }
             } catch(e:Exception) {if(e is CancellationException) throw e;notice=exportDeliveryNotice(e)}
@@ -89,7 +93,7 @@ import kotlinx.coroutines.*
             enabled=enabled && picker.loaded && !picker.busy && !busy && pending==null,icon=Icons.Outlined.IosShare)
         if(busy) {ExportProgress();ExportBusyLine(stringResource(R.string.export_delivery_preparing));ExportLink(stringResource(R.string.export_delivery_cancel_preparation),{job?.cancel()},Modifier.testTag("history-export-cancel-preparation-inline"))}
         notice?.let {ExportCallout(exportDeliveryText(it,savedFiles),textModifier=Modifier.testTag("history-export-notice"),warning=it.isFailure)}
-        picker.notice?.let {value ->
+        pickerNotice?.let {value ->
             val text=exportDeliveryText(value)
             ExportCallout(picker.request?.displayName?.let {stringResource(R.string.export_delivery_name_status,it,text)} ?: text,textModifier=Modifier.testTag("history-export-picker-notice"),warning=value.isFailure)
         }
@@ -100,13 +104,13 @@ import kotlinx.coroutines.*
                 Text(stringResource(R.string.export_delivery_pending_help),style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)
                 if(request.destination!=null) WdButton(stringResource(R.string.export_delivery_resume),{pickerController.resume(request.id)},Modifier.testTag("history-export-resume"),emphasis=WdEmphasis.primary,enabled=!picker.busy)
                 WdButton(stringResource(R.string.export_delivery_choose),{scope.launch {
-                    try {requestId=request.id;saver.launch(files.pickerIntent(request.id));pickerController.refresh()}
+                    try {requestId=request.id;openedPicker=true;saver.launch(files.pickerIntent(request.id));pickerController.refresh()}
                     catch(e:Exception) {if(e is CancellationException) throw e;notice=exportDeliveryNotice(e,ExportDeliveryNotice.unavailable)}
                 }},enabled=!picker.busy)
                 ExportLink(stringResource(R.string.export_delivery_cancel_pending),{pickerController.cancel(request.id)},Modifier.testTag("history-export-cancel-pending"),destructive=true)
             }
         }
-        if(picker.request==null && picker.notice!=null) ExportLink(stringResource(R.string.export_delivery_discard),pickerController::discardInterrupted,Modifier.testTag("history-export-discard"))
+        if(picker.request==null && pickerNotice!=null) ExportLink(stringResource(R.string.export_delivery_discard),pickerController::discardInterrupted,Modifier.testTag("history-export-discard"))
     }
     if(sheet) WorkspaceModalBottomSheet(onDismissRequest={job?.cancel();sheet=false}) {
         Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(horizontal=20.dp,vertical=16.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {

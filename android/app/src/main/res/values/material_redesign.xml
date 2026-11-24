@@ -170,6 +170,7 @@
     <string name="archive_recipe_sentence">Export my %1$s as %2$s, %3$s.</string>
     <string name="archive_recipe_all">Visits &amp; points</string>
     <string name="archive_recipe_split">one file per day</string>
+    <string name="archive_recipe_split_outing">one file per outing</string>
     <string name="archive_recipe_single">all in one file</string>
     <string name="archive_recipe_hint">Tap any underlined word to change it</string>
 

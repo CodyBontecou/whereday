@@ -17,6 +17,7 @@
     <string name="archive_recipe_sentence">Exporter mes %1$s en %2$s, %3$s.</string>
     <string name="archive_recipe_single">tout dans un seul fichier</string>
     <string name="archive_recipe_split">un fichier par jour</string>
+    <string name="archive_recipe_split_outing">un fichier par sortie</string>
     <string name="atlas_add_stay">Ajouter un séjour</string>
     <string name="atlas_all_countries">Tous les pays</string>
     <string name="atlas_all_years">Toutes les années</string>
@@ -122,6 +123,7 @@
     <string name="automation_command_cancel">Annuler</string>
     <string name="automation_command_help">Vous pouvez annuler et consulter le journal si le résultat est interrompu.</string>
     <string name="automation_command_title">Exécution de la commande Whereday</string>
+    <string name="automation_detail_exports">Fichiers complets avec les filtres demandés.</string>
     <string name="automation_detail_exports_plan">Fichiers complets avec les filtres demandés. Une formule Whereday active est également requise.</string>
     <string name="automation_detail_manual_visits">Enregistrer une arrivée à un lieu enregistré, à des coordonnées ou à votre position actuelle, et un départ des visites manuelles. Renvoie le nom, l’adresse et les heures de la visite. La position actuelle nécessite que Whereday soit ouvert avec un accès à la localisation déjà accordé.</string>
     <string name="automation_detail_outings">Noms des sorties enregistrées et heures de début et de fin.</string>
@@ -292,6 +294,7 @@
     <string name="country_period_rolling">365 derniers jours</string>
     <string name="country_period_year">Cette année</string>
     <string name="country_preview">Aperçu du CSV des pays</string>
+    <string name="country_preview_help">L’aperçu affiche les 100 premières dates locales. L’export CSV des pays inclut toutes les dates de la période choisie.</string>
     <string name="country_preview_plan_help">L’aperçu affiche les 100 premières dates locales. L’export CSV des pays inclut toutes les dates de la période choisie et nécessite une formule Whereday active.</string>
     <string name="country_preview_title">Aperçu du CSV des pays</string>
     <string name="country_retry">Réessayer</string>

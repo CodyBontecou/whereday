@@ -17,6 +17,7 @@
     <string name="archive_recipe_sentence">আমার %1$s %2$s হিসেবে রপ্তানি করুন, %3$s।</string>
     <string name="archive_recipe_single">সব এক ফাইলে</string>
     <string name="archive_recipe_split">প্রতিদিন একটি ফাইল</string>
+    <string name="archive_recipe_split_outing">প্রতিটি বেড়ানোর জন্য একটি ফাইল</string>
     <string name="atlas_add_stay">অবস্থানকাল যোগ করুন</string>
     <string name="atlas_all_countries">সব দেশ</string>
     <string name="atlas_all_years">সব বছর</string>
@@ -117,6 +118,7 @@
     <string name="automation_command_cancel">বাতিল করুন</string>
     <string name="automation_command_help">ফলাফল বাধাগ্রস্ত হলে আপনি বাতিল করে জার্নাল দেখে নিতে পারেন।</string>
     <string name="automation_command_title">Whereday কমান্ড সম্পন্ন হচ্ছে</string>
+    <string name="automation_detail_exports">অনুরোধ করা ফিল্টারসহ সম্পূর্ণ ফাইল।</string>
     <string name="automation_detail_exports_plan">অনুরোধ করা ফিল্টারসহ সম্পূর্ণ ফাইল। একটি সক্রিয় Whereday প্ল্যানও প্রয়োজন।</string>
     <string name="automation_detail_manual_visits">কোনো সংরক্ষিত জায়গা, স্থানাঙ্ক বা আপনার বর্তমান অবস্থানে চেক-ইন করুন এবং ম্যানুয়াল ভিজিট থেকে চেক-আউট করুন। ভিজিটের নাম, ঠিকানা ও সময় ফেরত দেয়। বর্তমান অবস্থানের জন্য বিদ্যমান লোকেশন অ্যাক্সেসসহ Whereday খোলা থাকা প্রয়োজন।</string>
     <string name="automation_detail_outings">রেকর্ড করা আউটিংয়ের নাম ও শুরু/শেষের সময়।</string>
@@ -284,6 +286,7 @@
     <string name="country_period_rolling">গত 365 দিন</string>
     <string name="country_period_year">এই বছর</string>
     <string name="country_preview">দেশের CSV প্রিভিউ</string>
+    <string name="country_preview_help">প্রিভিউতে প্রথম 100টি স্থানীয় তারিখ দেখায়। দেশের CSV রপ্তানিতে বেছে নেওয়া সময়ের সব তারিখ থাকে।</string>
     <string name="country_preview_plan_help">প্রিভিউতে প্রথম 100টি স্থানীয় তারিখ দেখায়। দেশের CSV রপ্তানিতে বেছে নেওয়া সময়ের সব তারিখ থাকে এবং এর জন্য একটি সক্রিয় Whereday প্ল্যান প্রয়োজন।</string>
     <string name="country_preview_title">দেশের CSV প্রিভিউ</string>
     <string name="country_retry">আবার চেষ্টা করুন</string>

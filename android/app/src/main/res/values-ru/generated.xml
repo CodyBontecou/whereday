@@ -17,6 +17,7 @@
     <string name="archive_recipe_sentence">Экспортировать %1$s в %2$s, %3$s.</string>
     <string name="archive_recipe_single">всё в одном файле</string>
     <string name="archive_recipe_split">по файлу на день</string>
+    <string name="archive_recipe_split_outing">по файлу на выход</string>
     <string name="atlas_add_stay">Добавить пребывание</string>
     <string name="atlas_all_countries">Все страны</string>
     <string name="atlas_all_years">Все годы</string>
@@ -127,6 +128,7 @@
     <string name="automation_command_cancel">Отмена</string>
     <string name="automation_command_help">Если результат прервётся, можно отменить и проверить журнал.</string>
     <string name="automation_command_title">Выполнение команды Whereday</string>
+    <string name="automation_detail_exports">Полные файлы с выбранными фильтрами.</string>
     <string name="automation_detail_exports_plan">Полные файлы с выбранными фильтрами. Также нужен активный тариф Whereday.</string>
     <string name="automation_detail_manual_visits">Отметка о прибытии в сохранённое место, по координатам или в текущем местоположении и завершение ручных посещений. Возвращает название, адрес и время посещения. Для текущего местоположения Whereday должен быть открыт и иметь доступ к местоположению.</string>
     <string name="automation_detail_outings">Названия записанных прогулок и время начала и окончания.</string>
@@ -300,6 +302,7 @@
     <string name="country_period_rolling">Последние 365 дней</string>
     <string name="country_period_year">Этот год</string>
     <string name="country_preview">Предпросмотр CSV по странам</string>
+    <string name="country_preview_help">Предпросмотр показывает первые 100 местных дат. Экспорт CSV по странам включает все даты выбранного периода.</string>
     <string name="country_preview_plan_help">Предпросмотр показывает первые 100 местных дат. Экспорт CSV по странам включает все даты выбранного периода и требует активного тарифа Whereday.</string>
     <string name="country_preview_title">Предпросмотр CSV по странам</string>
     <string name="country_retry">Повторить</string>

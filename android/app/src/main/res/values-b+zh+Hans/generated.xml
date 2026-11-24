@@ -17,6 +17,7 @@
     <string name="archive_recipe_sentence">将我的%1$s导出为 %2$s，%3$s。</string>
     <string name="archive_recipe_single">全部放在一个文件中</string>
     <string name="archive_recipe_split">每天一个文件</string>
+    <string name="archive_recipe_split_outing">每次出行一个文件</string>
     <string name="atlas_add_stay">添加停留</string>
     <string name="atlas_all_countries">所有国家</string>
     <string name="atlas_all_years">所有年份</string>
@@ -112,6 +113,7 @@
     <string name="automation_command_cancel">取消</string>
     <string name="automation_command_help">如果结果中断，你可以取消并检查日志。</string>
     <string name="automation_command_title">正在完成 Whereday 命令</string>
+    <string name="automation_detail_exports">按所请求的筛选条件生成完整文件。</string>
     <string name="automation_detail_exports_plan">按所请求的筛选条件生成完整文件。同样需要有效的 Whereday 方案。</string>
     <string name="automation_detail_manual_visits">在已保存的地点、坐标或你的当前位置签到，并签退手动到访。返回到访名称、地址和时间。使用当前位置需要 Whereday 处于打开状态并已获得位置权限。</string>
     <string name="automation_detail_outings">已记录出行的名称及开始/结束时间。</string>
@@ -276,6 +278,7 @@
     <string name="country_period_rolling">过去 365 天</string>
     <string name="country_period_year">今年</string>
     <string name="country_preview">预览国家 CSV</string>
+    <string name="country_preview_help">预览显示前 100 个本地日期。导出国家 CSV 会包含所选时间段内的所有日期。</string>
     <string name="country_preview_plan_help">预览显示前 100 个本地日期。导出国家 CSV 会包含所选时间段内的所有日期，并需要有效的 Whereday 方案。</string>
     <string name="country_preview_title">国家 CSV 预览</string>
     <string name="country_retry">重试</string>

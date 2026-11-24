@@ -17,6 +17,7 @@
     <string name="archive_recipe_sentence">Eksportuj moje %1$s jako %2$s, %3$s.</string>
     <string name="archive_recipe_single">wszystko w jednym pliku</string>
     <string name="archive_recipe_split">jeden plik na dzień</string>
+    <string name="archive_recipe_split_outing">jeden plik na wyjście</string>
     <string name="atlas_add_stay">Dodaj pobyt</string>
     <string name="atlas_all_countries">Wszystkie kraje</string>
     <string name="atlas_all_years">Wszystkie lata</string>
@@ -127,6 +128,7 @@
     <string name="automation_command_cancel">Anuluj</string>
     <string name="automation_command_help">Jeśli wynik zostanie przerwany, możesz anulować i sprawdzić dziennik.</string>
     <string name="automation_command_title">Wykonywanie polecenia Whereday</string>
+    <string name="automation_detail_exports">Pełne pliki z wybranymi filtrami.</string>
     <string name="automation_detail_exports_plan">Pełne pliki z wybranymi filtrami. Wymagany jest też aktywny plan Whereday.</string>
     <string name="automation_detail_manual_visits">Meldowanie się w zapisanym miejscu, we współrzędnych lub w bieżącej lokalizacji oraz wymeldowanie z ręcznych wizyt. Zwraca nazwę wizyty, adres i godziny. Bieżąca lokalizacja wymaga otwartego Whereday z przyznanym już dostępem do lokalizacji.</string>
     <string name="automation_detail_outings">Nazwy zarejestrowanych podróży oraz godziny rozpoczęcia i zakończenia.</string>
@@ -300,6 +302,7 @@
     <string name="country_period_rolling">Ostatnie 365 dni</string>
     <string name="country_period_year">Ten rok</string>
     <string name="country_preview">Podgląd CSV krajów</string>
+    <string name="country_preview_help">Podgląd pokazuje pierwsze 100 dat lokalnych. Eksport CSV krajów obejmuje wszystkie daty z wybranego okresu.</string>
     <string name="country_preview_plan_help">Podgląd pokazuje pierwsze 100 dat lokalnych. Eksport CSV krajów obejmuje wszystkie daty z wybranego okresu i wymaga aktywnego planu Whereday.</string>
     <string name="country_preview_title">Podgląd CSV krajów</string>
     <string name="country_retry">Spróbuj ponownie</string>

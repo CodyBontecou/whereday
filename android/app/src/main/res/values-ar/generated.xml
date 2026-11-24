@@ -17,6 +17,7 @@
     <string name="archive_recipe_sentence">صدّر %1$s بصيغة %2$s، %3$s.</string>
     <string name="archive_recipe_single">الكل في ملف واحد</string>
     <string name="archive_recipe_split">ملف لكل يوم</string>
+    <string name="archive_recipe_split_outing">ملف لكل نزهة</string>
     <string name="atlas_add_stay">أضف إقامة</string>
     <string name="atlas_all_countries">كل الدول</string>
     <string name="atlas_all_years">كل السنوات</string>
@@ -137,6 +138,7 @@
     <string name="automation_command_cancel">إلغاء</string>
     <string name="automation_command_help">يمكنك الإلغاء ومراجعة اليوميات إذا انقطعت النتيجة.</string>
     <string name="automation_command_title">جارٍ إكمال أمر Whereday</string>
+    <string name="automation_detail_exports">ملفات كاملة بالمرشحات المطلوبة.</string>
     <string name="automation_detail_exports_plan">ملفات كاملة بالمرشحات المطلوبة. يلزم أيضًا وجود خطة Whereday نشطة.</string>
     <string name="automation_detail_manual_visits">سجّل الوصول إلى مكان محفوظ أو إحداثيات أو موقعك الحالي، وسجّل المغادرة من الزيارات اليدوية. يُرجع اسم الزيارة وعنوانها وأوقاتها. يتطلب الموقع الحالي أن يكون Whereday مفتوحًا مع إذن وصول إلى الموقع ممنوح مسبقًا.</string>
     <string name="automation_detail_outings">أسماء النزهات المسجّلة وأوقات بدئها وانتهائها.</string>
@@ -316,6 +318,7 @@
     <string name="country_period_rolling">آخر 365 يومًا</string>
     <string name="country_period_year">هذا العام</string>
     <string name="country_preview">معاينة CSV الدول</string>
+    <string name="country_preview_help">تعرض المعاينة أول 100 تاريخ محلي. يشمل تصدير CSV للدول كل التواريخ في الفترة المحددة.</string>
     <string name="country_preview_plan_help">تعرض المعاينة أول 100 تاريخ محلي. يشمل تصدير CSV للدول كل التواريخ في الفترة المحددة ويتطلب خطة Whereday نشطة.</string>
     <string name="country_preview_title">معاينة CSV الدول</string>
     <string name="country_retry">حاول مجددًا</string>
