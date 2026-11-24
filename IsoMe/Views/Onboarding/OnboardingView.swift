@@ -2,7 +2,6 @@ import SwiftUI
 import CoreLocation
 import MapKit
 import Photos
-import UserNotifications
 
 /// The ten first-run screens, in order.
 enum OnboardingStep: Int, CaseIterable {
@@ -64,7 +63,8 @@ struct OnboardingView: View {
     @State private var photoDayCounts: [Int]?
     @State private var isConfiguringAutomaticPhotoSync = false
     @State private var exportSample: OnboardingExportSample?
-    @State private var nightlyEnabled = true
+    /// The "Evening recap" toggle: Every evening when on, Off when off. Applied only on the last button.
+    @State private var recapEnabled = true
     @State private var selectedPlan: OnboardingPlanChoice = .yearly
     @State private var familyPlan = false
     @State private var showsAllPlans = false
@@ -908,15 +908,14 @@ struct OnboardingView: View {
         }
     }
 
-    // MARK: 10 · Tonight
+    // MARK: 10 · Start my day (access already in place)
 
     private var tonightPage: some View {
-        let fire = NightlyPageSchedule.next(after: .now)
-        return VStack(alignment: .leading, spacing: 18) {
-            titleBlock("YOUR FIRST PAGE", fire.isTomorrow ? "Page one closes\ntomorrow night." : "Page one closes\ntonight.")
+        VStack(alignment: .leading, spacing: 18) {
+            titleBlock("YOUR FIRST DAY", "Recording starts\nnow.")
             VStack(alignment: .leading, spacing: 14) {
                 HStack(alignment: .firstTextBaseline) {
-                    Text(fire.date.formatted(.dateTime.weekday(.abbreviated).month(.abbreviated).day()))
+                    Text(Date.now.formatted(.dateTime.weekday(.abbreviated).month(.abbreviated).day()))
                         .font(WheredayFont.serif(size: 24, relativeTo: .title2))
                     Spacer()
                     Text("DRAFTING")
@@ -943,18 +942,26 @@ struct OnboardingView: View {
             .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(TE.dialTick, style: StrokeStyle(lineWidth: 1, dash: [4, 3])))
             .accessibilityElement(children: .combine)
 
-            nightlyToggle(fire)
+            recapToggle
         }
     }
 
-    private func nightlyToggle(_ fire: NightlyPageSchedule.Fire) -> some View {
-        let time = ClockTimeFormatter.string(from: fire.date)
-        return Toggle(isOn: $nightlyEnabled) {
+    /// Every evening at the configured time (9 PM unless Settings › Reminders says otherwise).
+    private var recapToggle: some View {
+        let settings = RecapReminderScheduler.shared.settings
+        let time = RecapTimeFormatter.string(hour: settings.hour, minute: settings.minute)
+        let now = Date.now
+        let startsTonight = RecapSchedule.nextFire(after: now, frequency: .daily, hour: settings.hour, minute: settings.minute)
+            .map { RecapSchedule.startsToday(fire: $0, now: now) } ?? true
+        return Toggle(isOn: $recapEnabled) {
             VStack(alignment: .leading, spacing: 2) {
-                Text("Send me tonight’s page").font(.body.weight(.semibold))
-                Text(fire.isTomorrow ? "One notification tomorrow at \(time)." : "One notification tonight at \(time).")
+                Text("Evening recap").font(.body.weight(.semibold))
+                Text(startsTonight
+                     ? "Every night at \(time), starting tonight. Change it in Settings › Reminders."
+                     : "Every night at \(time), starting tomorrow. Change it in Settings › Reminders.")
                     .font(.footnote)
                     .foregroundStyle(TE.textMuted)
+                    .fixedSize(horizontal: false, vertical: true)
             }
         }
         .toggleStyle(TEToggleStyle())
@@ -962,7 +969,7 @@ struct OnboardingView: View {
         .padding(.vertical, 14)
         .background(RoundedRectangle(cornerRadius: 16).fill(TE.card))
         .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(TE.border, lineWidth: 1))
-        .accessibilityIdentifier("onboarding-nightly-toggle")
+        .accessibilityIdentifier("onboarding-recap-toggle")
     }
 
     // MARK: 10 · Free week (for someone who needs a plan)
@@ -978,7 +985,7 @@ struct OnboardingView: View {
 
     private var checkingPage: some View {
         VStack(alignment: .leading, spacing: 16) {
-            titleBlock("YOUR FREE WEEK", "Page one starts\nnow, on us.")
+            titleBlock("YOUR FREE WEEK", "Recording starts\nnow, on us.")
             ProgressView("Checking purchases…")
                 .font(.footnote)
                 .frame(maxWidth: .infinity, minHeight: 88)
@@ -987,8 +994,7 @@ struct OnboardingView: View {
 
     /// After a purchase, trial start or restore: the only place notifications are asked for.
     private var trialDonePage: some View {
-        let fire = NightlyPageSchedule.next(after: .now)
-        return VStack(alignment: .leading, spacing: 18) {
+        VStack(alignment: .leading, spacing: 18) {
             ZStack {
                 Circle().fill(TE.textPrimary)
                 Image(systemName: "checkmark")
@@ -1002,7 +1008,7 @@ struct OnboardingView: View {
                     .font(TE.mono(.caption2))
                     .tracking(0.9)
                     .foregroundStyle(TE.inkRust)
-                headline("You’re in.\nPage one is open.", size: 36)
+                headline("You’re in.", size: 36)
             }
             .accessibilityElement(children: .combine)
             .accessibilityIdentifier("onboarding-trial-done")
@@ -1011,7 +1017,7 @@ struct OnboardingView: View {
                  : "Allow location in iPhone Settings and Whereday starts writing your days.")
                 .foregroundStyle(TE.textMuted)
                 .fixedSize(horizontal: false, vertical: true)
-            nightlyToggle(fire)
+            recapToggle
         }
     }
 
@@ -1192,12 +1198,10 @@ struct OnboardingView: View {
     private func finish() {
         guard !isFinishing else { return }
         isFinishing = true
-        let fire = NightlyPageSchedule.next(after: .now)
-        let schedulesNotification = nightlyEnabled
+        let recapOn = recapEnabled
         Task { @MainActor in
-            if schedulesNotification {
-                await OnboardingNightlyNotification.schedule(at: fire.date)
-            }
+            // Asks for notification permission only when the recap is on, and only now.
+            await RecapReminderScheduler.shared.applyOnboardingChoice(enabled: recapOn)
             completeOnboarding(opensImport: false)
         }
     }
@@ -1206,10 +1210,9 @@ struct OnboardingView: View {
     private func finishAfterPurchase() {
         guard !isFinishing else { return }
         isFinishing = true
-        let fire = NightlyPageSchedule.next(after: .now)
-        let schedulesNotification = nightlyEnabled
+        let recapOn = recapEnabled
         Task { @MainActor in
-            await checkout.finish(nightlyEnabled: schedulesNotification, nightlyDate: fire.date)
+            await checkout.finish(recapEnabled: recapOn)
             completeOnboarding(opensImport: false)
         }
     }
@@ -1241,33 +1244,6 @@ enum OnboardingPhotoDays {
             dates.append(date)
         }
         return PhotoDayHistogram.counts(for: dates, today: today, calendar: calendar)
-    }
-}
-
-/// The single "tonight's page" reminder. Generic text: no places or coordinates.
-@MainActor
-enum OnboardingNightlyNotification {
-    static func schedule(at date: Date, center: UNUserNotificationCenter = .current()) async {
-        let granted = (try? await center.requestAuthorization(options: [.alert, .sound])) ?? false
-        guard granted else { return }
-
-        let content = UNMutableNotificationContent()
-        content.title = String(localized: "Page one is written")
-        content.body = String(localized: "See where your day went.")
-        content.sound = .default
-
-        let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: date)
-        let request = UNNotificationRequest(
-            identifier: NightlyPageSchedule.notificationIdentifier,
-            content: content,
-            trigger: UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
-        )
-        center.removePendingNotificationRequests(withIdentifiers: [NightlyPageSchedule.notificationIdentifier])
-        do {
-            try await center.add(request)
-        } catch {
-            LogManager.shared.warning("Couldn't schedule tonight's page · \(error.localizedDescription)", category: .general)
-        }
     }
 }
 

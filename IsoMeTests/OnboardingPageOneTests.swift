@@ -13,44 +13,6 @@ final class OnboardingPageOneTests: XCTestCase {
         calendar.date(from: DateComponents(year: year, month: month, day: day, hour: hour, minute: minute))!
     }
 
-    // MARK: Nightly notification time
-
-    func testNightlyFiresAtNineTonightBeforeTheCutoff() {
-        let fire = NightlyPageSchedule.next(after: date(2026, 11, 23, 14, 5), calendar: calendar)
-        XCTAssertEqual(fire.date, date(2026, 11, 23, 21, 0))
-        XCTAssertFalse(fire.isTomorrow)
-    }
-
-    func testNightlyJustBeforeCutoffStaysTonight() {
-        let fire = NightlyPageSchedule.next(after: date(2026, 11, 23, 20, 29), calendar: calendar)
-        XCTAssertEqual(fire.date, date(2026, 11, 23, 21, 0))
-        XCTAssertFalse(fire.isTomorrow)
-    }
-
-    func testNightlyMovesToTomorrowFromHalfPastEight() {
-        let atCutoff = NightlyPageSchedule.next(after: date(2026, 11, 23, 20, 30), calendar: calendar)
-        XCTAssertEqual(atCutoff.date, date(2026, 11, 24, 21, 0))
-        XCTAssertTrue(atCutoff.isTomorrow)
-
-        let lateNight = NightlyPageSchedule.next(after: date(2026, 11, 23, 23, 50), calendar: calendar)
-        XCTAssertEqual(lateNight.date, date(2026, 11, 24, 21, 0))
-        XCTAssertTrue(lateNight.isTomorrow)
-    }
-
-    func testNightlyAcrossMonthEndAndEarlyMorning() {
-        XCTAssertEqual(NightlyPageSchedule.next(after: date(2026, 11, 30, 22, 0), calendar: calendar).date,
-                       date(2026, 12, 1, 21, 0))
-        XCTAssertEqual(NightlyPageSchedule.next(after: date(2026, 12, 1, 0, 10), calendar: calendar).date,
-                       date(2026, 12, 1, 21, 0))
-    }
-
-    func testNightlyKeepsLocalNineAcrossDaylightSavingChange() {
-        // US clocks fall back on 2026-11-01; the next fire is still 9 PM local time.
-        let fire = NightlyPageSchedule.next(after: date(2026, 10, 31, 22, 0), calendar: calendar)
-        XCTAssertEqual(calendar.component(.hour, from: fire.date), 21)
-        XCTAssertEqual(calendar.component(.day, from: fire.date), 1)
-    }
-
     // MARK: Intents
 
     func testIntentsDefaultToRememberMyDays() {

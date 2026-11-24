@@ -111,9 +111,9 @@ enum OnboardingFreeWeekCopy {
 
     static func headline(for offer: OnboardingOffer, bundle: Bundle = .main) -> String {
         switch offer {
-        case .trial: String(localized: "Page one starts\nnow, on us.", bundle: bundle)
-        case .subscription: String(localized: "Page one starts\nnow.", bundle: bundle)
-        case .lifetime: String(localized: "Page one starts\nnow, for good.", bundle: bundle)
+        case .trial: String(localized: "Recording starts\nnow, on us.", bundle: bundle)
+        case .subscription: String(localized: "Recording starts\nnow.", bundle: bundle)
+        case .lifetime: String(localized: "Recording starts\nnow, for good.", bundle: bundle)
         }
     }
 
@@ -151,7 +151,7 @@ enum OnboardingFreeWeekCopy {
 
 /// One stop on the free-week timeline.
 struct OnboardingTimelineEntry: Equatable, Identifiable {
-    enum Kind: String { case today, tonight, reminder, renewal, lifetime }
+    enum Kind: String { case today, recap, reminder, renewal, lifetime }
 
     let kind: Kind
     /// Shown in small capitals; VoiceOver reads it as written.
@@ -171,18 +171,18 @@ enum OnboardingTrialTimeline {
         var canRecord: Bool
     }
 
-    static func entries(offer: OnboardingOffer, today: Today, nightly: NightlyPageSchedule.Fire, now: Date,
+    /// - Parameter recapTime: the evening recap's hour and minute (Settings › Reminders; 9 PM by default).
+    static func entries(offer: OnboardingOffer, today: Today, recapTime: (hour: Int, minute: Int), now: Date,
                         calendar: Calendar = .current, locale: Locale = .autoupdatingCurrent,
                         bundle: Bundle = .main) -> [OnboardingTimelineEntry] {
-        let time = ClockTimeFormatter.string(from: nightly.date, locale: locale, timeZone: calendar.timeZone)
+        let recapDate = calendar.date(bySettingHour: recapTime.hour, minute: recapTime.minute, second: 0, of: now) ?? now
+        let time = ClockTimeFormatter.string(from: recapDate, locale: locale, timeZone: calendar.timeZone)
         var entries = [
             OnboardingTimelineEntry(kind: .today, when: String(localized: "Today", bundle: bundle),
                                     text: todayText(today, bundle: bundle)),
-            OnboardingTimelineEntry(kind: .tonight,
-                                    when: nightly.isTomorrow
-                                        ? String(localized: "Tomorrow night · \(time)", bundle: bundle)
-                                        : String(localized: "Tonight · \(time)", bundle: bundle),
-                                    text: String(localized: "Page one arrives.", bundle: bundle))
+            OnboardingTimelineEntry(kind: .recap,
+                                    when: String(localized: "Every evening · \(time)", bundle: bundle),
+                                    text: String(localized: "A short recap of your day: where you went and how far.", bundle: bundle))
         ]
         switch offer {
         case let .trial(period, price):
@@ -257,7 +257,7 @@ private extension String {
 
 // MARK: - Checkout
 
-/// The purchase on the last step and what follows it. Notifications are scheduled only from `finish`,
+/// The purchase on the last step and what follows it. Notifications are asked for and scheduled only from `finish`,
 /// and only after a purchase, trial start or restore succeeded, so nobody is asked about an empty day.
 @MainActor
 final class OnboardingCheckout: ObservableObject {
@@ -281,22 +281,23 @@ final class OnboardingCheckout: ObservableObject {
     private let restore: () async -> StoreRestoreOutcome
     private let expiration: () -> Date?
     private let scheduleTrialReminder: () async -> Void
-    private let scheduleNightly: (Date) async -> Void
+    /// Applies the "Evening recap" toggle (Every evening or Off) and, when on, asks for notification permission.
+    private let applyRecap: (Bool) async -> Void
     private var hasFinished = false
 
     init(purchase: @escaping (IsoMePurchaseOption) async -> StorePurchaseOutcome,
          restore: @escaping () async -> StoreRestoreOutcome,
          expiration: @escaping () -> Date?,
          scheduleTrialReminder: @escaping () async -> Void,
-         scheduleNightly: @escaping (Date) async -> Void) {
+         applyRecap: @escaping (Bool) async -> Void) {
         self.purchase = purchase
         self.restore = restore
         self.expiration = expiration
         self.scheduleTrialReminder = scheduleTrialReminder
-        self.scheduleNightly = scheduleNightly
+        self.applyRecap = applyRecap
     }
 
-    /// Real StoreKit purchases; the trial reminder waits for `finish`, with tonight's page.
+    /// Real StoreKit purchases; the trial reminder waits for `finish`, with the evening recap.
     convenience init(store: StoreManager) {
         self.init(
             purchase: { [weak store] option in
@@ -305,7 +306,7 @@ final class OnboardingCheckout: ObservableObject {
             restore: { [weak store] in await store?.restorePurchases() ?? .failed },
             expiration: { [weak store] in store?.trackingExpiration },
             scheduleTrialReminder: { [weak store] in await store?.scheduleDeferredTrialReminder() },
-            scheduleNightly: { date in await OnboardingNightlyNotification.schedule(at: date) }
+            applyRecap: { enabled in await RecapReminderScheduler.shared.applyOnboardingChoice(enabled: enabled) }
         )
     }
 
@@ -343,11 +344,11 @@ final class OnboardingCheckout: ObservableObject {
     /// The "You're in" screen's action. Asks for notification permission and schedules only here,
     /// after a successful purchase. Returns whether anything was scheduled or attempted.
     @discardableResult
-    func finish(nightlyEnabled: Bool, nightlyDate: Date) async -> Bool {
+    func finish(recapEnabled: Bool) async -> Bool {
         guard case let .done(completion) = phase, !hasFinished else { return false }
         hasFinished = true
         if case .trial = completion { await scheduleTrialReminder() }
-        if nightlyEnabled { await scheduleNightly(nightlyDate) }
+        await applyRecap(recapEnabled)
         return true
     }
 }

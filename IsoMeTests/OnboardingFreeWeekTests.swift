@@ -98,18 +98,18 @@ final class OnboardingFreeWeekTests: XCTestCase {
 
     // MARK: Timeline
 
-    private func fire(_ now: Date) -> NightlyPageSchedule.Fire { NightlyPageSchedule.next(after: now, calendar: calendar) }
+    private let nine = (hour: 21, minute: 0)
 
     func testTrialTimelineUsesRealPlaceDaysAndDates() {
         let now = date(2026, 11, 23, 14, 5)
         let entries = OnboardingTrialTimeline.entries(
             offer: .trial(.year, displayPrice: "$29.99"),
             today: .init(placeName: "Café", earlierPhotoDays: 75, canRecord: true),
-            nightly: fire(now), now: now, calendar: calendar, locale: locale, bundle: english)
-        XCTAssertEqual(entries.map(\.kind), [.today, .tonight, .reminder, .renewal])
+            recapTime: nine, now: now, calendar: calendar, locale: locale, bundle: english)
+        XCTAssertEqual(entries.map(\.kind), [.today, .recap, .reminder, .renewal])
         XCTAssertEqual(entries[0].text, "Café is stamped and 75 earlier days are in from Photos. Recording starts now.")
-        XCTAssertEqual(entries[1].text, "Page one arrives.")
-        XCTAssertTrue(entries[1].when.hasPrefix("Tonight · "), entries[1].when)
+        XCTAssertEqual(entries[1].text, "A short recap of your day: where you went and how far.")
+        XCTAssertEqual(entries[1].when.replacingOccurrences(of: "\u{202F}", with: " "), "Every evening · 9:00 PM")
         XCTAssertEqual(entries[2].when, "Day 5 · Nov 28")
         XCTAssertEqual(entries[3].when, "Day 7 · Nov 30")
         XCTAssertEqual(entries[3].text, "Yearly plan begins: $29.99 a year. Cancel before then and pay nothing.")
@@ -120,18 +120,22 @@ final class OnboardingFreeWeekTests: XCTestCase {
         let now = date(2026, 11, 28, 9)
         let entries = OnboardingTrialTimeline.entries(
             offer: .trial(.week, displayPrice: "$0.99"), today: .init(canRecord: true),
-            nightly: fire(now), now: now, calendar: calendar, locale: locale, bundle: english)
+            recapTime: nine, now: now, calendar: calendar, locale: locale, bundle: english)
         XCTAssertEqual(entries[2].when, "Day 5 · Dec 3")
         XCTAssertEqual(entries[3].when, "Day 7 · Dec 5")
         XCTAssertEqual(entries[3].text, "Weekly plan begins: $0.99 a week. Cancel before then and pay nothing.")
     }
 
-    func testTonightMovesToTomorrowAfterTheCutoff() {
+    func testRecapEntryFollowsTheConfiguredTimeAndMakesNoTonightPromise() {
         let now = date(2026, 11, 23, 22)
         let entries = OnboardingTrialTimeline.entries(
             offer: .trial(.year, displayPrice: "$29.99"), today: .init(canRecord: true),
-            nightly: fire(now), now: now, calendar: calendar, locale: locale, bundle: english)
-        XCTAssertTrue(entries[1].when.hasPrefix("Tomorrow night · "), entries[1].when)
+            recapTime: (22, 30), now: now, calendar: calendar, locale: locale, bundle: english)
+        XCTAssertEqual(entries[1].when.replacingOccurrences(of: "\u{202F}", with: " "), "Every evening · 10:30 PM")
+        for entry in entries {
+            XCTAssertFalse(entry.text.localizedCaseInsensitiveContains("page one"), entry.text)
+            XCTAssertFalse(entry.when.localizedCaseInsensitiveContains("tonight"), entry.when)
+        }
     }
 
     func testMissingTodayValuesAreDroppedNotInvented() {
@@ -158,14 +162,14 @@ final class OnboardingFreeWeekTests: XCTestCase {
         let now = date(2026, 11, 23, 14)
         let lifetime = OnboardingTrialTimeline.entries(
             offer: .lifetime(displayPrice: "$49.99"), today: .init(canRecord: true),
-            nightly: fire(now), now: now, calendar: calendar, locale: locale, bundle: english)
-        XCTAssertEqual(lifetime.map(\.kind), [.today, .tonight, .lifetime])
+            recapTime: nine, now: now, calendar: calendar, locale: locale, bundle: english)
+        XCTAssertEqual(lifetime.map(\.kind), [.today, .recap, .lifetime])
         XCTAssertEqual(lifetime[2].text, "One payment of $49.99. No renewals, no reminders.")
 
         let subscribe = OnboardingTrialTimeline.entries(
             offer: .subscription(.year, displayPrice: "$29.99"), today: .init(canRecord: true),
-            nightly: fire(now), now: now, calendar: calendar, locale: locale, bundle: english)
-        XCTAssertEqual(subscribe.map(\.kind), [.today, .tonight, .renewal])
+            recapTime: nine, now: now, calendar: calendar, locale: locale, bundle: english)
+        XCTAssertEqual(subscribe.map(\.kind), [.today, .recap, .renewal])
         XCTAssertEqual(subscribe[2].text, "$29.99 a year, renewing until you cancel in Apple settings.")
         for entry in lifetime + subscribe {
             XCTAssertFalse(entry.text.localizedCaseInsensitiveContains("free"), entry.text)
@@ -192,7 +196,7 @@ final class OnboardingFreeWeekTests: XCTestCase {
         XCTAssertEqual(OnboardingFreeWeekCopy.primaryTitle(for: .individualYearly, displayPrice: "$29.99", hasTrial: false, bundle: english),
                        "Subscribe")
         XCTAssertEqual(OnboardingFreeWeekCopy.eyebrow(for: .subscription(.year, displayPrice: "$29.99"), bundle: english), "YOUR PLAN")
-        XCTAssertEqual(OnboardingFreeWeekCopy.headline(for: .subscription(.year, displayPrice: nil), bundle: english), "Page one starts\nnow.")
+        XCTAssertEqual(OnboardingFreeWeekCopy.headline(for: .subscription(.year, displayPrice: nil), bundle: english), "Recording starts\nnow.")
         let fine = OnboardingFreeWeekCopy.finePrint(for: .familyWeekly, displayPrice: "$1.99", hasTrial: false, now: now,
                                                     calendar: calendar, locale: locale, bundle: english)
         XCTAssertEqual(fine, "$1.99 per week, automatically renewing until canceled. "
@@ -216,8 +220,9 @@ final class OnboardingFreeWeekTests: XCTestCase {
     }
 
     func testNewOnboardingCopyIsTranslatedInEveryShippedLocale() throws {
-        let keys = ["Start my free week", "All plans and Family", "Page one starts\nnow, on us.", "Page one arrives.",
-                    "We remind you, two days before you’re charged.", "You’re in.\nPage one is open.", "Just me",
+        let keys = ["Start my free week", "All plans and Family", "Recording starts\nnow, on us.",
+                    "A short recap of your day: where you went and how far.", "Every evening · %@", "Evening recap",
+                    "We remind you, two days before you’re charged.", "You’re in.", "Just me",
                     "Yearly plan begins: %@ a year. Cancel before then and pay nothing.", "Buy Lifetime · %@"]
         for locale in ["ar", "bn", "es", "fr", "hi", "ja", "pl", "pt-BR", "ru", "zh-Hans"] {
             let url = Bundle.main.bundleURL.appendingPathComponent("\(locale).lproj")
@@ -235,7 +240,7 @@ final class OnboardingFreeWeekTests: XCTestCase {
     private final class Recorder {
         var purchases: [IsoMePurchaseOption] = []
         var trialReminders = 0
-        var nightly: [Date] = []
+        var recapChoices: [Bool] = []
     }
 
     private func makeCheckout(outcome: StorePurchaseOutcome, restore: StoreRestoreOutcome = .notFound,
@@ -248,56 +253,55 @@ final class OnboardingFreeWeekTests: XCTestCase {
             restore: { restore },
             expiration: { Date(timeIntervalSince1970: 1_800_000_000) },
             scheduleTrialReminder: { recorder.trialReminders += 1 },
-            scheduleNightly: { recorder.nightly.append($0) }
+            applyRecap: { recorder.recapChoices.append($0) }
         )
     }
 
     func testNothingIsScheduledBeforeAPurchaseSucceeds() async {
-        let tonight = date(2026, 11, 23, 21)
         for outcome in [StorePurchaseOutcome.cancelled, .pending, .failed(.storeError), .failed(.productUnavailable)] {
             let recorder = Recorder()
             let checkout = makeCheckout(outcome: outcome, recorder: recorder)
-            let earlyFinish = await checkout.finish(nightlyEnabled: true, nightlyDate: tonight)
+            let earlyFinish = await checkout.finish(recapEnabled: true)
             XCTAssertFalse(earlyFinish)
             await checkout.buy(.individualYearly, startsTrial: true)
             XCTAssertEqual(checkout.phase, .choosing, "\(outcome)")
             XCTAssertEqual(checkout.lastOutcome, outcome)
-            let finished = await checkout.finish(nightlyEnabled: true, nightlyDate: tonight)
+            let finished = await checkout.finish(recapEnabled: true)
             XCTAssertFalse(finished, "\(outcome)")
             XCTAssertEqual(recorder.purchases, [.individualYearly])
             XCTAssertEqual(recorder.trialReminders, 0, "\(outcome)")
-            XCTAssertTrue(recorder.nightly.isEmpty, "\(outcome)")
+            XCTAssertTrue(recorder.recapChoices.isEmpty, "\(outcome)")
         }
     }
 
     func testTrialStartSchedulesOnlyOnTheDoneScreen() async {
-        let tonight = date(2026, 11, 23, 21)
         let recorder = Recorder()
         let checkout = makeCheckout(outcome: .succeeded, recorder: recorder)
         await checkout.buy(.individualYearly, startsTrial: true)
         XCTAssertEqual(checkout.phase, .done(.trial(ends: Date(timeIntervalSince1970: 1_800_000_000))))
         // The purchase itself never asks for notifications.
         XCTAssertEqual(recorder.trialReminders, 0)
-        XCTAssertTrue(recorder.nightly.isEmpty)
+        XCTAssertTrue(recorder.recapChoices.isEmpty)
 
-        let finished = await checkout.finish(nightlyEnabled: true, nightlyDate: tonight)
+        let finished = await checkout.finish(recapEnabled: true)
         XCTAssertTrue(finished)
         XCTAssertEqual(recorder.trialReminders, 1)
-        XCTAssertEqual(recorder.nightly, [tonight])
+        XCTAssertEqual(recorder.recapChoices, [true])
 
         // Finishing twice schedules nothing more.
-        await checkout.finish(nightlyEnabled: true, nightlyDate: tonight)
+        await checkout.finish(recapEnabled: true)
         XCTAssertEqual(recorder.trialReminders, 1)
-        XCTAssertEqual(recorder.nightly.count, 1)
+        XCTAssertEqual(recorder.recapChoices.count, 1)
     }
 
-    func testNightlyToggleOffSchedulesNoPage() async {
+    func testRecapToggleOffTurnsTheRecapOff() async {
         let recorder = Recorder()
         let checkout = makeCheckout(outcome: .succeeded, recorder: recorder)
         await checkout.buy(.individual, startsTrial: false)
         XCTAssertEqual(checkout.phase, .done(.lifetime))
-        await checkout.finish(nightlyEnabled: false, nightlyDate: Date())
-        XCTAssertTrue(recorder.nightly.isEmpty)
+        await checkout.finish(recapEnabled: false)
+        // Off is applied too (frequency Off), so nothing is left scheduled from an earlier choice.
+        XCTAssertEqual(recorder.recapChoices, [false])
         // No trial, so no trial reminder either.
         XCTAssertEqual(recorder.trialReminders, 0)
     }
@@ -315,7 +319,7 @@ final class OnboardingFreeWeekTests: XCTestCase {
         let notFound = makeCheckout(outcome: .cancelled, restore: .notFound, recorder: recorder)
         await notFound.restorePurchases()
         XCTAssertEqual(notFound.phase, .choosing)
-        let finished = await notFound.finish(nightlyEnabled: true, nightlyDate: Date())
+        let finished = await notFound.finish(recapEnabled: true)
         XCTAssertFalse(finished)
     }
 }

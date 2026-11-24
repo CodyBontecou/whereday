@@ -43,12 +43,13 @@ struct OnboardingFreeWeekPage: View {
     private var option: IsoMePurchaseOption { effectivePlan.option(family: family) }
     private var offer: OnboardingOffer { storeManager.onboardingOffer(for: option) }
 
-    /// Until StoreKit returns the plan, only what's already true: today and tonight.
+    /// Until StoreKit returns the plan, only what's already true: today and the evening recap.
     private var timelineEntries: [OnboardingTimelineEntry] {
+        let recap = RecapReminderScheduler.shared.settings
         let entries = OnboardingTrialTimeline.entries(offer: offer, today: today,
-                                                      nightly: NightlyPageSchedule.next(after: now), now: now)
+                                                      recapTime: (recap.hour, recap.minute), now: now)
         guard storeManager.product(for: option) == nil else { return entries }
-        return entries.filter { $0.kind == .today || $0.kind == .tonight }
+        return entries.filter { $0.kind == .today || $0.kind == .recap }
     }
 
     var body: some View {
