@@ -1,7 +1,8 @@
 steps:
 - echo: Use only the onboarded idle mapQa app with reset webhook settings and unconfigured
-    Play purchases. Uses a public .invalid URL; never starts recording or sends a
-    request. Ends reset at Map.
+    Play purchases (webhooks unlocked). Uses a public .invalid URL; the entry fragment's
+    connection test targets that unresolvable host, so no data leaves the device. Never
+    starts recording. Ends reset at Map.
 - launch: com.bontecou.whereday.mapqa
 - await:
     visible:

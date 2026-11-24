@@ -1,16 +1,48 @@
+# Archive export access and the Filters and fields controls, on the disposable QA package
+# com.bontecou.whereday.mapqa (NEVER the owner's com.bontecou.whereday), with UNCONFIGURED billing.
+# Prerequisites: mapQa onboarded, idle, English UI, Archive defaults (JSON, All, Time of day off, 08:00 start).
+# Side effects: prepares one export file in mapQa's cache for the share sheet (dismissed, nothing shared), opens and
+# cancels the Save picker (no file written), opens and cancels the time and date pickers; settings end unchanged.
+# 2026-11-24: since PR #177 unconfigured builds unlock exports, so the "Lifetime export access" card and the
+# "Verified lifetime export access is required." denials are gone. The Share/Save span now expects the system share
+# sheet and Save picker; those steps were recorded live in billing-unconfigured-all-unlocked on the same screen and
+# copied here, then verified here with the CLI runner (not re-recorded in this file). The hidden export-locked and
+# "Verified lifetime..." checks are configured-only absence checks, backed by Share/Save reaching the system UI.
+# Raw `button: back` steps dismiss system UI (share sheet, DocumentsUI), which no directive expresses; each is followed
+# by a hidden check. Retargeted from the owner package to mapQa.
+# KNOWN STALE (not billing): the CLI runner passes steps 1-24 (launch, open Archive, Share/Save unlocked, Time of day
+# toggle) and fails at step 25, `scroll-to "From time: 08:00"`: the row label is now "From time" without the value
+# (export_from_time). That span needs a live re-record; it also leaves Time of day ON when it fails.
+version: 1
+requires:
+  platform: android
 steps:
-  - echo: Requires completed onboarding, idle recording and an unconfigured purchase verifier. Does not buy, start recording or write a destination file.
-  - launch: com.bontecou.whereday
+  - echo: Disposable mapQa only (never com.bontecou.whereday). Requires completed onboarding, idle recording and an unconfigured purchase verifier, where exports are unlocked. Does not buy, start recording, share or write a destination file.
+  - launch: com.bontecou.whereday.mapqa
   - await: { visible: { id: map-header } }
   - await: { idle: true }
   - tap: { id: navigation-archive }
-  - await: { visible: { text: Lifetime export access } }
-  - scroll-to: { target: { text: { matches: '^Share export$' } }, direction: down }
+  - await: { visible: { id: export-history-count } }
   - await: { idle: true }
+  - assert: { hidden: { id: export-locked } }
+  - echo: 'Share is unlocked: expect the Android share sheet, dismissed with Back without sharing.'
   - tap: { text: { matches: '^Share export$' } }
-  - await: { visible: { text: Verified lifetime export access is required. } }
+  - await: { visible: { id: 'com.android.intentresolver:id/content_preview_filename' }, timeout: 15000 }
+  - tool: button
+    args:
+      button: back
+  - await: { hidden: { id: 'com.android.intentresolver:id/content_preview_filename' } }
+  - await: { visible: { id: export-save-as } }
+  - echo: 'Save is unlocked: expect the system Save picker, cancelled with Back so no file is written.'
   - tap: { text: Save export as… }
-  - await: { visible: { text: Verified lifetime export access is required. } }
+  - await: { visible: { id: 'com.google.android.documentsui:id/drawer_layout' }, timeout: 15000 }
+  - tool: button
+    args:
+      button: back
+  - await: { hidden: { id: 'com.google.android.documentsui:id/drawer_layout' } }
+  - scroll-to: { target: { text: Export canceled. }, direction: down }
+  - await: { visible: { text: Export canceled. Files already written remain in the destination. } }
+  - assert: { hidden: { text: Verified lifetime export access is required } }
   - scroll-to: { target: { text: { matches: '^Filters and fields$' } }, direction: down }
   - tap: { text: { matches: '^Filters and fields$' } }
   - scroll-to: { target: { text: { matches: '^Time of day$' } }, direction: down }

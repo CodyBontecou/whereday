@@ -1,0 +1,73 @@
+# Archive in a build with UNCONFIGURED billing (debug/mapQa: no whereday.purchaseVerifierUrl etc.). Since PR #177
+# every capability is free there (BillingState.unlocked): Archive shows no plan/lifetime card, no Restore purchases,
+# no "Purchases are not available" notice and no lock; the JSON preview renders; Share and Save open the system
+# share sheet and Save picker instead of the plans; import is still offered. Replaces billing-unconfigured-free-preview.
+# Prerequisites: the disposable QA package com.bontecou.whereday.mapqa (NEVER the owner's com.bontecou.whereday),
+# onboarded, idle (not recording), English UI, Archive on its defaults (JSON, All, one file, no export folder).
+# E.g. fresh install, then `argent e2e run map-qa-onboarding`. Recorded on the API 35 pool emulator.
+# Side effects (QA package only): renders a preview; prepares one export file in mapQa's cache for the share sheet
+# (the sheet is dismissed with Back, nothing is shared); opens the Save picker and cancels it (no file written).
+# Absence checks: export-access (plan card), export-locked, Restore purchases, the "not available" notice,
+# "included with every" plan copy and "Verified lifetime export access is required." exist only in builds with Play
+# billing configured, so they can never be seen visible here (covered there by ExportOptionsFlowTest). They are
+# backed by positive evidence: the visible Share/Save buttons, the billing-free folder copy (exact text), and Share
+# and Save reaching the system UI.
+# Authoring notes: 2026-11-24, argent 0.34.0. The live describe/await tree went stale after in-window scrolls; it was
+# refreshed with `adb shell am force-stop com.argent.androiddevtools` and every step was recorded live.
+# Coordinate exceptions: none. Back is a raw `button: back` step because dismissing the share sheet and cancelling
+# the Save picker via system Back is the behavior under test; each is followed by a hidden check on the system UI.
+version: 1
+requires:
+  platform: android
+steps:
+  - echo: Onboarded idle disposable mapQa (unconfigured purchase verifier). Restart; expect the Map.
+  - launch: com.bontecou.whereday.mapqa
+  - await: { visible: { id: map-header-title }, timeout: 20000 }
+  - await: { idle: true }
+  - echo: On the Map. Open Archive; expect the export screen with no plan card.
+  - tap: { id: navigation-archive }
+  - await: { visible: { id: export-history-count } }
+  - await: { idle: true }
+  - await: { visible: { id: export-preview-start } }
+  - echo: 'Archive in an unconfigured build: Share export is shown, and there is no plan card (export-access),
+      Restore purchases, "not available" notice or lock row (export-locked). These exist only in configured
+      builds, so the hidden checks are backed by the visible Share/Save buttons here and the free folder copy below.'
+  - assert: { visible: { id: export-share } }
+  - assert: { visible: { id: export-save-as } }
+  - assert: { hidden: { id: export-locked } }
+  - assert: { hidden: { id: export-access } }
+  - assert: { hidden: { text: Restore purchases } }
+  - assert: { hidden: { text: Purchases are not available } }
+  - echo: Tap Preview export; expect the JSON preview with "exportDate".
+  - tap: { text: Preview export }
+  - scroll-to: { target: { id: export-preview-result }, direction: down }
+  - await: { text: { in: { id: export-preview-result }, contains: '"exportDate"' } }
+  - scroll-to: { target: { text: Folder exports keep both files }, direction: down }
+  - assert: { text: { in: { text: Folder exports keep both files }, equals: Folder exports keep both files when a name already exists. Choose a folder in Settings. } }
+  - assert: { hidden: { text: included with every } }
+  - echo: 'Share is unlocked: tap Share export; expect the Android share sheet (no plans dialog). Dismiss it with
+      Back without sharing.'
+  - tap: { text: Share export }
+  - await: { visible: { id: 'com.android.intentresolver:id/content_preview_filename' }, timeout: 15000 }
+  - tool: button
+    args:
+      button: back
+  - await: { hidden: { id: 'com.android.intentresolver:id/content_preview_filename' } }
+  - await: { visible: { id: export-save-as } }
+  - echo: 'Save is unlocked: tap Save export as…; expect the system Save picker (DocumentsUI). Cancel it with Back
+      so no file is written.'
+  - tap: { text: Save export as… }
+  - await: { visible: { id: 'com.google.android.documentsui:id/drawer_layout' }, timeout: 15000 }
+  - tool: button
+    args:
+      button: back
+  - await: { hidden: { id: 'com.google.android.documentsui:id/drawer_layout' } }
+  - echo: 'Import stays available: scroll to Import history file (not tapped).'
+  - scroll-to: { target: { text: Import history file }, direction: down }
+  - await: { visible: { text: Export canceled. Files already written remain in the destination. } }
+  - assert: { visible: { text: Import history file } }
+  - assert: { hidden: { text: Verified lifetime export access is required } }
+  - echo: Return to the Map.
+  - tap: { id: navigation-map }
+  - await: { visible: { id: recording-start } }
+  - await: { idle: true }
