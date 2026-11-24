@@ -1,0 +1,120 @@
+# Page One onboarding on Android with UNCONFIGURED billing (no purchase verifier deployed), end to end on a
+# real device: the last step must be the free-recording "tonight" step, not a plan chooser, with "Start recording
+# immediately" ON by default ("Start my day"), so recording starts; Archive exports are open (no plan card, no
+# "Purchases are not available" notice, no lock) and Settings shows the evening recap and no plans.
+# Prerequisites: a FRESH install of the disposable QA package com.bontecou.whereday.mapqa (never the owner's
+# com.bontecou.whereday or com.bontecou.isome.android): `adb uninstall com.bontecou.whereday.mapqa` then
+# `adb install app-mapQa.apk`, so no location or notification grants and onboarding not done. English locale,
+# 12-hour clock, real location available (the stamp step waits up to 40 s for a fix). Recorded on a Pixel 7
+# (API 37); also fits an English API 33+ pool emulator with a simulated GPS fix.
+# Side effects (QA package only): grants foreground location ("While using the app") and POST_NOTIFICATIONS to
+# mapQa; no place saved (the stamp step is skipped), photo matching left off; turns on the evening recap
+# (Settings › Reminders: Every evening, 9:00 PM) and queues its next run; marks onboarding complete; STARTS
+# RECORDING (foreground location service) at the device's real location. Afterwards stop recording or
+# force-stop mapQa; nothing here touches another package.
+# Authoring notes: 2026-11-24, Pixel 7 / API 37, the live argent 0.33.0 describe/await-ui-element tools served a
+# stale tree after in-window Compose navigation (refreshing only on window changes), on this phone and on the API 35
+# pool emulator alike, so a live re-recording stopped at the second screen. The 2026-11-24 follow-up edits (export
+# step id and selected Markdown chip instead of the onboarding-format-json workaround, the recording switch on by
+# default, the open Archive checks) were checked step by step with the CLI runner, which reads the current tree.
+# The export-access/export-locked hidden checks are absence checks for elements that exist only in builds with
+# Play billing configured (covered there by ExportOptionsFlowTest); the positive evidence here is the billing-free
+# folder copy and the unlocked Share button.
+# No coordinate exceptions: every tap is an id, and the scrolls are scroll-to.
+version: 1
+requires:
+  platform: android
+steps:
+  - echo: Fresh mapQa install, billing unconfigured. Launch MainActivity; expect the Page One cover with "Start my journal".
+  - launch: com.bontecou.whereday.mapqa
+  - await: { visible: { id: onboarding-cover-dial }, timeout: 20000 }
+  - await: { idle: true }
+  - assert: { text: { in: { id: onboarding-continue }, contains: Start my journal } }
+  - tap: { id: onboarding-continue }
+  - await: { visible: { id: onboarding-intent-days } }
+  - await: { idle: true }
+  - echo: Keep the preselected "Remember my days" intent and continue; expect the scrub step.
+  - tap: { id: onboarding-continue }
+  - await: { visible: { id: onboarding-scrub } }
+  - await: { idle: true }
+  - tap: { id: onboarding-continue }
+  - await: { visible: { id: onboarding-pen-preview } }
+  - await: { idle: true }
+  - tap: { id: onboarding-continue }
+  - await: { visible: { id: onboarding-perm-compare } }
+  - await: { idle: true }
+  - echo: Location not asked yet, so no "access is off" banner. Allow location; answer the real system dialog with
+      "While using the app".
+  - assert: { hidden: { id: location-access-options } }
+  - tap: { id: onboarding-continue }
+  - await: { visible: { id: "com.android.permissioncontroller:id/permission_allow_foreground_only_button" } }
+  - tap: { id: "com.android.permissioncontroller:id/permission_allow_foreground_only_button" }
+  - await: { visible: { id: onboarding-stamp-map }, timeout: 10000 }
+  - await: { idle: true }
+  - await: { visible: { id: onboarding-place-home }, timeout: 40000 }
+  - echo: A real fix arrived (place chips shown). Skip naming it so no place is saved at the real location.
+  - tap: { id: onboarding-continue }
+  - await: { visible: { id: onboarding-heatmap } }
+  - await: { idle: true }
+  - echo: Leave photo matching off (no access to the real photo library) and continue; expect the glance step.
+  - tap: { id: onboarding-continue }
+  - await: { visible: { id: onboarding-glance-notification } }
+  - await: { idle: true }
+  - echo: Notifications not asked yet, so no "access is off" banner. Allow them in the real system dialog; that
+      moves on to the export step.
+  - assert: { hidden: { id: notification-access-options } }
+  - tap: { id: onboarding-continue }
+  - await: { visible: { id: "com.android.permissioncontroller:id/permission_allow_button" } }
+  - tap: { id: "com.android.permissioncontroller:id/permission_allow_button" }
+  - await: { visible: { id: onboarding-export-step } }
+  - await: { idle: true }
+  - echo: Export step. Markdown is preselected for the days intent and keeps its id while selected; the note has no
+      plan sentence. Continue; expect the last step, which with unconfigured billing is the tonight step.
+  - assert: { visible: { id: onboarding-format-markdown } }
+  - assert: { visible: { text: "Schedule it daily to a folder, or export once." } }
+  - tap: { id: onboarding-continue }
+  - await: { visible: { id: onboarding-draft } }
+  - await: { idle: true }
+  - assert: { text: { in: { id: onboarding-progress }, equals: Step 10 of 10 } }
+  - assert: { visible: { text: Your day starts now. } }
+  - assert: { text: { in: { id: onboarding-recap-toggle }, contains: Change it in Settings › Reminders. } }
+  - echo: 'Tonight step: Evening recap and "Start recording immediately" are both on by default, so the primary reads
+      "Start my day". Tap it; expect the map with recording on.'
+  - assert: { visible: { id: onboarding-start-now } }
+  - assert: { text: { in: { id: onboarding-continue }, equals: Start my day } }
+  - tap: { id: onboarding-continue }
+  - await: { visible: { id: map-header-title }, timeout: 15000 }
+  - await: { idle: true }
+  - await: { visible: { id: recording-stop }, timeout: 10000 }
+  - assert: { text: { in: { id: map-recording-status }, contains: RECORDING } }
+  - echo: Map home with recording on. Open Archive; with unconfigured billing, exports are open - no plan card,
+      no "Purchases are not available" notice and no lock on Share/Save.
+  - tap: { id: navigation-archive }
+  - await: { visible: { id: archive-settings } }
+  - await: { idle: true }
+  - await: { visible: { id: export-share } }
+  - assert: { text: { in: { id: export-share }, equals: Share export } }
+  - assert: { hidden: { id: export-locked } }
+  - assert: { hidden: { id: export-access } }
+  - assert: { hidden: { text: Purchases are not available } }
+  - scroll-to: { target: { text: "Folder exports keep both files when a name already exists." } }
+  - assert: { visible: { text: "Folder exports keep both files when a name already exists." } }
+  - echo: Archive is open for export. Open Settings; expect the Reminders row.
+  - tap: { id: archive-settings }
+  - await: { visible: { id: settings-reminders } }
+  - await: { idle: true }
+  - assert: { text: { in: { id: settings-reminders }, contains: Every evening · 9:00 PM } }
+  - echo: Settings shows Reminders = Every evening · 9:00 PM in full. Open Settings › Reminders; expect Daily 9:00 PM
+      and the selected 9:00 PM chip with its id (Skip quiet days on and Show place names off are checked by eye).
+  - tap: { id: settings-reminders }
+  - await: { visible: { id: reminders-screen } }
+  - await: { idle: true }
+  - assert: { text: { in: { id: reminders-preview-when }, equals: Daily 9:00 PM } }
+  - assert: { visible: { id: reminders-time-21 } }
+  - echo: Back to Settings and scroll to the bottom; with unconfigured billing no plans card (settings-plan) is shown.
+  - tap: { id: reminders-back }
+  - await: { visible: { id: settings-screen } }
+  - await: { idle: true }
+  - scroll-to: { target: { id: settings-software-notices } }
+  - await: { visible: { id: settings-software-notices } }
+  - assert: { hidden: { id: settings-plan } }

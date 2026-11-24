@@ -6,7 +6,10 @@
 # Side effects (QA package only): grants foreground location, notifications and photo access to mapQa;
 # saves one place named "Home" at the simulated fix (default 150 m radius); turns on automatic photo
 # matching; persists the routes intent (and the Every step preset); turns on the evening recap (Settings ›
-# Reminders: Every evening at 21:00) and queues its next run; marks onboarding complete. No recording is started.
+# Reminders: Every evening at 21:00) and queues its next run; marks onboarding complete; STARTS RECORDING at the
+# simulated fix ("Start recording immediately" is on by default since 2026-11-24; stop it or force-stop mapQa after).
+# The 2026-11-24 "Start my day" checks were added by hand and verified with the CLI runner: the live argent 0.33.0
+# tree went stale after in-window Compose navigation, so they could not be recorded live.
 # Coordinate exception: the slider drag on the scrub step is a raw gesture-swipe, because a Slider thumb
 # has no selector-based drag; its result is checked by the "Office" card that follows.
 version: 1
@@ -77,6 +80,9 @@ steps:
   - await: { visible: { text: Home · stamped just now } }
   - assert: { visible: { text: Your day starts now. } }
   - await: { text: { in: { id: onboarding-recap-toggle }, contains: Change it in Settings › Reminders. } }
+  - echo: '"Start recording immediately" is on by default, so the primary reads "Start my day" and finishing starts recording.'
+  - assert: { visible: { id: onboarding-start-now } }
+  - assert: { text: { in: { id: onboarding-continue }, equals: Start my day } }
   - tap: { id: onboarding-continue }
   - await: { visible: { id: map-header-title }, timeout: 15000 }
   - await: { idle: true }
