@@ -289,7 +289,10 @@ final class RecapReminderTests: XCTestCase {
                                     horizontalAccuracy: 5, isOutlier: true))
         let summary = recap(visits: day.visits, points: points, home: savedHome,
                             period: RecapSchedule.period(endingAt: date(2026, 11, 23, 21), kind: .day, calendar: calendar), now: day.now)
-        let moved = TodayDay.pathDistance(points.filter { !$0.isOutlier }.sorted { $0.timestamp < $1.timestamp })
+        // Today's "MOVED" (`LocationViewModel.todayDistanceTraveled`) is this day's `DayDistance`.
+        let moved = DayDistance.distances(points, calendar: calendar).meters(on: day.now, calendar: calendar)
+        XCTAssertEqual(moved, TodayDay.pathDistance(points.filter { !$0.isOutlier }.sorted { $0.timestamp < $1.timestamp }),
+                       accuracy: moved * 0.002)
         XCTAssertGreaterThan(moved, 3_000)
         XCTAssertEqual(summary.distanceMeters, moved, accuracy: 0.01)
     }
@@ -302,12 +305,14 @@ final class RecapReminderTests: XCTestCase {
         ]
         XCTAssertEqual(RecapAggregation.distance(along: points, calendar: calendar), 567, accuracy: 10)
         XCTAssertEqual(RecapAggregation.distance(along: [], calendar: calendar), 0)
-        // Like the map's 7D totals, the overnight gap between two days isn't travel.
+        // Like the map's 7D total, a week counts the leg across midnight between two of its days, though neither
+        // day's own distance (Today's, or its chip's) does.
         let overnight = [
             RecapPoint(latitude: home.0, longitude: home.1, timestamp: date(2026, 11, 23, 23, 50)),
             RecapPoint(latitude: office.0, longitude: office.1, timestamp: date(2026, 11, 24, 8))
         ]
-        XCTAssertEqual(RecapAggregation.distance(along: overnight, calendar: calendar), 0)
+        let leg = DayDistance.meters(latitude1: home.0, longitude1: home.1, latitude2: office.0, longitude2: office.1)
+        XCTAssertEqual(RecapAggregation.distance(along: overnight, calendar: calendar), leg, accuracy: 0.01)
     }
 
     func testNewPlacesFollowEarlierVisits() {
@@ -394,7 +399,9 @@ final class RecapReminderTests: XCTestCase {
         let todayDay = today(visits: day.visits, points: day.points, home: savedHome, now: day.now)
         XCTAssertEqual(summary.placeCount, todayDay.placeCount)
         XCTAssertEqual(summary.places.map(\.name), ["Home", "Corner café", "Office", nil])
-        XCTAssertEqual(summary.distanceMeters, TodayDay.pathDistance(day.points.sorted { $0.timestamp < $1.timestamp }), accuracy: 0.01)
+        // Today's "MOVED" for the day: the shared `DayDistance`.
+        XCTAssertEqual(summary.distanceMeters, DayDistance.distances(day.points, calendar: calendar).meters(on: day.now, calendar: calendar),
+                       accuracy: 0.01)
     }
 
     // MARK: - Content

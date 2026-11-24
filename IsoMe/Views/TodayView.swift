@@ -331,6 +331,7 @@ struct TodayView: View {
             VStack(alignment: .leading, spacing: points ? 14 : 10) {
                 stat(DistanceFormatter.format(meters: viewModel.todayDistanceTraveled, usesMetric: usesMetricDistanceUnits),
                      label: "MOVED")
+                    .accessibilityIdentifier("today-moved")
                 stat(day.awayDuration.map(TodayDay.formatDuration) ?? "—", label: awayLabel)
                 if points {
                     stat(viewModel.todayLocationPoints.count.formatted(), label: "POINTS KEPT")
@@ -355,6 +356,7 @@ struct TodayView: View {
             HStack(alignment: .top, spacing: 8) {
                 sheetStat(DistanceFormatter.format(meters: movedMeters, usesMetric: usesMetricDistanceUnits),
                           label: "MOVED")
+                    .accessibilityIdentifier("today-moved")
                 sheetStat(day.awayDuration.map(TodayDay.formatDuration) ?? "—", label: "AWAY")
                 sheetStat(day.placeCount.formatted(), label: "PLACES")
             }
@@ -365,9 +367,8 @@ struct TodayView: View {
 
     private var movedMeters: Double {
         guard let pastDay else { return viewModel.todayDistanceTraveled }
-        let calendar = Calendar.current
-        let points = viewModel.mapLocationPoints.filter { !$0.isOutlier && calendar.isDate($0.timestamp, inSameDayAs: pastDay) }
-        return TodayDay.pathDistance(points)
+        // The day's distance from every stored fix, as Today and the range chips count it (`DayDistance`).
+        return viewModel.mapDayDistances.meters(on: pastDay)
     }
 
     private func sheetStat(_ value: String, label: LocalizedStringKey) -> some View {
@@ -411,6 +412,7 @@ struct TodayView: View {
             VStack(alignment: .leading, spacing: 10) {
                 largeTextStat(DistanceFormatter.format(meters: viewModel.todayDistanceTraveled, usesMetric: usesMetricDistanceUnits),
                               label: "moved")
+                    .accessibilityIdentifier("today-moved")
                 largeTextStat(day.awayDuration.map(TodayDay.formatDuration) ?? "—",
                               label: home != nil ? "away from home" : "away from places")
             }

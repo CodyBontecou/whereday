@@ -878,7 +878,8 @@ struct LocationMapView: View {
                 kicker: String(localized: "THE DAY SO FAR"),
                 title: String(localized: "No places yet"), value: distance, caption: places, arcs: arcs, showsNow: true)
         }
-        let distance = DistanceFormatter.format(meters: RouteReplayCalculator.totalDistance(in: filteredPoints), usesMetric: usesMetricDistanceUnits)
+        let distance = DistanceFormatter.format(meters: viewModel.mapDayDistances.meters(on: day.domain.lowerBound),
+                                                usesMetric: usesMetricDistanceUnits)
         let first = day.visits.first.map { Self.clockText(max($0.arrivedAt, day.domain.lowerBound)) }
         return MapPeekContent(
             kicker: first.map { String(localized: "THE DAY · FROM \($0)") } ?? String(localized: "THE DAY"),
@@ -1097,6 +1098,7 @@ struct LocationMapView: View {
         key += "|\(points.count)|\(lastPoint)|\(visits.count)|\(departures.max() ?? 0)|\(names)"
         key += "|\(stayVisits.count)|\(viewModel.mapLocationPoints.count)|\(String(describing: home))"
         key += "|\(Calendar.current.startOfDay(for: now).timeIntervalSinceReferenceDate)"
+        key += "|\(viewModel.mapDayDistances.totalMeters)|\(viewModel.mapDayDistances.days.count)"
         if rangeCache.key == key, let summary = rangeCache.summary { return summary }
         let summary = MultiDayAggregator.summarize(
             visits: visits.map { DayVisitSample(placeKey: day.placeKey(for: $0), arrivedAt: $0.arrivedAt) },
@@ -1107,7 +1109,9 @@ struct LocationMapView: View {
                 points: viewModel.mapLocationPoints.filter { !$0.isOutlier }.map(DayStayPoint.init),
                 home: home,
                 now: now
-            )
+            ),
+            // Each day's distance from every stored fix, as Today counts it, not from the drawn points.
+            distances: viewModel.mapDayDistances
         )
         rangeCache.key = key
         rangeCache.summary = summary
@@ -1888,8 +1892,9 @@ struct LocationMapView: View {
             let distance = DistanceFormatter.format(meters: routeReplaySnapshot.distanceMeters, usesMetric: usesMetricDistanceUnits)
             return String(localized: "\(distance) so far")
         }
+        // The range's distance as Today, the chips and the recap count it, whatever the outlier layer shows.
         let distance = DistanceFormatter.format(
-            meters: RouteReplayCalculator.totalDistance(in: filteredPoints),
+            meters: viewModel.mapDayDistances.totalMeters,
             usesMetric: usesMetricDistanceUnits
         )
         return String(localized: "\(distance) moved")
@@ -4619,6 +4624,18 @@ enum MapDatePreset: CaseIterable, Hashable {
         case .thisMonth: return String(localized: "Month")
         case .thirtyDays: return String(localized: "30D")
         case .all: return String(localized: "All")
+        }
+    }
+
+    /// "map-range-7d" and so on: the range chip's accessibility identifier.
+    var identifierSuffix: String {
+        switch self {
+        case .today: return "today"
+        case .yesterday: return "yesterday"
+        case .sevenDays: return "7d"
+        case .thisMonth: return "month"
+        case .thirtyDays: return "30d"
+        case .all: return "all"
         }
     }
 

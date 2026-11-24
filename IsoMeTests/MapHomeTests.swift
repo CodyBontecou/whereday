@@ -171,7 +171,7 @@ final class MultiDayAggregatorTests: XCTestCase {
         XCTAssertEqual(summary.defaultSelectedDay, calendar.startOfDay(for: date(29, 0)))
     }
 
-    func testDistanceIsSummedPerDayWithoutBridgingNights() {
+    func testDayChipsStartAtMidnightAndTheTotalAddsTheNight() {
         // About 1.11 km per 0.01° of latitude.
         let points = [
             DayPathSample(timestamp: date(27, 9), latitude: 37.70, longitude: -122.4),
@@ -185,8 +185,11 @@ final class MultiDayAggregatorTests: XCTestCase {
         XCTAssertEqual(summary.days.count, 2)
         XCTAssertEqual(summary.days[0].distanceMeters, 1_110, accuracy: 15)
         XCTAssertEqual(summary.days[1].distanceMeters, 2_220, accuracy: 30)
-        // The overnight jump of 10 km is not travel.
-        XCTAssertEqual(summary.totalDistanceMeters, 3_330, accuracy: 45)
+        // Each chip starts fresh at midnight, as Today does; the leg across the night (about 10 km) counts only in
+        // the range total, as in the weekly recap and on Android.
+        XCTAssertEqual(summary.crossingMeters, 9_990, accuracy: 120)
+        XCTAssertEqual(summary.totalDistanceMeters, summary.days.map(\.distanceMeters).reduce(0, +) + summary.crossingMeters,
+                       accuracy: 0.001)
         XCTAssertEqual(summary.longestDayMeters, summary.days[1].distanceMeters)
     }
 

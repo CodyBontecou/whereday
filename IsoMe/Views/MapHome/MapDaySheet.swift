@@ -174,12 +174,14 @@ struct MapRangeCard: View {
                         .minimumScaleFactor(0.8)
                 }
                 .accessibilityElement(children: .combine)
+                .accessibilityIdentifier("map-range-day-summary")
                 Spacer(minLength: 4)
                 Text(totals)
                     .font(WheredayFont.mono(size: 9, weight: .medium, relativeTo: .caption2))
                     .tracking(1.2)
                     .foregroundStyle(TE.textMuted)
                     .multilineTextAlignment(.trailing)
+                    .accessibilityIdentifier("map-range-totals")
                 Button(action: onExpand) {
                     Image(systemName: "chevron.up")
                         .font(.system(size: 13, weight: .semibold))

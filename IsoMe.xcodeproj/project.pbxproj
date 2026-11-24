@@ -15,6 +15,7 @@
 		0B0A00000000000000000106 /* OnboardingFreeWeekViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0A00000000000000000006 /* OnboardingFreeWeekViews.swift */; };
 		0B0A00000000000000000107 /* OnboardingFreeWeekTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0A00000000000000000007 /* OnboardingFreeWeekTests.swift */; };
 		0C0B00000000000000000104 /* RecapReminderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0B00000000000000000004 /* RecapReminderTests.swift */; };
+		0D1D00000000000000000102 /* DayDistanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1D00000000000000000002 /* DayDistanceTests.swift */; };
 		0B0A00000000000000000108 /* StoreKitQASessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0A00000000000000000008 /* StoreKitQASessionTests.swift */; };
 		F8AA00000000000000000001 /* MonthRecapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8AA00000000000000000002 /* MonthRecapTests.swift */; };
         CB1030000000000000000001 /* OnboardingLaunchConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1030000000000000000002 /* OnboardingLaunchConfigurationTests.swift */; };
@@ -65,6 +66,7 @@
 		A1000002212F000100000002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002212F000000000002 /* ContentView.swift */; };
 		A1000003212F000100000003 /* Visit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000003212F000000000003 /* Visit.swift */; };
 		A1000004212F000100000004 /* LocationPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000004212F000000000004 /* LocationPoint.swift */; };
+		0D1D00000000000000000101 /* DayDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1D00000000000000000001 /* DayDistance.swift */; };
 		A1000005212F000100000005 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000005212F000000000005 /* LocationManager.swift */; };
 		B7E10A0100000000000000A2 /* RouteSampling.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E10A0100000000000000A1 /* RouteSampling.swift */; };
 		B7E10A0100000000000000A4 /* RouteSamplerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E10A0100000000000000A3 /* RouteSamplerTests.swift */; };
@@ -311,6 +313,7 @@
 		0B0A00000000000000000006 /* OnboardingFreeWeekViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding/OnboardingFreeWeekViews.swift; sourceTree = "<group>"; };
 		0B0A00000000000000000007 /* OnboardingFreeWeekTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFreeWeekTests.swift; sourceTree = "<group>"; };
 		0C0B00000000000000000004 /* RecapReminderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecapReminderTests.swift; sourceTree = "<group>"; };
+		0D1D00000000000000000002 /* DayDistanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayDistanceTests.swift; sourceTree = "<group>"; };
 		0B0A00000000000000000008 /* StoreKitQASessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitQASessionTests.swift; sourceTree = "<group>"; };
 		F8AA00000000000000000002 /* MonthRecapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthRecapTests.swift; sourceTree = "<group>"; };
         CB1030000000000000000002 /* OnboardingLaunchConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLaunchConfigurationTests.swift; sourceTree = "<group>"; };
@@ -380,6 +383,7 @@
 		BEE50001212F000000000001 /* ReleaseNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseNotes.swift; sourceTree = "<group>"; };
 		A1000003212F000000000003 /* Visit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Visit.swift; sourceTree = "<group>"; };
 		A1000004212F000000000004 /* LocationPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPoint.swift; sourceTree = "<group>"; };
+		0D1D00000000000000000001 /* DayDistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayDistance.swift; sourceTree = "<group>"; };
 		A1000005212F000000000005 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		B7E10A0100000000000000A1 /* RouteSampling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSampling.swift; sourceTree = "<group>"; };
 		B7E10A0100000000000000A3 /* RouteSamplerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RouteSamplerTests.swift; sourceTree = "<group>"; };
@@ -654,6 +658,7 @@
 				C0DE0301212F000000000301 /* CountryStay.swift */,
 				A1000003212F000000000003 /* Visit.swift */,
 				A1000004212F000000000004 /* LocationPoint.swift */,
+				0D1D00000000000000000001 /* DayDistance.swift */,
 				C0DE0001212F000000000001 /* RecordingSession.swift */,
 				C0DE0101212F000000000101 /* PhotoMoment.swift */,
 				A100001A212F00000000001A /* LocationActivityAttributes.swift */,
@@ -852,6 +857,7 @@
 				0B0A00000000000000000004 /* OnboardingPageOneTests.swift */,
 				0B0A00000000000000000007 /* OnboardingFreeWeekTests.swift */,
 				0C0B00000000000000000004 /* RecapReminderTests.swift */,
+				0D1D00000000000000000002 /* DayDistanceTests.swift */,
 				0B0A00000000000000000008 /* StoreKitQASessionTests.swift */,
 				EB20DB41562641EE9CE37203 /* SavedPlaceImportTests.swift */,
 				3F25E12BEE074B0EA5988F1D /* SavedPlaceManagementTests.swift */,
@@ -1180,6 +1186,7 @@
 				BEE50001212F000100000001 /* ReleaseNotes.swift in Sources */,
 				A1000003212F000100000003 /* Visit.swift in Sources */,
 				A1000004212F000100000004 /* LocationPoint.swift in Sources */,
+				0D1D00000000000000000101 /* DayDistance.swift in Sources */,
 				C0DE0001212F000100000001 /* RecordingSession.swift in Sources */,
 				C0DE0101212F000100000101 /* PhotoMoment.swift in Sources */,
 				A1000005212F000100000005 /* LocationManager.swift in Sources */,
@@ -1331,6 +1338,7 @@
 				0B0A00000000000000000104 /* OnboardingPageOneTests.swift in Sources */,
 				0B0A00000000000000000107 /* OnboardingFreeWeekTests.swift in Sources */,
 				0C0B00000000000000000104 /* RecapReminderTests.swift in Sources */,
+				0D1D00000000000000000102 /* DayDistanceTests.swift in Sources */,
 				0B0A00000000000000000108 /* StoreKitQASessionTests.swift in Sources */,
 				A857B5F352054A2C9C6AEA1D /* SavedPlaceImportTests.swift in Sources */,
 				54EC7C2E1B7D4635BF1F1422 /* SavedPlaceManagementTests.swift in Sources */,

@@ -294,17 +294,14 @@ enum RecapAggregation {
                             recordedVisitCount: recorded)
     }
 
-    /// Straight segments between consecutive points, summed within each day and skipping GPS glitches: the
-    /// map's range totals (`MultiDayAggregator`). For one day it is Today's "MOVED".
+    /// The period's distance, as Today and the map count it (`DayDistance`): outliers dropped, each day's own
+    /// path from midnight, plus the legs that cross midnight between the period's days. For a day it is Today's
+    /// "MOVED"; for a week it is the map's 7D total over the same days.
     static func distance(along points: [RecapPoint], calendar: Calendar = .autoupdatingCurrent) -> Double {
-        let kept = points.filter { !$0.isOutlier }
-        guard kept.count > 1, let first = kept.map(\.timestamp).min(), let last = kept.map(\.timestamp).max() else { return 0 }
-        return MultiDayAggregator.summarize(
-            visits: [],
-            points: kept.map { DayPathSample(timestamp: $0.timestamp, latitude: $0.latitude, longitude: $0.longitude) },
-            range: first...last,
+        DayDistance.distances(
+            points.map { DistanceFix(timestamp: $0.timestamp, latitude: $0.latitude, longitude: $0.longitude, isOutlier: $0.isOutlier) },
             calendar: calendar
-        ).totalDistanceMeters
+        ).totalMeters
     }
 
     private static func isNew(_ visit: DayStayVisit, earlierVisits: [DayStayVisit]) -> Bool {
