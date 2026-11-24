@@ -140,6 +140,9 @@ class OnboardingPageOneTest {
     @Test fun everyStepAfterCoverOffersBackAndAccessibleIllustrations() {
         compose.setContent {MaterialTheme {Onboarding({},{}) {}}}
         compose.onNodeWithTag("onboarding-cover-dial").assert(SemanticsMatcher.keyIsDefined(SemanticsProperties.ContentDescription))
+        // The cover's button starts the journal; it no longer promises "Write page one".
+        compose.onNodeWithTag("onboarding-continue").assert(androidx.compose.ui.test.hasText("Start my journal"))
+        compose.onNodeWithText("Write page one",useUnmergedTree=true).assertDoesNotExist()
         for(step in OnboardingStep.entries.drop(1)) {
             compose.walkOnboarding(1);at(step)
             compose.onNodeWithTag("onboarding-back").assertExists()

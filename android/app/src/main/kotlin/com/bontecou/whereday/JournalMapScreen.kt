@@ -89,7 +89,7 @@ internal val LocalTabBarHidden=compositionLocalOf<MutableState<Boolean>?> {null}
     val story=remember(window,firstDay,now.epochSecond/60) {window?.takeIf {!multiDay}?.let {DayStory.build(firstDay,zone,it.visits,it.points,now,it.summary.distanceMeters)}}
     // One per-day scan per selection; Room invalidation (not the live clock tick) refreshes it.
     val totals by remember(selected.copy(visitFocus=null),multiDay) {if(multiDay) graph.history.observeDayTotals({selected.range(Instant.now(),zone)},zone) else flowOf(null)}.collectAsStateWithLifecycle(initialValue=null)
-    val summary=remember(window,totals,multiDay) {if(!multiDay || window==null) null else MapRangeAggregation.summarize(range,zone,now,window.visits,totals?.distances.orEmpty(),totals?.counts.orEmpty())}
+    val summary=remember(window,totals,multiDay) {if(!multiDay || window==null) null else MapRangeAggregation.summarize(range,zone,now,window.visits,totals?.distances.orEmpty(),totals?.counts.orEmpty(),totals?.crossings.orEmpty())}
     val activeDay=selectedDay?.let(LocalDate::parse) ?: summary?.latestActiveDay
     val dayPaths=remember(window,multiDay) {if(multiDay && window!=null) MapRangeAggregation.dayPaths(window.points,zone) else emptyMap()}
     val quickVisit=quickVisitId?.let {id->window?.visits?.firstOrNull {it.id==id}}

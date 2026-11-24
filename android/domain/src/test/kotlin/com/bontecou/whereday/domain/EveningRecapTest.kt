@@ -166,8 +166,11 @@ class EveningRecapTest {
         val week=RecapSchedule.period(RecapFrequency.weekly,at("2026-11-29","21:00"))
         // Fixes every 20 minutes from Monday 23:00, so legs cross midnight; one glitch.
         val route=points(at("2026-11-23","23:00"),12,outlierAt=4)
-        val days=DayDistanceAccumulator(zone).apply {route.forEach(::add)}.distances()
-        assertEquals(days.values.sum(),summary(route,week).distanceMeters,1e-6)
+        val days=DayDistanceAccumulator(zone).apply {route.forEach(::add)}
+        val map=MapRangeAggregation.summarize(week.range,zone,week.until,emptyList(),days.distances(),days.counts(),days.crossings())
+        assertEquals(map.distanceMeters,summary(route,week).distanceMeters,1e-6)
+        // The day chips start fresh at midnight, so they add up to a little less.
+        assertTrue(map.days.sumOf {it.distanceMeters}<map.distanceMeters)
     }
     @Test fun aRecapPeriodsDaysAreItsCivilDays() {
         assertEquals(listOf(LocalDate.of(2026,11,23)),RecapSchedule.period(RecapFrequency.daily,at("2026-11-23","21:00")).days)

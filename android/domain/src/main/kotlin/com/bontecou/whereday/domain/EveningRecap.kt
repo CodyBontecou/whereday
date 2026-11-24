@@ -91,7 +91,8 @@ data class RecapFacts(
     val names:List<String>,
     /** The point summary's path length over the period, the figure Today shows: for a day, Today's distance at the recap
      *  time; for a week, the map's 7-day total, where a leg across midnight counts too (so it can be a little more than the
-     *  sum of seven Today figures, which each start fresh at midnight). */
+     *  sum of seven Today figures, or of the map's seven day chips, which each start fresh at midnight; see
+     *  [MapRangeSummary.crossingMeters]). */
     val distanceMeters:Double,
     /** Distinct countries from Country Days; null when unknown. */
     val countries:Int?=null,
