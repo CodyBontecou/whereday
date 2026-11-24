@@ -1,10 +1,21 @@
 package com.bontecou.whereday
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.NotificationsNone
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.*
+import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.test.platform.app.InstrumentationRegistry
 import com.bontecou.whereday.domain.RecapFacts
@@ -109,5 +120,40 @@ class RemindersScreenTest {
         compose.onNodeWithTag("reminders-blocked").assertDoesNotExist()
         compose.onNodeWithTag("reminders-back").performClick()
         assertEquals(1,backs)
+    }
+    /** The id and the selected state sit on one node, which accessibility clients report as resource-id. */
+    @Test fun selectedTimeChipKeepsItsId() {
+        show()
+        compose.onNode(hasTestTag("reminders-time-21") and isSelected(),useUnmergedTree=true).assertExists()
+        compose.onNodeWithTag("reminders-time-22").performScrollTo().performClick()
+        compose.onNode(hasTestTag("reminders-time-22") and isSelected(),useUnmergedTree=true).assertExists()
+        compose.onNode(hasTestTag("reminders-time-21") and isNotSelected(),useUnmergedTree=true).assertExists()
+    }
+    /** Settings' Reminders row on a Pixel 7 width (411 dp): "Every evening · 9:00 PM" fits on one line at normal text
+     *  and wraps rather than being cut off at large text. */
+    @Test fun settingsRemindersValueIsNeverCutOff() {
+        var fontScale by mutableStateOf(1f)
+        var summary=""
+        compose.setContent {
+            val density=LocalDensity.current
+            CompositionLocalProvider(LocalDensity provides Density(density.density,fontScale)) {MaterialTheme {
+                Box(Modifier.width(411.dp)) {
+                    summary=remindersSummary(RecapSettings(RecapFrequency.daily))
+                    WdNavRow(target.getString(R.string.reminders_title),value=summary,icon=Icons.Outlined.NotificationsNone) {}
+                }
+            }}
+        }
+        fun layout():TextLayoutResult {
+            val results=mutableListOf<TextLayoutResult>()
+            compose.onNodeWithText(summary,useUnmergedTree=true).fetchSemanticsNode().config[SemanticsActions.GetTextLayoutResult].action!!.invoke(results)
+            return results.single()
+        }
+        assertEquals("Every evening · 9:00 PM",summary)
+        layout().let {assertEquals(1,it.lineCount);assertFalse(it.isLineEllipsized(0));assertFalse(it.hasVisualOverflow)}
+        for(scale in listOf(1.3f,1.6f,2f)) {
+            compose.runOnIdle {fontScale=scale};compose.waitForIdle()
+            layout().let {assertFalse("ellipsized at $scale",it.isLineEllipsized(it.lineCount-1));assertFalse("overflow at $scale",it.hasVisualOverflow)}
+            compose.onNodeWithText(target.getString(R.string.reminders_title),useUnmergedTree=true).assertIsDisplayed()
+        }
     }
 }
