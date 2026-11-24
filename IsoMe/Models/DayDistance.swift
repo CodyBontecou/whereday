@@ -6,8 +6,8 @@ struct DistanceFix: Equatable, Sendable {
     var timestamp: Date
     var latitude: Double
     var longitude: Double
-    /// GPS glitches flagged when the fix was saved (`LocationManager`: an implied speed over 40 m/s, or an
-    /// out-and-back spike) or imported as outliers. They never count, as Today's dial and moves drop them.
+    /// GPS glitches flagged after the fix was saved (`LocationManager`: an out-and-back spike; speed alone never
+    /// flags a fix, so a flight counts) or imported as outliers. They never count, as Today's dial and moves drop them.
     var isOutlier = false
 }
 

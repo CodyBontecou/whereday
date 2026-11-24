@@ -49,9 +49,11 @@ The feature-by-feature free/paid labels below are the August 2026 baseline. They
 - Duplicate merging: visits within **100 m** and (arrival ≤15 min apart or gap ≤30 min) are merged (earliest arrival, latest departure, notes concatenated).
 - Startup reconciliation keeps only the newest open visit; stale ones get inferred departures (next arrival or now).
 
-**TRK-3 GPS point capture + outlier detection** — free · iOS
-- Only fixes with `0 ≤ horizontalAccuracy ≤ 100 m` are saved (lat/lon/time/altitude/speed/accuracy/outlier flag).
-- Outlier heuristics: **implied speed > 40 m/s** (teleport) and **out-and-back spike** (prev→last >100 m, last→new >100 m, prev→new <30 m — retroactively flags the middle point).
+**TRK-3 GPS point capture + outlier detection** — free · iOS + Android
+- Two rules only, the same on iOS and Android:
+  - **Accuracy filter:** only fixes with `0 ≤ horizontalAccuracy ≤ 100 m` are saved (lat/lon/time/altitude/speed/accuracy/outlier flag); fixes over ±100 m are dropped.
+  - **Out-and-back spike:** prev→last >100 m, last→new >100 m, prev→new <30 m — retroactively flags the middle point as an outlier.
+- Implied speed never flags a fix, so fast travel such as a flight counts as movement (iOS #170, Android #169). Points flagged by the old 40 m/s rule keep their stored flag.
 
 **TRK-4 Daily distance stats** — free · iOS + shared
 - Every delivered location (even when not tracking) accumulates distance per calendar day; moves <200 m ignored, >100 km treated as glitch; 7-day rolling window (`DailyDistanceTracker`). Feeds widgets/watch/Live Activity. (`isAboveAverage()` is dead code from a removed auto-start feature.)

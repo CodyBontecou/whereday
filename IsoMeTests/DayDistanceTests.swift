@@ -32,8 +32,8 @@ final class DayDistanceTests: XCTestCase {
         DistanceFix(timestamp: at, latitude: place.0, longitude: place.1, isOutlier: outlier)
     }
 
-    /// A day across San Francisco with one long GPS jump to Cupertino and back (two fixes delivered late, so the
-    /// save-time teleport check never flagged them) and one flagged outlier. Given out of time order, as late
+    /// A day across San Francisco with one long GPS jump to Cupertino and back (two fixes delivered late; the jump
+    /// isn't a single out-and-back fix, so the save-time spike check never flagged them) and one flagged outlier. Given out of time order, as late
     /// fixes are stored.
     private func jumpDay(_ day: Int) -> [DistanceFix] {
         [

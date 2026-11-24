@@ -911,8 +911,8 @@ private enum ScreenshotFeatureDemoSeeder {
 
     /// With --seed-gps-jump: one long GPS jump on the seeded day, as real recording at the simulator's Cupertino fix
     /// mixed into the San Francisco seed (#170). Two fixes at Cupertino between lunch and the evening errand arrive
-    /// unflagged, as fixes delivered late do (the save-time teleport check only compares a fix with the one before
-    /// it), so the day goes out and back: about 122 km more. A flagged GPS outlier north of the city must not count.
+    /// unflagged (two fixes there, so the save-time out-and-back spike check doesn't catch them; speed never flags
+    /// a fix), so the day goes out and back: about 122 km more. A flagged GPS outlier north of the city must not count.
     private static func seedGPSJump(in context: ModelContext, at ago: (Double) -> Date) {
         let fixes: [(latitude: Double, longitude: Double, hoursAgo: Double, isOutlier: Bool)] = [
             (37.9000, -122.3000, 4.0, true),

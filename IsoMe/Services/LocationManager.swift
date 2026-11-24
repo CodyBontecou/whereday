@@ -77,7 +77,7 @@ final class LocationManager: NSObject, ObservableObject {
     private var lastGeocodedLocation: CLLocation?
     private var pendingManualLocationRequest = false
 
-    // Sliding window of recently saved points for outlier detection
+    // Sliding window of recently saved points for out-and-back spike detection
     private var pointBeforeLast: LocationPoint?
     private var lastSavedPoint: LocationPoint?
 
@@ -1110,20 +1110,9 @@ final class LocationManager: NSObject, ObservableObject {
         var nextLastSavedPoint = lastSavedPoint
 
         for location in validLocations {
+            // Speed alone never flags a fix: a plane or train is real movement and its distance counts.
+            // Only the out-and-back spike below marks a GPS glitch.
             let point = LocationPoint(from: location)
-
-            // Flag obvious teleports: implied speed from the last saved point exceeds
-            // what a human moves (~40 m/s / ~90 mph). Cheap check, catches end-of-trail spikes.
-            if let last = nextLastSavedPoint {
-                let dt = point.timestamp.timeIntervalSince(last.timestamp)
-                if dt > 0 {
-                    let impliedSpeed = last.distance(to: point) / dt
-                    if impliedSpeed > 40 {
-                        point.isOutlier = true
-                    }
-                }
-            }
-
             context.insert(point)
 
             // Re-evaluate the previously saved point now that we have a point after it.
