@@ -5,8 +5,8 @@
 #   adb -s <serial> emu geo fix -122.4194 37.7749
 # Side effects (QA package only): grants foreground location, notifications and photo access to mapQa;
 # saves one place named "Home" at the simulated fix (default 150 m radius); turns on automatic photo
-# matching; persists the routes intent (and the Every step preset); schedules one local "tonight's page"
-# notification at the next 21:00; marks onboarding complete. No recording is started.
+# matching; persists the routes intent (and the Every step preset); turns on the evening recap (Settings ›
+# Reminders: Every evening at 21:00) and queues its next run; marks onboarding complete. No recording is started.
 # Coordinate exception: the slider drag on the scrub step is a raw gesture-swipe, because a Slider thumb
 # has no selector-based drag; its result is checked by the "Office" card that follows.
 version: 1
@@ -72,9 +72,11 @@ steps:
   - tap: { id: onboarding-continue }
   - await: { visible: { id: onboarding-draft } }
   - await: { idle: true }
-  - echo: The draft names the stamped place, and the nightly page is on now that notifications are allowed.
+  - echo: The draft names the stamped place, the step makes no "page tonight" promise, and the Evening recap
+      switch is on now that notifications are allowed.
   - await: { visible: { text: Home · stamped just now } }
-  - await: { text: { in: { id: onboarding-nightly-toggle }, contains: One notification tonight } }
+  - assert: { visible: { text: Today is page one. } }
+  - await: { text: { in: { id: onboarding-recap-toggle }, contains: Change it in Settings › Reminders. } }
   - tap: { id: onboarding-continue }
   - await: { visible: { id: map-header-title }, timeout: 15000 }
   - await: { idle: true }

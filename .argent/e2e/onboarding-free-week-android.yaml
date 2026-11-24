@@ -6,8 +6,8 @@
 # screen and the post-purchase notification request are the production code; the store is not.
 # Prerequisites: a fresh install of the disposable QA package com.bontecou.whereday.mapqa (never the owner's
 # com.bontecou.whereday) on an English API 33+ pool emulator, notifications not granted.
-# Side effects (QA package only): grants POST_NOTIFICATIONS to mapQa and schedules one local "tonight's page"
-# notification at the next 21:00 through the app's applyNightlyChoice. No journal, Play or settings writes.
+# Side effects (QA package only): grants POST_NOTIFICATIONS to mapQa, sets its Settings › Reminders to Every
+# evening (21:00) and queues the next evening recap through the app's scheduleRecap. No journal or Play writes.
 # No coordinate exceptions.
 version: 1
 requires:
@@ -26,6 +26,8 @@ steps:
   - await: { visible: { id: onboarding-trial-timeline }, timeout: 10000 }
   - await: { idle: true }
   - assert: { text: { in: { id: onboarding-start-trial }, equals: Start my free week } }
+  - assert: { visible: { text: "Recording starts now, on us." } }
+  - assert: { text: { in: { id: onboarding-trial-timeline }, contains: "A short recap of your day: where you went and how far." } }
   - echo: Yearly is preselected. Pick Lifetime; expect "Buy Lifetime · $49.99" as the primary.
   - tap: { id: onboarding-plan-lifetime }
   - await: { text: { in: { id: onboarding-start-trial }, equals: Buy Lifetime · $49.99 } }
@@ -42,16 +44,16 @@ steps:
   - await: { hidden: { id: paywall-sheet } }
   - await: { text: { in: { id: onboarding-trial-disclosure }, contains: $0.99 per week } }
   - echo: Weekly is chosen. Start the free week (fake checkout succeeds after ~0.8 s); expect "You're in"
-      with the nightly toggle off because notifications aren't granted.
+      with the Evening recap switch off because notifications aren't granted.
   - tap: { id: onboarding-start-trial }
   - await: { visible: { id: onboarding-trial-done } }
   - await: { idle: true }
-  - assert: { visible: { text: "You're in. Page one is open." } }
-  - echo: 'Turn on "Send me tonight''s page": the only notification request, made after the purchase. Allow
-      it in the system dialog.'
-  - tap: { id: onboarding-nightly-toggle }
+  - assert: { visible: { text: "You're in." } }
+  - echo: 'Turn on "Evening recap": the only notification request, made after the purchase. Allow it in the
+      system dialog.'
+  - tap: { id: onboarding-recap-toggle }
   - await: { visible: { id: permission_allow_button } }
   - tap: { id: com.android.permissioncontroller:id/permission_allow_button }
   - await: { hidden: { id: permission_allow_button } }
   - tap: { id: onboarding-continue }
-  - await: { text: { in: { id: qa-onboarding-result }, equals: "QA onboarding finished: start=true nightly=true trial=true" } }
+  - await: { text: { in: { id: qa-onboarding-result }, equals: "QA onboarding finished: start=true recap=true trial=true" } }
