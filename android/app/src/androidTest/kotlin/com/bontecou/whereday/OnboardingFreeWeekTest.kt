@@ -64,7 +64,9 @@ class OnboardingFreeWeekTest {
     @Test fun freeWeekPreselectsYearlyThenAVerifiedCheckoutOpensYoureIn() {
         show()
         compose.onNodeWithTag("onboarding-trial-timeline").assert(hasContentDescription("$29.99",substring=true))
-            .assert(hasContentDescription(target.getString(R.string.onboarding_trial_tonight_body),substring=true))
+            .assert(hasContentDescription(target.getString(R.string.onboarding_trial_evening_body),substring=true))
+            .assert(hasContentDescription(target.getString(R.string.onboarding_trial_when_evening,"9:00 PM"),substring=true,ignoreCase=true))
+        compose.onNodeWithText(target.getString(R.string.onboarding_trial_title),useUnmergedTree=true).assertExists()
         compose.onNodeWithTag("onboarding-plan-yearly").assertIsSelected()
         compose.onNodeWithTag("onboarding-plan-weekly").assertIsNotSelected()
         compose.onNodeWithTag("onboarding-trial-disclosure").assert(hasText("$29.99",substring=true))
@@ -77,25 +79,26 @@ class OnboardingFreeWeekTest {
         compose.runOnIdle {checkout=false;billing=billing.copy(access=AccessState.active,notice=BillingNotice.verified,activeProductId="whereday_individual")}
         compose.onNodeWithTag("onboarding-trial-done").assertExists()
         compose.onNodeWithTag("onboarding-back").assertDoesNotExist()
-        compose.onNodeWithTag("onboarding-nightly-toggle").performScrollTo().assertIsOff()
+        compose.onNodeWithTag("onboarding-recap-toggle").performScrollTo().assertIsOff()
+        compose.onNodeWithText(target.getString(R.string.onboarding_done_title),useUnmergedTree=true).assertExists()
         compose.onNodeWithTag("onboarding-continue").performScrollTo().assertTextEquals(target.getString(R.string.onboarding_done_open)).performClick()
         compose.waitUntil {finished.isNotEmpty()}
         val decision=finished.single()
-        assertTrue(decision.trial);assertTrue(decision.start);assertFalse(decision.nightly)
+        assertTrue(decision.trial);assertTrue(decision.start);assertFalse(decision.recap)
     }
-    @Test fun nightlyToggleAsksForNotificationsOnlyAfterThePurchase() {
+    @Test fun recapToggleAsksForNotificationsOnlyAfterThePurchase() {
         show()
-        compose.onNodeWithTag("onboarding-nightly-toggle").assertDoesNotExist()
+        compose.onNodeWithTag("onboarding-recap-toggle").assertDoesNotExist()
         startTrial().performClick()
         compose.runOnIdle {billing=billing.copy(access=AccessState.active)}
         assertEquals(0,notificationRequests)
-        compose.onNodeWithTag("onboarding-nightly-toggle").performScrollTo().assertIsOff().performClick()
+        compose.onNodeWithTag("onboarding-recap-toggle").performScrollTo().assertIsOff().performClick()
         assertEquals(1,notificationRequests)
         compose.runOnIdle {notifications=true}
-        compose.onNodeWithTag("onboarding-nightly-toggle").assertIsOn()
+        compose.onNodeWithTag("onboarding-recap-toggle").assertIsOn()
         compose.onNodeWithTag("onboarding-continue").performScrollTo().performClick()
         compose.waitUntil {finished.isNotEmpty()}
-        assertTrue(finished.single().nightly);assertTrue(finished.single().trial)
+        assertTrue(finished.single().recap);assertTrue(finished.single().trial)
     }
     @Test fun lifetimeChangesTheActionAndTimeline() {
         show()

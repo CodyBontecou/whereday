@@ -5,12 +5,12 @@
     <string name="onboarding_trial_kicker">Your free week</string>
     <string name="onboarding_trial_kicker_trial">Your free trial</string>
     <string name="onboarding_trial_kicker_plan">Your plan</string>
-    <string name="onboarding_trial_title">Page one starts now, on us.</string>
-    <string name="onboarding_trial_title_lifetime">Page one starts now, for good.</string>
-    <string name="onboarding_trial_title_plan">Page one starts now.</string>
+    <string name="onboarding_trial_title">Recording starts now, on us.</string>
+    <string name="onboarding_trial_title_lifetime">Recording starts now, for good.</string>
+    <string name="onboarding_trial_title_plan">Recording starts now.</string>
 
-    <string name="onboarding_trial_when_tonight">Tonight · %1$s</string>
-    <string name="onboarding_trial_when_tomorrow">Tomorrow · %1$s</string>
+    <!-- %1$s: the evening recap time from Settings › Reminders, e.g. "9:00 PM". -->
+    <string name="onboarding_trial_when_evening">Every evening · %1$s</string>
     <string name="onboarding_trial_when_day">Day %1$d · %2$s</string>
     <string name="onboarding_trial_when_renews">Renews · %1$s</string>
     <string name="onboarding_trial_when_for_good">For good</string>
@@ -21,7 +21,7 @@
     </plurals>
     <string name="onboarding_trial_today_recording">Recording starts now.</string>
     <string name="onboarding_trial_today_no_location">Recording starts once you allow location.</string>
-    <string name="onboarding_trial_tonight_body">Page one arrives.</string>
+    <string name="onboarding_trial_evening_body">A short recap of your day: where you went and how far.</string>
     <string name="onboarding_trial_for_good_body">One payment of %1$s. No renewals, no reminders.</string>
     <string name="onboarding_trial_timeline">Timeline. %1$s</string>
     <string name="onboarding_trial_timeline_entry">%1$s: %2$s</string>
@@ -51,7 +51,7 @@
     <string name="onboarding_done_kicker_trial">Free until %1$s</string>
     <string name="onboarding_done_kicker_lifetime">Lifetime · purchased</string>
     <string name="onboarding_done_kicker_plan">%1$s plan · active</string>
-    <string name="onboarding_done_title">You\'re in. Page one is open.</string>
+    <string name="onboarding_done_title">You\'re in.</string>
     <string name="onboarding_done_icon">Done</string>
     <string name="onboarding_done_body">Recording starts now. Go about your day; Whereday writes it down.</string>
     <string name="onboarding_done_body_no_location">Allow location when you\'re ready, and recording starts from the map.</string>

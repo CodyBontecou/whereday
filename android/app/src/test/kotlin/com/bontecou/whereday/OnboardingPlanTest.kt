@@ -2,7 +2,7 @@ package com.bontecou.whereday
 
 import com.bontecou.whereday.data.AppSettings
 import com.bontecou.whereday.export.ExportFormat
-import com.bontecou.whereday.platform.NightlyPageReminder
+import com.bontecou.whereday.platform.EveningRecap
 import com.bontecou.whereday.platform.UsageStep
 import java.time.LocalDate
 import org.junit.Assert.*
@@ -69,8 +69,8 @@ class OnboardingPlanTest {
         assertFalse(OnboardingPlaceName.other.saves);assertTrue(OnboardingPlaceName.home.saves)
         assertNull(OnboardingPlaceName.fromKey(null));assertEquals(OnboardingPlaceName.gym,OnboardingPlaceName.fromKey("gym"))
     }
-    @Test fun nightlyNotificationOpensTheTimelineShortcut() {
-        assertEquals(LauncherAction.timeline.action,NightlyPageReminder.OPEN_ACTION)
-        assertEquals(LauncherAction.timeline,LauncherAction.fromAction(NightlyPageReminder.OPEN_ACTION))
+    @Test fun eveningRecapOpensTheTimelineShortcut() {
+        assertEquals(LauncherAction.timeline.action,EveningRecap.OPEN_ACTION)
+        assertEquals(LauncherAction.timeline,LauncherAction.fromAction(EveningRecap.OPEN_ACTION))
     }
 }

@@ -111,5 +111,7 @@ class PurchaseController(private val context: Context,private val usage:()->Usag
 
     internal fun close() {scope.cancel();refreshes.close();store.close()}
 
+    /** Offline check from the cached grant: never contacts Play or the verifier and never changes [state]. */
+    suspend fun hasAccess(capability:Capability)=withContext(Dispatchers.IO) { session.hasAccess(capability) }
     suspend fun requireAccess(capability:Capability)=withContext(Dispatchers.IO) { session.requireAccessWithRefresh(capability) }
 }

@@ -145,17 +145,17 @@
     <string name="onboarding_sample_body_csv" translatable="false">date,arrival,departure,place\n2026-11-23,08:50,09:45,Corner café\n2026-11-23,10:00,17:30,Office\n2026-11-23,18:00,19:15,Riverside park</string>
     <string name="onboarding_sample_body_json" translatable="false">{\n  \"visits\": [\n    { \"place\": \"Corner café\",\n      \"arrival\": \"2026-11-23T08:50\" }\n  ]\n}</string>
 
-    <string name="onboarding_tonight_kicker">Your first page</string>
-    <string name="onboarding_tonight_title">Page one closes tonight.</string>
+    <string name="onboarding_tonight_kicker">Your first day</string>
+    <string name="onboarding_tonight_title">Today is page one.</string>
     <string name="onboarding_tonight_drafting">Drafting</string>
     <string name="onboarding_tonight_place">%1$s · stamped just now</string>
     <string name="onboarding_tonight_first_place">Your first place</string>
     <string name="onboarding_tonight_fill">Places, distance and photos fill in as you go.</string>
     <string name="onboarding_tonight_draft">Draft of today\'s page, %1$s. %2$s.</string>
-    <string name="onboarding_tonight_toggle">Send me tonight\'s page</string>
-    <string name="onboarding_tonight_toggle_tomorrow">Send me tomorrow\'s page</string>
-    <string name="onboarding_tonight_toggle_detail">One notification tonight at %1$s.</string>
-    <string name="onboarding_tonight_toggle_detail_tomorrow">It\'s late for tonight, so one notification tomorrow at %1$s.</string>
+    <!-- The last step's switch for Settings › Reminders › Day recap (on: Every evening; off: Off). -->
+    <string name="onboarding_recap_toggle">Evening recap</string>
+    <string name="onboarding_recap_detail">Every night at %1$s, starting tonight. Change it in Settings › Reminders.</string>
+    <string name="onboarding_recap_detail_tomorrow">Every night at %1$s, starting tomorrow. Change it in Settings › Reminders.</string>
     <string name="onboarding_tonight_notifications_off">Notifications are off, so nothing will be sent. You can allow them in Settings.</string>
     <string name="onboarding_tonight_start">Start my day</string>
 </resources>

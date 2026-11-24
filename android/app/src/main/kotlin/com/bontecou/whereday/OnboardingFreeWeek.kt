@@ -34,7 +34,6 @@ import androidx.compose.ui.unit.sp
 import com.bontecou.whereday.billing.AccessState
 import com.bontecou.whereday.billing.StorePlan
 import com.bontecou.whereday.billing.StoreProduct
-import com.bontecou.whereday.platform.NightlyPageReminder
 import java.time.LocalDate
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -47,8 +46,17 @@ import java.util.Locale
     return DateTimeFormatter.ofPattern(android.text.format.DateFormat.getBestDateTimePattern(locale,"MMMd"),locale).format(date)
 }
 
-@Composable private fun nightlyTime():String=DateTimeFormatter.ofPattern(if(android.text.format.DateFormat.is24HourFormat(LocalContext.current)) "H:mm" else "h:mm a",uiLocale())
-    .format(NightlyPageReminder.at)
+/** The recap time on the phone's 12/24-hour clock: "9:00 PM", "21:00". */
+@Composable internal fun recapClock(time:java.time.LocalTime):String=DateTimeFormatter.ofPattern(if(android.text.format.DateFormat.is24HourFormat(LocalContext.current)) "H:mm" else "h:mm a",uiLocale())
+    .format(time)
+
+/** The last step's "Evening recap" switch, on the tonight step and on "You're in" (tag `onboarding-recap-toggle`). */
+@Composable internal fun RecapToggleCard(on:Boolean,enabled:Boolean,time:java.time.LocalTime,tomorrow:Boolean,onChange:(Boolean)->Unit) {
+    WdCard(radius=16.dp) {
+        WdToggleRow(stringResource(R.string.onboarding_recap_toggle),on,onChange,Modifier.testTag("onboarding-recap-toggle"),enabled=enabled,divider=false,
+            detail=stringResource(if(tomorrow) R.string.onboarding_recap_detail_tomorrow else R.string.onboarding_recap_detail,recapClock(time)))
+    }
+}
 
 @Composable private fun Kicker(text:String) {
     Text(text.uppercase(uiLocale()),style=WdType.eyebrow.copy(letterSpacing=0.08.em),color=wd.inkRust)
@@ -66,12 +74,11 @@ import java.util.Locale
 }
 
 /** "When" and "what" for each timeline row. */
-@Composable private fun timelineRow(step:TrialStep,product:StoreProduct,today:TrialToday):Pair<String,String> {
-    val time=nightlyTime()
+@Composable private fun timelineRow(step:TrialStep,product:StoreProduct,today:TrialToday,recapTime:java.time.LocalTime):Pair<String,String> {
+    val time=recapClock(recapTime)
     return when(step.kind) {
         TrialStepKind.today->stringResource(R.string.paywall_trial_today) to todayText(today)
-        TrialStepKind.tonight->stringResource(if(step.tomorrow) R.string.onboarding_trial_when_tomorrow else R.string.onboarding_trial_when_tonight,time) to
-            stringResource(R.string.onboarding_trial_tonight_body)
+        TrialStepKind.evening->stringResource(R.string.onboarding_trial_when_evening,time) to stringResource(R.string.onboarding_trial_evening_body)
         TrialStepKind.reminder->stringResource(R.string.onboarding_trial_when_day,step.day!!,trialDate(step.date!!)) to stringResource(R.string.paywall_trial_reminder_body)
         TrialStepKind.begins->stringResource(R.string.onboarding_trial_when_day,step.day!!,trialDate(step.date!!)) to
             stringResource(if(product.plan==StorePlan.yearly) R.string.paywall_trial_begins_yearly else R.string.paywall_trial_begins_weekly,product.formattedPrice)
@@ -90,7 +97,7 @@ import java.util.Locale
 
 // MARK: The free-week step
 
-@Composable internal fun FreeWeekStep(offer:OnboardingOffer,selected:StorePlan?,onSelect:(StorePlan)->Unit,now:ZonedDateTime,today:TrialToday,enabled:Boolean) {
+@Composable internal fun FreeWeekStep(offer:OnboardingOffer,selected:StorePlan?,onSelect:(StorePlan)->Unit,now:ZonedDateTime,recapTime:java.time.LocalTime,today:TrialToday,enabled:Boolean) {
     val state=offer.state
     val product=selected?.let {state.product(it)}
     val cta=product?.let {OnboardingCta.of(it)}
@@ -114,7 +121,7 @@ import java.util.Locale
                 }
             }
         } else {
-            TrialTimeline(OnboardingTrialTimeline.steps(product,now),product,today)
+            TrialTimeline(OnboardingTrialTimeline.steps(product,now),product,today,recapTime)
             QuickPlans(state.products,selected,enabled,onSelect)
         }
         when {
@@ -126,8 +133,8 @@ import java.util.Locale
     }
 }
 
-@Composable private fun TrialTimeline(steps:List<TrialStep>,product:StoreProduct,today:TrialToday) {
-    val rows=steps.map {timelineRow(it,product,today)}
+@Composable private fun TrialTimeline(steps:List<TrialStep>,product:StoreProduct,today:TrialToday,recapTime:java.time.LocalTime) {
+    val rows=steps.map {timelineRow(it,product,today,recapTime)}
     val context=LocalContext.current
     val summary=stringResource(R.string.onboarding_trial_timeline,rows.joinToString(" ") {(time,text)->context.getString(R.string.onboarding_trial_timeline_entry,time,text)})
     val shape=RoundedCornerShape(16.dp)
@@ -241,8 +248,8 @@ import java.util.Locale
 
 // MARK: You're in
 
-@Composable internal fun TrialDoneStep(plan:StoreProduct?,today:LocalDate,canStart:Boolean,nightly:Boolean,nightlyEnabled:Boolean,notificationsAllowed:Boolean,
-    tomorrow:Boolean,onNightlyChange:(Boolean)->Unit) {
+@Composable internal fun TrialDoneStep(plan:StoreProduct?,today:LocalDate,canStart:Boolean,recap:Boolean,recapEnabled:Boolean,notificationsAllowed:Boolean,
+    time:java.time.LocalTime,tomorrow:Boolean,onRecapChange:(Boolean)->Unit) {
     val ends=plan?.let {OnboardingTrialTimeline.trialEnds(it,today)}
     Column(verticalArrangement=Arrangement.spacedBy(18.dp)) {
         val done=stringResource(R.string.onboarding_done_icon)
@@ -260,14 +267,9 @@ import java.util.Locale
             Text(stringResource(R.string.onboarding_done_title),Modifier.semantics {heading()},style=WdType.largeTitle.copy(fontWeight=FontWeight.Normal,lineHeight=38.sp),color=wd.textPrimary)
         }
         Text(stringResource(if(canStart) R.string.onboarding_done_body else R.string.onboarding_done_body_no_location),style=MaterialTheme.typography.bodyLarge,color=wd.textMuted)
-        val time=nightlyTime()
-        WdCard(radius=16.dp) {
-            WdToggleRow(stringResource(if(tomorrow) R.string.onboarding_tonight_toggle_tomorrow else R.string.onboarding_tonight_toggle),nightly,onNightlyChange,
-                Modifier.testTag("onboarding-nightly-toggle"),enabled=nightlyEnabled,divider=false,
-                detail=stringResource(if(tomorrow) R.string.onboarding_tonight_toggle_detail_tomorrow else R.string.onboarding_tonight_toggle_detail,time))
-        }
+        RecapToggleCard(recap,recapEnabled,time,tomorrow,onRecapChange)
         when {
-            !nightlyEnabled->Text(stringResource(R.string.onboarding_tonight_notifications_off),style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)
+            !recapEnabled->Text(stringResource(R.string.onboarding_tonight_notifications_off),style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)
             !notificationsAllowed->Text(stringResource(R.string.onboarding_done_notifications_ask),style=MaterialTheme.typography.bodyMedium,color=wd.textMuted)
         }
     }

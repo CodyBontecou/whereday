@@ -120,17 +120,22 @@ class OnboardingPageOneTest {
         compose.onNodeWithTag("onboarding-format-csv").assertIsSelected() // An explicit chip survives.
         next();assertEquals(listOf(ExportFormat.markdown),formats)
     }
-    @Test fun nightlyNeedsNotificationsAndIsPartOfTheDecision() {
+    @Test fun eveningRecapNeedsNotificationsAndIsPartOfTheDecision() {
         val decisions=mutableListOf<OnboardingDecision>()
         var access by androidx.compose.runtime.mutableStateOf(RecordingAccessState(LocationPrecision.precise,false))
         compose.setContent {MaterialTheme {Onboarding({},{},authorization=UsageAuthorization.foreground,access=access) {decisions+=it}}}
         compose.walkOnboarding();at(OnboardingStep.tonight)
-        compose.onNodeWithTag("onboarding-nightly-toggle").performScrollTo().assertIsOff().assertIsNotEnabled()
+        compose.onNodeWithTag("onboarding-recap-toggle").performScrollTo().assertIsOff().assertIsNotEnabled()
         compose.runOnIdle {access=RecordingAccessState(LocationPrecision.precise,true)}
-        compose.onNodeWithTag("onboarding-nightly-toggle").performScrollTo().assertIsOn().assertIsEnabled()
+        compose.onNodeWithTag("onboarding-recap-toggle").performScrollTo().assertIsOn().assertIsEnabled()
+            .assert(hasText(target.getString(R.string.onboarding_recap_toggle),substring=true))
+        // No "page one closes tonight" promise remains on this step.
+        compose.onNodeWithText(target.getString(R.string.onboarding_tonight_title),useUnmergedTree=true).assertExists()
+        compose.onNodeWithText("Page one closes tonight",substring=true,useUnmergedTree=true).assertDoesNotExist()
         compose.onNodeWithText(target.getString(R.string.onboarding_tonight_first_place),useUnmergedTree=true).assertExists()
         next();compose.waitUntil {decisions.isNotEmpty()}
-        assertTrue(decisions.single().nightly);assertFalse(decisions.single().start)
+        assertTrue(decisions.single().recap);assertFalse(decisions.single().start)
+        assertEquals(com.bontecou.whereday.domain.RecapFrequency.daily,OnboardingRecap.frequency(decisions.single()))
     }
     @Test fun everyStepAfterCoverOffersBackAndAccessibleIllustrations() {
         compose.setContent {MaterialTheme {Onboarding({},{}) {}}}

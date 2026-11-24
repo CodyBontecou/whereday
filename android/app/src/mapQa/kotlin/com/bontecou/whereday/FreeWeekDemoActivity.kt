@@ -24,8 +24,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 /** QA-only (mapQa): onboarding's last step with a FAKE configured billing, so the free-week path can be driven on an emulator
- *  without Google Play, the purchase verifier or a real purchase. Nothing here touches the journal, Play or the app's settings;
- *  only the nightly page choice is applied, through the same function the app uses.
+ *  without Google Play, the purchase verifier or a real purchase. Nothing here touches the journal or Play; only the Evening
+ *  recap choice is applied to this QA package's Settings › Reminders and scheduled, through the same function the app uses.
  *  `adb shell am start -n com.bontecou.whereday.mapqa/com.bontecou.whereday.FreeWeekDemoActivity`
  *  Extras: `trial` (boolean, default true: Play offers the free week), `catalog` (`ok` or `fail`: the first product query fails),
  *  `outcome` (`success`, `cancel` or `pending`), `intents` (comma-separated keys, default `days`), `location` (boolean, default true). */
@@ -57,8 +57,10 @@ class FreeWeekDemoActivity:androidx.activity.ComponentActivity() {
                     authorization=if(location) UsageAuthorization.foreground else UsageAuthorization.unknown,
                     access=RecordingAccessState(if(location) LocationPrecision.precise else LocationPrecision.none,notifications),
                     initialIntents=intents,offer=OnboardingOffer(purchase,checkout,billing::buy,billing::restore,billing::load),initialStep=OnboardingStep.tonight) {decision->
-                    applyNightlyChoice(this@FreeWeekDemoActivity,decision)
-                    result="QA onboarding finished: start=${decision.start} nightly=${decision.nightly} trial=${decision.trial}"
+                    val preferences=com.bontecou.whereday.platform.AppGraph.from(this@FreeWeekDemoActivity).preferences
+                    preferences.update {it.copy(recapFrequency=OnboardingRecap.frequency(decision).key)}
+                    scheduleRecap(this@FreeWeekDemoActivity,preferences)
+                    result="QA onboarding finished: start=${decision.start} recap=${decision.recap} trial=${decision.trial}"
                 }
             }
         }

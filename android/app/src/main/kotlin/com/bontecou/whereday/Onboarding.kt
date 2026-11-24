@@ -44,8 +44,8 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 
 internal data class OnboardingDecision(val start:Boolean,val authorization:UsageAuthorization,val permit:UsageActionPermit?,
-    /** "Send me tonight's page", already limited to installs that may post notifications. */
-    val nightly:Boolean=false,
+    /** The "Evening recap" switch, already limited to installs that may post notifications: on is Every evening, off is Off. */
+    val recap:Boolean=false,
     /** Finished from "You're in" after a verified free-week (or plan) checkout, not from the tonight step. */
     val trial:Boolean=false)
 
@@ -76,6 +76,8 @@ internal class OnboardingServices(
     initialIntents:Set<OnboardingIntent> = OnboardingIntent.DEFAULT,notificationRequestAvailable:Boolean=android.os.Build.VERSION.SDK_INT>=33,
     /** What the last step can sell; null or unconfigured billing keeps the tonight step. */
     offer:OnboardingOffer?=null,initialStep:OnboardingStep=OnboardingStep.cover,
+    /** The recap time from Settings › Reminders, shown on the last step (9 PM unless changed). */
+    recapTime:java.time.LocalTime=com.bontecou.whereday.domain.RecapSettings().time,
     complete:suspend (OnboardingDecision)->Unit) {
     var page by rememberSaveable { mutableIntStateOf(initialStep.ordinal) }
     val step=OnboardingStep.at(page)
@@ -100,7 +102,7 @@ internal class OnboardingServices(
     var savedLongitude by rememberSaveable {mutableStateOf<Double?>(null)}
     var formatKey by rememberSaveable {mutableStateOf<String?>(null)}
     val format=OnboardingFormat.entries.firstOrNull {it.key==formatKey} ?: OnboardingFormat.preferred(intents)
-    var nightly by rememberSaveable {mutableStateOf(true)}
+    var recap by rememberSaveable {mutableStateOf(true)}
     var photoDenied by rememberSaveable {mutableStateOf(false)}
     var photoError by remember {mutableStateOf(false)}
     var locationRequested by rememberSaveable {mutableStateOf(false)}
@@ -225,15 +227,15 @@ internal class OnboardingServices(
                     OnboardingStep.export->ExportStep(format) {formatKey=it.key}
                     OnboardingStep.tonight->if(finale==OnboardingFinale.freeWeek) {
                         val stampedName=savedName ?: placeName?.takeIf {it.saves && fix!=null}?.let {stringResource(it.label)}
-                        FreeWeekStep(offer!!,chosenPlan,{planKey=it.name},now,
+                        FreeWeekStep(offer!!,chosenPlan,{planKey=it.name},now,recapTime,
                             TrialToday.of(stampedName,if(photoEnabled) OnboardingHeatmap.foundDays(photoCounts,today) else 0,recording=canStart),enabled=!busy && !offer.checkout)
                         if(plansOpen) AllPlansSheet(offer,chosenPlan,intents,today,enabled=!busy && !offer.checkout,busy=offer.checkout || offer.state.busy,
                             onSelect={planKey=it.name},onBuy={chosenPlan?.let {plan->checkedOut=true;boughtKey=plan.name;offer.buy(plan)}},dismiss={plansOpen=false})
                     } else if(finale==OnboardingFinale.done) {
-                        TrialDoneStep(boughtProduct,today,canStart,nightly=nightly && notificationsAllowed,nightlyEnabled=(notificationsAllowed || notificationRequestAvailable) && !busy,
-                            notificationsAllowed=notificationsAllowed,tomorrow=com.bontecou.whereday.platform.NightlyPageReminder.tomorrow(now)) {on->
-                            // The only notification request for tonight's page, and only after the purchase.
-                            nightly=on;if(on && !notificationsAllowed) requestNotifications()
+                        TrialDoneStep(boughtProduct,today,canStart,recap=recap && notificationsAllowed,recapEnabled=(notificationsAllowed || notificationRequestAvailable) && !busy,
+                            notificationsAllowed=notificationsAllowed,time=recapTime,tomorrow=OnboardingRecap.startsTomorrow(recapTime,now)) {on->
+                            // The only notification request for the evening recap, and only after the purchase.
+                            recap=on;if(on && !notificationsAllowed) requestNotifications()
                         }
                     } else {
                         TonightStep(today,savedName ?: placeName?.takeIf {it.saves && fix!=null}?.let {stringResource(it.label)},stamped=fix!=null,
@@ -243,8 +245,8 @@ internal class OnboardingServices(
                                 analytics?.track {UsageEvent(UsageEventName.trackingIntentChanged,step=UsageStep.ready,authorization=authorization,
                                     tracking=if(value) UsageTrackingIntent.startImmediately else UsageTrackingIntent.later)}
                             },
-                            nightly=nightly && notificationsAllowed,nightlyAvailable=notificationsAllowed,tomorrow=com.bontecou.whereday.platform.NightlyPageReminder.tomorrow(now),
-                            onNightlyChange={nightly=it})
+                            recap=recap && notificationsAllowed,recapAvailable=notificationsAllowed,time=recapTime,tomorrow=OnboardingRecap.startsTomorrow(recapTime,now),
+                            onRecapChange={recap=it})
                         access?.let {RecordingAccessNotice(it,onAccessOptions,location=true,notifications=false,contentPadding=PaddingValues(0.dp))}
                     }
                 }
@@ -261,7 +263,7 @@ internal class OnboardingServices(
             val chosenLabel=placeName?.let {stringResource(it.label)}
             fun next() {page=(page+1).coerceAtMost(OnboardingStep.entries.lastIndex);failure=null}
             val finish:()->Unit=finish@{
-                val decision=OnboardingFinish.decide(finale,startImmediately,canStart,nightly,notificationsAllowed,authorization,analytics?.capture()) ?: return@finish
+                val decision=OnboardingFinish.decide(finale,startImmediately,canStart,recap,notificationsAllowed,authorization,analytics?.capture()) ?: return@finish
                 busy=true;failure=null
                 scope.launch {
                     try {complete(decision)}

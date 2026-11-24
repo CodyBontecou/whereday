@@ -26,6 +26,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.activity.compose.LocalActivity
 import com.bontecou.whereday.data.*
 import com.bontecou.whereday.platform.*
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -90,7 +91,7 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
             // The last step sells the free week through the same PurchaseController as every paywall; unconfigured billing keeps the tonight step.
             val offer=OnboardingOffer(purchase,checkout,{buy(it,UsagePaywall.onboarding)},{graph.purchases.restore(UsagePaywall.onboarding)},graph.purchases::refresh)
             JournalWorkspaceFrame(false,primary={Onboarding(onRequestLocation,onRequestNotifications,graph.usageAnalytics,onboardingAuthorization,access,onAccessOptions,
-                current.onboardingPreset,{preset->graph.settingsActions.update {it.applying(preset)}},services,OnboardingIntent.decode(current.onboardingIntents),offer=offer) {decision->
+                current.onboardingPreset,{preset->graph.settingsActions.update {it.applying(preset)}},services,OnboardingIntent.decode(current.onboardingIntents),offer=offer,recapTime=current.recap.time) {decision->
                 val start=decision.start
                 val permit=decision.permit
                 val authorization=decision.authorization
@@ -98,8 +99,9 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
                 if(deferred) startAfterAccess=true
                 completeOnboarding(start && !deferred,onOnboardingStart,{
                     // Finishing through the free week already chose a plan, so the separate post-onboarding paywall never shows for this install.
-                    graph.preferences.update {latest->latest.copy(onboarded=true,accessGateCleared=latest.accessGateCleared || decision.trial)}
-                    applyNightlyChoice(onboardingContext,decision)
+                    graph.preferences.update {latest->latest.copy(onboarded=true,accessGateCleared=latest.accessGateCleared || decision.trial,
+                        recapFrequency=OnboardingRecap.frequency(decision).key)}
+                    scheduleRecap(onboardingContext,graph.preferences)
                 }) {
                     graph.usageAnalytics.track(permit) {UsageEvent(UsageEventName.onboardingCompleted,step=UsageStep.ready,authorization=authorization,
                         tracking=if(start) UsageTrackingIntent.startImmediately else if(authorization in setOf(UsageAuthorization.foreground,UsageAuthorization.always)) UsageTrackingIntent.later else UsageTrackingIntent.unavailable)}
@@ -253,9 +255,10 @@ internal fun WheredayApp(graph: AppGraph, journal: JournalViewModel, onRecord: (
 
 }
 
-/** One local notification at 9 PM, or none; a failure to schedule never blocks finishing setup. */
-internal fun applyNightlyChoice(context:android.content.Context,decision:OnboardingDecision) {
-    try {if(decision.nightly) NightlyPageReminder.schedule(context) else NightlyPageReminder.cancel(context)} catch(_:Exception) {}
+/** Schedules (or cancels) the evening recap from Settings › Reminders; a failure to schedule never blocks finishing setup. */
+internal suspend fun scheduleRecap(context:android.content.Context,preferences:AppPreferences) {
+    try {EveningRecap.schedule(context,preferences.settings.first().recap)}
+    catch(error:kotlinx.coroutines.CancellationException) {throw error} catch(_:Exception) {}
 }
 
 /** True inside the navigation-rail layout, where Today's "Log a stop" lives on the rail instead of a floating button. */

@@ -4,7 +4,9 @@ import com.bontecou.whereday.billing.AccessState
 import com.bontecou.whereday.billing.BillingState
 import com.bontecou.whereday.billing.StorePlan
 import com.bontecou.whereday.billing.StoreProduct
-import com.bontecou.whereday.platform.NightlyPageReminder
+import com.bontecou.whereday.domain.RecapFrequency
+import com.bontecou.whereday.domain.RecapSchedule
+import com.bontecou.whereday.domain.RecapSettings
 import com.bontecou.whereday.platform.UsageActionPermit
 import com.bontecou.whereday.platform.UsageAuthorization
 import java.time.LocalDate
@@ -16,7 +18,7 @@ internal class OnboardingOffer(val state:BillingState,val checkout:Boolean=false
 
 /** Which form the tenth step takes. */
 internal enum class OnboardingFinale {
-    /** PR #166's "Page one closes tonight": billing is unconfigured, or this person already has access. */
+    /** PR #166's last step: billing is unconfigured, or this person already has access. */
     tonight,
     /** "Start my free week": billing is configured and there is no access yet. */
     freeWeek,
@@ -78,8 +80,8 @@ internal data class TrialToday(val place:String?,val photoDays:Int?,val recordin
 
 internal enum class TrialStepKind {
     today,
-    /** Tonight's page at 9 PM, or tomorrow's from 20:30 on ([TrialStep.tomorrow]). */
-    tonight,
+    /** Every evening at the recap time: a short recap of the day. */
+    evening,
     /** Play's trial reminder, two days before the trial ends. */
     reminder,
     /** The plan's first charge when the trial ends. */
@@ -90,13 +92,13 @@ internal enum class TrialStepKind {
     forGood,
 }
 
-internal data class TrialStep(val kind:TrialStepKind,val date:LocalDate?=null,val day:Int?=null,val tomorrow:Boolean=false)
+internal data class TrialStep(val kind:TrialStepKind,val date:LocalDate?=null,val day:Int?=null)
 
 /** The personalised timeline on the free-week step, with real dates from today and the plan Play offers. */
 internal object OnboardingTrialTimeline {
     fun steps(product:StoreProduct,now:ZonedDateTime):List<TrialStep> {
         val today=now.toLocalDate()
-        val tonight=TrialStep(TrialStepKind.tonight,NightlyPageReminder.nextFire(now).toLocalDate(),tomorrow=NightlyPageReminder.tomorrow(now))
+        val tonight=TrialStep(TrialStepKind.evening)
         val days=product.freeTrialDays
         return when {
             product.plan==StorePlan.lifetime->listOf(TrialStep(TrialStepKind.today,today),tonight,TrialStep(TrialStepKind.forGood))
@@ -114,12 +116,20 @@ internal object OnboardingTrialTimeline {
 
 /** How the tenth step finishes. Returns null where the step cannot finish: the free-week step completes only through a verified purchase. */
 internal object OnboardingFinish {
-    fun decide(finale:OnboardingFinale,startImmediately:Boolean,canStart:Boolean,nightly:Boolean,notificationsAllowed:Boolean,
+    fun decide(finale:OnboardingFinale,startImmediately:Boolean,canStart:Boolean,recap:Boolean,notificationsAllowed:Boolean,
         authorization:UsageAuthorization,permit:UsageActionPermit?):OnboardingDecision?=when(finale) {
-        // PR #166 unchanged: recording only on an explicit choice; tonight's page only where notifications may post.
-        OnboardingFinale.tonight->OnboardingDecision(startImmediately && canStart,authorization,permit,nightly=nightly && notificationsAllowed)
+        // PR #166 unchanged: recording only on an explicit choice; the evening recap only where notifications may post.
+        OnboardingFinale.tonight->OnboardingDecision(startImmediately && canStart,authorization,permit,recap=recap && notificationsAllowed)
         OnboardingFinale.freeWeek->null
-        // The trial is the choice to record: it starts now wherever location allows. The 9 PM page is scheduled only here.
-        OnboardingFinale.done->OnboardingDecision(canStart,authorization,permit,nightly=nightly && notificationsAllowed,trial=true)
+        // The trial is the choice to record: it starts now wherever location allows. Recaps are turned on only here.
+        OnboardingFinale.done->OnboardingDecision(canStart,authorization,permit,recap=recap && notificationsAllowed,trial=true)
     }
+}
+
+/** The last step's "Evening recap" switch, which sets Settings › Reminders › Day recap. */
+internal object OnboardingRecap {
+    /** On is Every evening, off is Off. */
+    fun frequency(decision:OnboardingDecision)=RecapFrequency.fromToggle(decision.recap)
+    /** "starting tomorrow" once tonight's recap time has passed. */
+    fun startsTomorrow(time:java.time.LocalTime,now:ZonedDateTime)=!RecapSchedule.today(RecapSettings(RecapFrequency.daily,time.hour*60+time.minute),now)
 }
