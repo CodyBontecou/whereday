@@ -1,6 +1,6 @@
 # Legacy cohort: an install that existed before paid tracking never pays in onboarding. With the
 # real StoreKit path on (--use-storekit, so no Debug development unlock), the last step is the
-# old "Page one closes tonight" page with "Start my day", not the free week, and finishing lands
+# Start my day step ("Recording starts now.", Evening recap toggle), not the free week, and finishing lands
 # on the map without the required paywall.
 #
 # Prerequisites: an iOS pool simulator (iPhone 18 Pro, portrait, default text size, English)
@@ -11,9 +11,9 @@
 # uninstall and reinstall the Debug build (xcrun simctl uninstall/install) before the run.
 # Location need not be granted.
 # Side effects: marks the install as the legacy cohort, sets hasCompletedOnboarding; no
-# purchase, no notification requested (toggle off), tracking does not start without location.
+# purchase, no notification requested (toggle off sets the recap to Off), tracking does not start without location.
 #
-# Coordinate exceptions: the nightly toggle (onboarding-nightly-toggle) and Start my day
+# Coordinate exceptions: the Evening recap toggle (onboarding-recap-toggle) and Start my day
 # (onboarding-next) carry ids, but Argent's iOS runner tree exposes only anonymous
 # AXScrollArea/AXButton nodes there, so the taps keep their recorded points (402x874 pt
 # iPhone 18 Pro); the toggle tap lands on the switch track at the row's trailing edge. Each
@@ -46,7 +46,7 @@ steps:
         identifier: onboarding-step-9
       timeoutMs: 20000
   - await: { idle: true }
-  - echo: "Last step for a legacy install: Start my day and the tonight page, no plan
+  - echo: "Last step for a legacy install: Start my day and Recording starts now, no plan
       chooser."
   - tool: await-ui-element
     args:
@@ -59,8 +59,8 @@ steps:
     args:
       condition: visible
       selector:
-        text: Page one closes
-  - echo: "Turn off Send me tonight's page at (0.85, 0.673) so no notification alert
+        text: Recording starts
+  - echo: "Turn off Evening recap at (0.85, 0.673) so no notification alert
       appears, then tap Start my day at (0.5, 0.912); expect the map, not a paywall."
   - tool: gesture-tap
     args: { x: 0.85, y: 0.673 }
@@ -68,7 +68,7 @@ steps:
     args:
       condition: exists
       selector:
-        identifier: onboarding-nightly-toggle
+        identifier: onboarding-recap-toggle
   - tool: gesture-tap
     args: { x: 0.5, y: 0.912 }
   - tool: await-ui-element
@@ -82,4 +82,4 @@ steps:
     args:
       condition: hidden
       selector:
-        text: Page one closes
+        text: Recording starts
