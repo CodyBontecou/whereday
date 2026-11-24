@@ -171,7 +171,7 @@ final class MultiDayAggregatorTests: XCTestCase {
         XCTAssertEqual(summary.defaultSelectedDay, calendar.startOfDay(for: date(29, 0)))
     }
 
-    func testDistanceIsSummedPerDayWithoutBridgingNights() {
+    func testDayChipsStartAtMidnightAndTheTotalAddsTheNight() {
         // About 1.11 km per 0.01° of latitude.
         let points = [
             DayPathSample(timestamp: date(27, 9), latitude: 37.70, longitude: -122.4),
@@ -185,8 +185,11 @@ final class MultiDayAggregatorTests: XCTestCase {
         XCTAssertEqual(summary.days.count, 2)
         XCTAssertEqual(summary.days[0].distanceMeters, 1_110, accuracy: 15)
         XCTAssertEqual(summary.days[1].distanceMeters, 2_220, accuracy: 30)
-        // The overnight jump of 10 km is not travel.
-        XCTAssertEqual(summary.totalDistanceMeters, 3_330, accuracy: 45)
+        // Each chip starts fresh at midnight, as Today does; the leg across the night (about 10 km) counts only in
+        // the range total, as in the weekly recap and on Android.
+        XCTAssertEqual(summary.crossingMeters, 9_990, accuracy: 120)
+        XCTAssertEqual(summary.totalDistanceMeters, summary.days.map(\.distanceMeters).reduce(0, +) + summary.crossingMeters,
+                       accuracy: 0.001)
         XCTAssertEqual(summary.longestDayMeters, summary.days[1].distanceMeters)
     }
 
@@ -217,6 +220,118 @@ final class MultiDayAggregatorTests: XCTestCase {
         XCTAssertEqual(thinned.last, 999)
         XCTAssertEqual(MultiDayAggregator.thinned([1, 2, 3], limit: 10), [1, 2, 3])
     }
+
+    // MARK: Places per day, as Today counts them
+
+    private let homeSpot = (37.3349, -122.0090)
+    private let northBeach = (37.8060, -122.4100)
+    private let office = (37.3500, -122.0090)
+    private let tartine = (37.7614, -122.4241)
+
+    private var savedHome: SavedPlace {
+        SavedPlace(name: "Home", latitude: homeSpot.0, longitude: homeSpot.1, radiusMeters: 150, kind: .home)
+    }
+
+    private func visit(_ name: String, _ place: (Double, Double), from arrived: Date, to departed: Date?) -> Visit {
+        Visit(latitude: place.0, longitude: place.1, arrivedAt: arrived, departedAt: departed,
+              locationName: name, geocodingCompleted: true)
+    }
+
+    /// Points every 10 minutes, standing at one place.
+    private func points(at place: (Double, Double), from start: Date, to end: Date) -> [LocationPoint] {
+        stride(from: start.timeIntervalSinceReferenceDate, through: end.timeIntervalSinceReferenceDate, by: 600).map {
+            LocationPoint(latitude: place.0, longitude: place.1, timestamp: Date(timeIntervalSinceReferenceDate: $0),
+                          horizontalAccuracy: 5)
+        }
+    }
+
+    /// The map's range summary for the models, through the same conversion `LocationMapView.rangeSummary` uses.
+    @MainActor
+    private func rangeSummary(visits: [Visit], points: [LocationPoint], home: SavedPlace?,
+                              range: ClosedRange<Date>, now: Date) -> RangeSummary {
+        MultiDayAggregator.summarize(
+            visits: visits.map { DayVisitSample(placeKey: PlaceInkOrder.placeName(for: $0, home: home), arrivedAt: $0.arrivedAt) },
+            points: points.map { DayPathSample(timestamp: $0.timestamp, latitude: $0.latitude, longitude: $0.longitude) },
+            range: range.lowerBound...min(range.upperBound, now),
+            stays: DayStayInput(visits: visits.enumerated().map { DayStayVisit($1, index: $0) },
+                                points: points.filter { !$0.isOutlier }.map(DayStayPoint.init),
+                                home: home.map(DayStayHome.init), now: now),
+            calendar: calendar)
+    }
+
+    /// Today's "N PLACES" for `day` (`TodayDay(viewModel:now:)`), or the day sheet's for a finished day
+    /// (`TodayDay(pastDay:)`), from the same models.
+    @MainActor
+    private func todayPlaceCount(_ day: Date, visits: [Visit], points: [LocationPoint], home: SavedPlace?, now: Date) -> Int {
+        let start = calendar.startOfDay(for: day)
+        let midnight = calendar.date(byAdding: .day, value: 1, to: start)!
+        let isToday = now < midnight
+        let end = isToday ? now : midnight
+        let shown = visits.filter { $0.arrivedAt <= end && ($0.departedAt ?? end) >= start }.sorted { $0.arrivedAt < $1.arrivedAt }
+        let dayPoints = points.filter { !$0.isOutlier && $0.timestamp >= start && $0.timestamp < midnight }
+        let dayEnd = isToday ? now : DayStayPlanner.pastDayEnd(visits: shown.map { DayStayVisit($0) },
+                                                               points: dayPoints.map(DayStayPoint.init), endOfDay: midnight)
+        return TodayDay(visits: shown, points: dayPoints, startOfDay: start, now: dayEnd, home: home,
+                        isCurrentVisit: { $0.departedAt == nil }).placeCount
+    }
+
+    @MainActor
+    func testAnOvernightStayCountsOnTheFollowingDay() {
+        // A night at a friend's in North Beach from 8 PM, then the office and lunch the next day.
+        let visits = [
+            visit("North Beach", northBeach, from: date(27, 20), to: date(28, 7, 30)),
+            visit("Office", office, from: date(28, 9), to: date(28, 12)),
+            visit("Tartine", tartine, from: date(28, 12, 30), to: date(28, 13, 30))
+        ]
+        let now = date(28, 18)
+        let summary = rangeSummary(visits: visits, points: [], home: nil, range: date(27, 0)...date(28, 23, 59), now: now)
+
+        XCTAssertEqual(summary.days.map(\.placeCount), [1, 3])
+        XCTAssertEqual(summary.days[1].placeCount, todayPlaceCount(date(28, 0), visits: visits, points: [], home: nil, now: now))
+        // The night counts on both days it covers; arrivals (VISITS) still count once.
+        XCTAssertEqual(summary.placeDayCounts["North Beach"], 2)
+        XCTAssertEqual(summary.days.map(\.visitCount), [1, 2])
+
+        // Without Today's stays, the old per-arrival count missed the night on the 28th.
+        let byArrival = MultiDayAggregator.summarize(
+            visits: visits.map { DayVisitSample(placeKey: $0.displayName, arrivedAt: $0.arrivedAt) },
+            points: [], range: date(27, 0)...now, calendar: calendar)
+        XCTAssertEqual(byArrival.days.map(\.placeCount), [1, 2])
+    }
+
+    @MainActor
+    func testSevenDayCountsEqualTodaysCountForEveryDay() {
+        // Oct 22–28, now Wednesday the 28th at 8 PM. A saved Home, an overnight Home visit from the 27th's
+        // evening into the 28th (inside Home, so it reads "Home"), a morning at Home known only from points,
+        // and an overnight stay away from Home.
+        let home = savedHome
+        let visits = [
+            visit("Office", office, from: date(22, 9), to: date(22, 17)),
+            visit("Tartine", tartine, from: date(23, 12), to: date(23, 13)),
+            visit("North Beach", northBeach, from: date(24, 21), to: date(25, 9)),
+            visit("Office", office, from: date(25, 10), to: date(25, 16)),
+            visit("812 Elm St", (homeSpot.0 + 0.0003, homeSpot.1), from: date(27, 19), to: date(28, 8)),
+            visit("Office", office, from: date(28, 9), to: date(28, 12)),
+            visit("Tartine", tartine, from: date(28, 12, 30), to: date(28, 13, 30)),
+            visit("Office", office, from: date(28, 14), to: nil)
+        ]
+        let points = points(at: homeSpot, from: date(22, 0), to: date(22, 8, 30))
+            + points(at: homeSpot, from: date(23, 0), to: date(23, 11))
+            + points(at: homeSpot, from: date(26, 0), to: date(26, 23))
+            + points(at: homeSpot, from: date(27, 0), to: date(27, 10))
+        let now = date(28, 20)
+        let summary = rangeSummary(visits: visits, points: points, home: home, range: date(22, 0)...date(28, 23, 59), now: now)
+
+        XCTAssertEqual(summary.days.count, 7)
+        let today = summary.days.map { todayPlaceCount($0.day, visits: visits, points: points, home: home, now: now) }
+        XCTAssertEqual(summary.days.map(\.placeCount), today)
+        // The 27th is Home all day; the 28th is Home (the night from the 27th), Office and Tartine.
+        XCTAssertEqual(today, [2, 2, 1, 2, 1, 1, 3])
+        XCTAssertEqual(summary.placeDayCounts["Home"], 5)
+        XCTAssertEqual(summary.placeDayCounts["North Beach"], 2)
+        XCTAssertTrue(summary.days.allSatisfy(\.hasRecord))
+    }
+
 }
 
 final class ReplayClockTests: XCTestCase {

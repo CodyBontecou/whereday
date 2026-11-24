@@ -136,6 +136,9 @@ final class StoreManager: ObservableObject {
     /// nil when there's no subscription or the status couldn't be read.
     @Published private(set) var willAutoRenew: Bool?
     @Published private(set) var trialEligibleProductIDs: Set<String> = []
+    /// When the free week ends, while the subscription that grants access is in its introductory free trial
+    /// and set to renew. Nil otherwise. Settings › Reminders lists the trial reminder only then.
+    @Published private(set) var activeTrialEnds: Date?
 
     var isLoading: Bool { isLoadingProducts || purchasingOption != nil || isRestoring }
     var activePurchaseOption: IsoMePurchaseOption? {
@@ -226,8 +229,13 @@ final class StoreManager: ObservableObject {
         }
     }
 
+    /// A trial reminder whose permission prompt waits for the end of onboarding (see `purchase(_:defersTrialReminder:)`).
+    private var deferredTrialReminder: (trialEnds: Date, displayPrice: String)?
+
+    /// With `defersTrialReminder`, a started trial's reminder is kept until `scheduleDeferredTrialReminder()`,
+    /// so onboarding can ask for notification permission once, on its "You're in" screen.
     @discardableResult
-    func purchase(_ option: IsoMePurchaseOption = .individual) async -> StorePurchaseOutcome {
+    func purchase(_ option: IsoMePurchaseOption = .individual, defersTrialReminder: Bool = false) async -> StorePurchaseOutcome {
         guard !isRestoring, purchasingOption == nil else { return .failed(.storeError) }
         if option == .familyUpgrade && !canBuyFamilyUpgrade {
             purchaseError = String(localized: "Family Upgrade requires an Individual Lifetime purchase.")
@@ -257,7 +265,11 @@ final class StoreManager: ObservableObject {
                 await transaction.finish()
                 await checkEntitlement()
                 if offersTrial, Self.isIntroductoryOffer(transaction), let trialEnds = transaction.expirationDate {
-                    await TrialReminder.schedule(trialEnds: trialEnds, displayPrice: product.displayPrice)
+                    if defersTrialReminder {
+                        deferredTrialReminder = (trialEnds, product.displayPrice)
+                    } else {
+                        await TrialReminder.schedule(trialEnds: trialEnds, displayPrice: product.displayPrice)
+                    }
                 }
                 return .succeeded
             case .userCancelled: return .cancelled
@@ -270,6 +282,13 @@ final class StoreManager: ObservableObject {
             purchaseError = String(localized: "Purchase failed: \(error.localizedDescription)")
             return .failed(.storeError)
         }
+    }
+
+    /// Schedules the reminder a deferred trial purchase kept back, asking for notification permission then.
+    func scheduleDeferredTrialReminder() async {
+        guard let reminder = deferredTrialReminder else { return }
+        deferredTrialReminder = nil
+        await TrialReminder.schedule(trialEnds: reminder.trialEnds, displayPrice: reminder.displayPrice)
     }
 
     @discardableResult
@@ -318,6 +337,7 @@ final class StoreManager: ObservableObject {
         var active: [String] = []
         var expirations: [String: Date] = [:]
         var groupIDs: [String: String] = [:]
+        var introductory: Set<String> = []
         for await result in Transaction.currentEntitlements {
             guard case .verified(let transaction) = result,
                   Self.productIDs.contains(transaction.productID),
@@ -327,6 +347,7 @@ final class StoreManager: ObservableObject {
             active.append(transaction.productID)
             expirations[transaction.productID] = transaction.expirationDate
             groupIDs[transaction.productID] = transaction.subscriptionGroupID
+            if Self.isIntroductoryOffer(transaction) { introductory.insert(transaction.productID) }
         }
         let preferred = Self.preferredEntitlementProductID(from: active)
         trackingExpiration = preferred.flatMap { expirations[$0] }
@@ -337,6 +358,8 @@ final class StoreManager: ObservableObject {
         }
         unlockedProductID = preferred
         isPurchased = preferred != nil
+        activeTrialEnds = Self.activeTrialEnd(productID: preferred, introductory: introductory,
+                                              expirations: expirations, willAutoRenew: willAutoRenew)
         // A canceled trial, or Lifetime bought during one, has nothing left to remind about.
         if willAutoRenew == false || (hasResolvedEntitlements && activePurchaseOption?.isSubscription != true) {
             TrialReminder.cancel()
@@ -359,6 +382,13 @@ final class StoreManager: ObservableObject {
                 await self?.checkEntitlement()
             }
         }
+    }
+
+    nonisolated static func activeTrialEnd(productID: String?, introductory: Set<String>, expirations: [String: Date],
+                                           willAutoRenew: Bool?, now: Date = Date()) -> Date? {
+        guard let productID, introductory.contains(productID), willAutoRenew != false,
+              let end = expirations[productID], end > now else { return nil }
+        return end
     }
 
     /// Reads the verified renewal info for the subscription that grants access.

@@ -1,23 +1,63 @@
+# Page One onboarding, backfill screen (step 7 of 10): "Match photos to places" turns on the
+# existing automatic photo sync, then the 12-week heatmap counts real days with geotagged
+# photos (read on-device only). Turning it off returns the heatmap to "Today only".
+# Prerequisites: Whereday debug build on an iOS pool simulator (iPhone 18 Pro, portrait,
+# default text size, English); Photos access pre-granted (`argent settings-permissions grant
+# photos`) so no system prompt appears; automatic photo sync currently off. The caption
+# reads "N days found" for any library (the stock simulator library gives 0).
+# Side effects: toggles the automatic photo sync setting on and back off; may cache photo
+# metadata for the default map range. No photo leaves the device.
+#
+# Coordinate exceptions: the switch (onboarding-photos-toggle) carries an id, but Argent's iOS
+# runner tree exposes only an anonymous AXScrollArea there, so the taps keep their recorded
+# point on the switch track (0.85, 0.67) on a 402x874 pt iPhone 18 Pro. Each tap is followed
+# by an accessibility-tree check of the caption.
+version: 1
+requires:
+  platform: ios
 steps:
-  - echo: "Photos: skip optional photo sync and tap Next at (0.6, 0.912); expect
-      Ready. Same documented SwiftUI AX/native coordinate exception as
-      ink-onboarding-navigation."
-  - tap: { x: 0.6, y: 0.912 }
+  - launch:
+      native: com.bontecou.isome
+      ios:
+        app: com.bontecou.isome
+        args:
+          - -hasCompletedOnboarding
+          - NO
+          - --onboarding-page=6
+          - -AppleLanguages
+          - (en)
+          - -AppleLocale
+          - en_US
+          - -webhook.enabled
+          - NO
+  - echo: "Launch can take ~20 s to expose the tree while the app reads Photos state."
   - tool: await-ui-element
     args:
       condition: visible
       selector:
-        text: "Ready for your\nnext chapter."
+        text: Today only
+      timeoutMs: 30000
   - await: { idle: true }
-  - echo: "Ready: tap Back at (0.14, 0.912); expect Photos with its optional toggle
-      still off. Same documented coordinate exception."
-  - tap: { x: 0.14, y: 0.912 }
+  - echo: "Backfill: turn on Match photos to places at (0.85, 0.67); expect the caption to
+      switch from Today only to a days-found count."
+  - tool: gesture-tap
+    args: { x: 0.85, y: 0.67 }
   - tool: await-ui-element
     args:
       condition: visible
       selector:
-        text: "Your places.\nYour photographs."
-  - await: { idle: true }
-executionPrerequisite: English illustrated onboarding Photos page visible on a
-  portrait iPhone 18 Pro with default text size; photos and location not
-  requested. Leaves both unchanged.
+        text: found
+      timeoutMs: 15000
+  - tool: await-ui-element
+    args:
+      condition: hidden
+      selector:
+        text: Today only
+  - echo: "Backfill: turn it off again; expect Today only back."
+  - tool: gesture-tap
+    args: { x: 0.85, y: 0.67 }
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Today only

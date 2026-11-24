@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B0A00000000000000000101 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0A00000000000000000001 /* OnboardingView.swift */; };
+		0B0A00000000000000000102 /* OnboardingIllustrations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0A00000000000000000002 /* OnboardingIllustrations.swift */; };
+		0B0A00000000000000000103 /* OnboardingLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0A00000000000000000003 /* OnboardingLogic.swift */; };
+		0B0A00000000000000000104 /* OnboardingPageOneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0A00000000000000000004 /* OnboardingPageOneTests.swift */; };
+		0B0A00000000000000000105 /* OnboardingFreeWeekLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0A00000000000000000005 /* OnboardingFreeWeekLogic.swift */; };
+		0B0A00000000000000000106 /* OnboardingFreeWeekViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0A00000000000000000006 /* OnboardingFreeWeekViews.swift */; };
+		0B0A00000000000000000107 /* OnboardingFreeWeekTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0A00000000000000000007 /* OnboardingFreeWeekTests.swift */; };
+		0C0B00000000000000000104 /* RecapReminderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0B00000000000000000004 /* RecapReminderTests.swift */; };
+		0D1D00000000000000000102 /* DayDistanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1D00000000000000000002 /* DayDistanceTests.swift */; };
+		0B0A00000000000000000108 /* StoreKitQASessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0A00000000000000000008 /* StoreKitQASessionTests.swift */; };
 		F8AA00000000000000000001 /* MonthRecapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8AA00000000000000000002 /* MonthRecapTests.swift */; };
         CB1030000000000000000001 /* OnboardingLaunchConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1030000000000000000002 /* OnboardingLaunchConfigurationTests.swift */; };
 		CA1029B00000000000000001 /* RetiredAnalyticsCleanup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1029A00000000000000001 /* RetiredAnalyticsCleanup.swift */; };
@@ -41,6 +51,8 @@
 		5F000001212F000100000001 /* ExportFolderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F000001212F000000000001 /* ExportFolderManager.swift */; };
 		F1000001212F000100000001 /* FilenameTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000001212F000000000001 /* FilenameTemplate.swift */; };
 		5F000002212F000100000001 /* DailyExportScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F000002212F000000000001 /* DailyExportScheduler.swift */; };
+		0C0B00000000000000000102 /* RecapReminderScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0B00000000000000000002 /* RecapReminderScheduler.swift */; };
+		0C0B00000000000000000101 /* RecapReminders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0B00000000000000000001 /* RecapReminders.swift */; };
 		5F000005212F000100000001 /* IntervalExportScheduleDateMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F000005212F000000000001 /* IntervalExportScheduleDateMath.swift */; };
 		5F000006212F000100000001 /* ScheduledExportMergeStrategies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F000006212F000000000001 /* ScheduledExportMergeStrategies.swift */; };
 		5F000007212F000100000001 /* IntervalScheduledExportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F000007212F000000000001 /* IntervalScheduledExportTests.swift */; };
@@ -54,6 +66,7 @@
 		A1000002212F000100000002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002212F000000000002 /* ContentView.swift */; };
 		A1000003212F000100000003 /* Visit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000003212F000000000003 /* Visit.swift */; };
 		A1000004212F000100000004 /* LocationPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000004212F000000000004 /* LocationPoint.swift */; };
+		0D1D00000000000000000101 /* DayDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1D00000000000000000001 /* DayDistance.swift */; };
 		A1000005212F000100000005 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000005212F000000000005 /* LocationManager.swift */; };
 		B7E10A0100000000000000A2 /* RouteSampling.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E10A0100000000000000A1 /* RouteSampling.swift */; };
 		B7E10A0100000000000000A4 /* RouteSamplerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E10A0100000000000000A3 /* RouteSamplerTests.swift */; };
@@ -123,6 +136,7 @@
 		F7D0A11E5A00000000000015 /* MonthRecapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D0A11E5A00000000000014 /* MonthRecapView.swift */; };
 		F7D0A11E5A00000000000017 /* ShortcutsGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D0A11E5A00000000000016 /* ShortcutsGuideView.swift */; };
 		F7D0A11E5A00000000000019 /* ListeningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D0A11E5A00000000000018 /* ListeningView.swift */; };
+		0C0B00000000000000000103 /* RemindersSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0B00000000000000000003 /* RemindersSettingsView.swift */; };
 		F7D0A11E5A0000000000000B /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D0A11E5A0000000000000A /* TodayView.swift */; };
 		AB000001212F000100000001 /* IsoMeIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F000000000001 /* IsoMeIntents.swift */; };
 		AB000001212F0EE1000000E1 /* IsoMeEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000001212F0EE0000000E1 /* IsoMeEntities.swift */; };
@@ -291,6 +305,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0B0A00000000000000000001 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding/OnboardingView.swift; sourceTree = "<group>"; };
+		0B0A00000000000000000002 /* OnboardingIllustrations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding/OnboardingIllustrations.swift; sourceTree = "<group>"; };
+		0B0A00000000000000000003 /* OnboardingLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding/OnboardingLogic.swift; sourceTree = "<group>"; };
+		0B0A00000000000000000004 /* OnboardingPageOneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageOneTests.swift; sourceTree = "<group>"; };
+		0B0A00000000000000000005 /* OnboardingFreeWeekLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding/OnboardingFreeWeekLogic.swift; sourceTree = "<group>"; };
+		0B0A00000000000000000006 /* OnboardingFreeWeekViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding/OnboardingFreeWeekViews.swift; sourceTree = "<group>"; };
+		0B0A00000000000000000007 /* OnboardingFreeWeekTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFreeWeekTests.swift; sourceTree = "<group>"; };
+		0C0B00000000000000000004 /* RecapReminderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecapReminderTests.swift; sourceTree = "<group>"; };
+		0D1D00000000000000000002 /* DayDistanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayDistanceTests.swift; sourceTree = "<group>"; };
+		0B0A00000000000000000008 /* StoreKitQASessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitQASessionTests.swift; sourceTree = "<group>"; };
 		F8AA00000000000000000002 /* MonthRecapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthRecapTests.swift; sourceTree = "<group>"; };
         CB1030000000000000000002 /* OnboardingLaunchConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLaunchConfigurationTests.swift; sourceTree = "<group>"; };
 		CA1029A00000000000000001 /* RetiredAnalyticsCleanup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetiredAnalyticsCleanup.swift; sourceTree = "<group>"; };
@@ -320,6 +344,8 @@
 		5F000001212F000000000001 /* ExportFolderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportFolderManager.swift; sourceTree = "<group>"; };
 		F1000001212F000000000001 /* FilenameTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilenameTemplate.swift; sourceTree = "<group>"; };
 		5F000002212F000000000001 /* DailyExportScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyExportScheduler.swift; sourceTree = "<group>"; };
+		0C0B00000000000000000002 /* RecapReminderScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecapReminderScheduler.swift; sourceTree = "<group>"; };
+		0C0B00000000000000000001 /* RecapReminders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecapReminders.swift; sourceTree = "<group>"; };
 		5F000005212F000000000001 /* IntervalExportScheduleDateMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalExportScheduleDateMath.swift; sourceTree = "<group>"; };
 		5F000006212F000000000001 /* ScheduledExportMergeStrategies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledExportMergeStrategies.swift; sourceTree = "<group>"; };
 		5F000007212F000000000001 /* IntervalScheduledExportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalScheduledExportTests.swift; sourceTree = "<group>"; };
@@ -340,6 +366,7 @@
 		F7D0A11E5A00000000000014 /* MonthRecapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthRecapView.swift; sourceTree = "<group>"; };
 		F7D0A11E5A00000000000016 /* ShortcutsGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsGuideView.swift; sourceTree = "<group>"; };
 		F7D0A11E5A00000000000018 /* ListeningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListeningView.swift; sourceTree = "<group>"; };
+		0C0B00000000000000000003 /* RemindersSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersSettingsView.swift; sourceTree = "<group>"; };
 		F7D0A11E5A0000000000000A /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
 		AB000001212F000000000001 /* IsoMeIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoMeIntents.swift; sourceTree = "<group>"; };
 		AB000001212F0EE0000000E1 /* IsoMeEntities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoMeEntities.swift; sourceTree = "<group>"; };
@@ -356,6 +383,7 @@
 		BEE50001212F000000000001 /* ReleaseNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseNotes.swift; sourceTree = "<group>"; };
 		A1000003212F000000000003 /* Visit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Visit.swift; sourceTree = "<group>"; };
 		A1000004212F000000000004 /* LocationPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPoint.swift; sourceTree = "<group>"; };
+		0D1D00000000000000000001 /* DayDistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayDistance.swift; sourceTree = "<group>"; };
 		A1000005212F000000000005 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		B7E10A0100000000000000A1 /* RouteSampling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSampling.swift; sourceTree = "<group>"; };
 		B7E10A0100000000000000A3 /* RouteSamplerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RouteSamplerTests.swift; sourceTree = "<group>"; };
@@ -630,6 +658,7 @@
 				C0DE0301212F000000000301 /* CountryStay.swift */,
 				A1000003212F000000000003 /* Visit.swift */,
 				A1000004212F000000000004 /* LocationPoint.swift */,
+				0D1D00000000000000000001 /* DayDistance.swift */,
 				C0DE0001212F000000000001 /* RecordingSession.swift */,
 				C0DE0101212F000000000101 /* PhotoMoment.swift */,
 				A100001A212F00000000001A /* LocationActivityAttributes.swift */,
@@ -665,6 +694,8 @@
 				AB000001212F0AA0000000A1 /* IsoMeReadIntents.swift */,
 				AB000001212F0BB000000B1 /* IsoMeRenameIntents.swift */,
 				5F000002212F000000000001 /* DailyExportScheduler.swift */,
+				0C0B00000000000000000002 /* RecapReminderScheduler.swift */,
+				0C0B00000000000000000001 /* RecapReminders.swift */,
 				5F000005212F000000000001 /* IntervalExportScheduleDateMath.swift */,
 				D6000002212F000000000002 /* DailyExportNotificationScheduler.swift */,
 				D6000001212F000000000001 /* PushRegistrationManager.swift */,
@@ -692,6 +723,11 @@
 				ADCD25B953F185FC6FB2B603 /* MapHomeMarkers.swift */,
 				ADD85D07CA7CA83E4287EFFE /* MapHomeChrome.swift */,
 				AD1A000C99BA9FD22F9E6CBE /* DayDial.swift */,
+				0B0A00000000000000000001 /* OnboardingView.swift */,
+				0B0A00000000000000000002 /* OnboardingIllustrations.swift */,
+				0B0A00000000000000000003 /* OnboardingLogic.swift */,
+				0B0A00000000000000000005 /* OnboardingFreeWeekLogic.swift */,
+				0B0A00000000000000000006 /* OnboardingFreeWeekViews.swift */,
 				AD996D5DFCB1351D42B038D6 /* MapHomeLogic.swift */,
 				ADCB13E3846D7A105DC51D15 /* MainTab.swift */,
 				D2A10002212F000000000002 /* PlaceSelectionView.swift */,
@@ -711,6 +747,7 @@
 				F7D0A11E5A00000000000014 /* MonthRecapView.swift */,
 				F7D0A11E5A00000000000016 /* ShortcutsGuideView.swift */,
 				F7D0A11E5A00000000000018 /* ListeningView.swift */,
+				0C0B00000000000000000003 /* RemindersSettingsView.swift */,
 				D15C04D0BA000000000000B2 /* DiscordPromoBanner.swift */,
 				A1000031212F000000000031 /* ExportView.swift */,
 				24650F0FA6274DB58B9869F5 /* WebhookSettingsView.swift */,
@@ -817,6 +854,11 @@
 				E5F99A7F3A434BE49BB81EF9 /* VisitMapOpenerTests.swift */,
 				AD4137E94B1711039976CE90 /* IsolatedDefaults.swift */,
 				ADC016151E6D0BFAAE919E34 /* MapHomeTests.swift */,
+				0B0A00000000000000000004 /* OnboardingPageOneTests.swift */,
+				0B0A00000000000000000007 /* OnboardingFreeWeekTests.swift */,
+				0C0B00000000000000000004 /* RecapReminderTests.swift */,
+				0D1D00000000000000000002 /* DayDistanceTests.swift */,
+				0B0A00000000000000000008 /* StoreKitQASessionTests.swift */,
 				EB20DB41562641EE9CE37203 /* SavedPlaceImportTests.swift */,
 				3F25E12BEE074B0EA5988F1D /* SavedPlaceManagementTests.swift */,
 				D5E7A1580000000000000058 /* ExportRoundTripTests.swift */,
@@ -1144,6 +1186,7 @@
 				BEE50001212F000100000001 /* ReleaseNotes.swift in Sources */,
 				A1000003212F000100000003 /* Visit.swift in Sources */,
 				A1000004212F000100000004 /* LocationPoint.swift in Sources */,
+				0D1D00000000000000000101 /* DayDistance.swift in Sources */,
 				C0DE0001212F000100000001 /* RecordingSession.swift in Sources */,
 				C0DE0101212F000100000101 /* PhotoMoment.swift in Sources */,
 				A1000005212F000100000005 /* LocationManager.swift in Sources */,
@@ -1169,6 +1212,11 @@
 				AE25B953F185FC6FB2B603BD /* MapHomeMarkers.swift in Sources */,
 				AE5D07CA7CA83E4287EFFE84 /* MapHomeChrome.swift in Sources */,
 				AE000C99BA9FD22F9E6CBE9B /* DayDial.swift in Sources */,
+				0B0A00000000000000000101 /* OnboardingView.swift in Sources */,
+				0B0A00000000000000000102 /* OnboardingIllustrations.swift in Sources */,
+				0B0A00000000000000000103 /* OnboardingLogic.swift in Sources */,
+				0B0A00000000000000000105 /* OnboardingFreeWeekLogic.swift in Sources */,
+				0B0A00000000000000000106 /* OnboardingFreeWeekViews.swift in Sources */,
 				AE6D5DFCB1351D42B038D6EA /* MapHomeLogic.swift in Sources */,
 				AE13E3846D7A105DC51D1589 /* MainTab.swift in Sources */,
 				D2A10002212F000100000002 /* PlaceSelectionView.swift in Sources */,
@@ -1207,6 +1255,7 @@
 				F7D0A11E5A00000000000015 /* MonthRecapView.swift in Sources */,
 				F7D0A11E5A00000000000017 /* ShortcutsGuideView.swift in Sources */,
 				F7D0A11E5A00000000000019 /* ListeningView.swift in Sources */,
+				0C0B00000000000000000103 /* RemindersSettingsView.swift in Sources */,
 				D15C04D0BA000000000000A1 /* DiscordPromoBanner.swift in Sources */,
 				AB000001212F000100000001 /* IsoMeIntents.swift in Sources */,
 				76AB00000000000000000022 /* ManualVisitRoute.swift in Sources */,
@@ -1218,6 +1267,8 @@
 				AB000001212F0BB100000B1 /* IsoMeRenameIntents.swift in Sources */,
 				F1000001212F000100000001 /* FilenameTemplate.swift in Sources */,
 				5F000002212F000100000001 /* DailyExportScheduler.swift in Sources */,
+				0C0B00000000000000000102 /* RecapReminderScheduler.swift in Sources */,
+				0C0B00000000000000000101 /* RecapReminders.swift in Sources */,
 				5F000005212F000100000001 /* IntervalExportScheduleDateMath.swift in Sources */,
 				5F000006212F000100000001 /* ScheduledExportMergeStrategies.swift in Sources */,
 				D6000002212F000100000002 /* DailyExportNotificationScheduler.swift in Sources */,
@@ -1284,6 +1335,11 @@
 				34314394A69B4C38B941108A /* VisitMapOpenerTests.swift in Sources */,
 				AE37E94B1711039976CE90B8 /* IsolatedDefaults.swift in Sources */,
 				AE16151E6D0BFAAE919E3458 /* MapHomeTests.swift in Sources */,
+				0B0A00000000000000000104 /* OnboardingPageOneTests.swift in Sources */,
+				0B0A00000000000000000107 /* OnboardingFreeWeekTests.swift in Sources */,
+				0C0B00000000000000000104 /* RecapReminderTests.swift in Sources */,
+				0D1D00000000000000000102 /* DayDistanceTests.swift in Sources */,
+				0B0A00000000000000000108 /* StoreKitQASessionTests.swift in Sources */,
 				A857B5F352054A2C9C6AEA1D /* SavedPlaceImportTests.swift in Sources */,
 				54EC7C2E1B7D4635BF1F1422 /* SavedPlaceManagementTests.swift in Sources */,
 				D5E7A1580000000000000158 /* ExportRoundTripTests.swift in Sources */,

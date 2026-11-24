@@ -124,15 +124,28 @@ struct DaySummary: Identifiable, Equatable {
     let visitCount: Int
 
     var id: Date { day }
-    var hasRecord: Bool { distanceMeters > 0 || visitCount > 0 }
+    var hasRecord: Bool { distanceMeters > 0 || visitCount > 0 || placeCount > 0 }
+}
+
+/// What a range needs to count each day's places the way Today does (`DayStayPlanner`): every visit
+/// overlapping the range (`index` unique), its non-outlier points, Today's Home, and now.
+struct DayStayInput {
+    var visits: [DayStayVisit]
+    var points: [DayStayPoint]
+    var home: DayStayHome?
+    var now: Date
 }
 
 struct RangeSummary: Equatable {
     let days: [DaySummary]
     /// On how many days of the range each place was visited.
     let placeDayCounts: [String: Int]
+    /// Legs that cross midnight between two of the range's fixes (`DayDistances.crossings`). No day chip counts
+    /// them, as Today starts fresh at midnight, but the range total does, as the weekly recap does.
+    var crossingMeters: Double = 0
 
-    var totalDistanceMeters: Double { days.reduce(0) { $0 + $1.distanceMeters } }
+    /// The days' distances plus the legs across midnight: `DayDistances.totalMeters`.
+    var totalDistanceMeters: Double { days.reduce(0) { $0 + $1.distanceMeters } + crossingMeters }
     var totalVisits: Int { days.reduce(0) { $0 + $1.visitCount } }
     var longestDayMeters: Double { days.map(\.distanceMeters).max() ?? 0 }
 
@@ -146,10 +159,18 @@ enum MultiDayAggregator {
     /// Ranges up to this many days list every day, recorded or not; longer ones list only recorded days.
     static let maximumContinuousDays = 31
 
+    /// - Parameter stays: when given, each day's place count (and the days a place counts on) comes from
+    ///   `DayStayPlanner.dayStays`, as Today and the day sheet count it: a stay that began the evening
+    ///   before counts on the following day too, and Home's stretch before the first stop counts. Without
+    ///   it, places are the distinct `placeKey`s of the visits that arrived that day.
+    /// - Parameter distances: each day's distance, from every stored fix in the range (`DayDistance`, as Today
+    ///   counts it). Without it, distance comes from `points` by the same rules.
     static func summarize(
         visits: [DayVisitSample],
         points: [DayPathSample],
         range: ClosedRange<Date>,
+        stays: DayStayInput? = nil,
+        distances: DayDistances? = nil,
         calendar: Calendar = .current
     ) -> RangeSummary {
         var visitsByDay: [Date: [DayVisitSample]] = [:]
@@ -157,39 +178,68 @@ enum MultiDayAggregator {
             visitsByDay[calendar.startOfDay(for: visit.arrivedAt), default: []].append(visit)
         }
 
-        // Distance is summed within each day only, so overnight gaps never count as travel.
-        var distanceByDay: [Date: Double] = [:]
-        let sortedPoints = points.sorted { $0.timestamp < $1.timestamp }
-        for (previous, point) in zip(sortedPoints, sortedPoints.dropFirst()) {
-            let day = calendar.startOfDay(for: point.timestamp)
-            guard calendar.startOfDay(for: previous.timestamp) == day else { continue }
-            let a = CLLocation(latitude: previous.latitude, longitude: previous.longitude)
-            let b = CLLocation(latitude: point.latitude, longitude: point.longitude)
-            distanceByDay[day, default: 0] += a.distance(from: b)
-        }
-        for point in sortedPoints {
-            let day = calendar.startOfDay(for: point.timestamp)
-            if distanceByDay[day] == nil { distanceByDay[day] = 0 }
-        }
+        // Each day's distance is Today's for that day; legs across midnight go to the range total only.
+        let dayDistances = distances ?? DayDistance.distances(
+            points.map { DistanceFix(timestamp: $0.timestamp, latitude: $0.latitude, longitude: $0.longitude) },
+            calendar: calendar)
+        let distanceByDay = dayDistances.days
 
-        let recordedDays = Set(visitsByDay.keys).union(distanceByDay.keys)
+        var recordedDays = Set(visitsByDay.keys).union(distanceByDay.keys)
+        let stayBuckets = stays.map { dayBuckets($0, calendar: calendar) }
+        if let stayBuckets { recordedDays.formUnion(stayBuckets.visits.keys) }
         let days = dayList(range: range, recordedDays: recordedDays, calendar: calendar)
 
+        var placeNamesByDay: [Date: [String]] = [:]
+        if let stays, let stayBuckets {
+            for day in days {
+                let nextMidnight = calendar.date(byAdding: .day, value: 1, to: day) ?? day.addingTimeInterval(86_400)
+                let plans = DayStayPlanner.dayStays(
+                    visits: stayBuckets.visits[day] ?? [], points: stayBuckets.points[day] ?? [],
+                    dayStart: day, nextMidnight: nextMidnight, now: stays.now, home: stays.home)
+                placeNamesByDay[day] = DayStayPlanner.placeNames(plans)
+            }
+        } else {
+            for (day, samples) in visitsByDay {
+                placeNamesByDay[day] = DayStayPlanner.distinctNames(samples.map(\.placeKey))
+            }
+        }
+
         var placeDays: [String: Set<Date>] = [:]
-        for (day, samples) in visitsByDay {
-            for sample in samples { placeDays[sample.placeKey, default: []].insert(day) }
+        for (day, names) in placeNamesByDay {
+            for name in names { placeDays[name, default: []].insert(day) }
         }
 
         let summaries = days.map { day in
-            let samples = visitsByDay[day] ?? []
-            return DaySummary(
+            DaySummary(
                 day: day,
                 distanceMeters: distanceByDay[day] ?? 0,
-                placeCount: Set(samples.map(\.placeKey)).count,
-                visitCount: samples.count
+                placeCount: placeNamesByDay[day]?.count ?? 0,
+                visitCount: visitsByDay[day]?.count ?? 0
             )
         }
-        return RangeSummary(days: summaries, placeDayCounts: placeDays.mapValues(\.count))
+        let listed = Set(days)
+        let crossing = dayDistances.crossings.filter { listed.contains($0.key) }.values.reduce(0, +)
+        return RangeSummary(days: summaries, placeDayCounts: placeDays.mapValues(\.count), crossingMeters: crossing)
+    }
+
+    /// Each visit under every local day it overlaps (an open one up to now), and each point under its day,
+    /// so a long range plans each day from its own records only.
+    private static func dayBuckets(_ input: DayStayInput, calendar: Calendar)
+        -> (visits: [Date: [DayStayVisit]], points: [Date: [DayStayPoint]]) {
+        var visits: [Date: [DayStayVisit]] = [:]
+        for visit in input.visits {
+            let end = min(visit.departedAt ?? input.now, input.now)
+            var day = calendar.startOfDay(for: visit.arrivedAt)
+            // A stay that ends exactly at midnight doesn't reach the next day.
+            let lastDay = calendar.startOfDay(for: max(end.addingTimeInterval(-1), visit.arrivedAt))
+            while day <= lastDay {
+                visits[day, default: []].append(visit)
+                guard let next = calendar.date(byAdding: .day, value: 1, to: day) else { break }
+                day = next
+            }
+        }
+        let points = Dictionary(grouping: input.points) { calendar.startOfDay(for: $0.timestamp) }
+        return (visits, points)
     }
 
     /// Every day of a short range, or the recorded days of a long one ("All" can span years).

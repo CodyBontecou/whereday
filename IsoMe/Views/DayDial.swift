@@ -25,8 +25,202 @@ struct PlaceInkOrder {
     /// Inside a saved Home, stays read as Home unless renamed by hand.
     @MainActor
     static func placeName(for visit: Visit, home: SavedPlace?) -> String {
-        if let home, !visit.hasCustomName, home.contains(visit.coordinate) { return home.name }
+        DayStayPlanner.placeName(for: DayStayVisit(visit), home: home.map(DayStayHome.init))
+    }
+}
+
+// MARK: - A day's stays (shared by Today, the map and the evening recap)
+
+/// A visit reduced to what a day's stays need. Plain values, so the same rules run on the main actor (Today,
+/// the map's day sheet) and inside `RecapDataReader`'s model actor (the evening recap).
+struct DayStayVisit: Equatable, Sendable {
+    /// Position in the caller's visit list; a stay points back to its visit with it.
+    var index: Int
+    var latitude: Double
+    var longitude: Double
+    var arrivedAt: Date
+    var departedAt: Date?
+    /// `Visit.displayName`: the custom name, else the place name, else the address, else "Unknown Location".
+    var displayName: String
+    var hasCustomName: Bool
+    /// False when `displayName` is only the "Unknown Location" fallback.
+    var hasKnownName: Bool
+
+    /// Read wherever the model is: on the main actor, or in the model actor that fetched it.
+    init(_ visit: Visit, index: Int = 0) {
+        self.init(index: index, latitude: visit.latitude, longitude: visit.longitude, arrivedAt: visit.arrivedAt,
+                  departedAt: visit.departedAt, displayName: visit.displayName, hasCustomName: visit.hasCustomName,
+                  hasKnownName: visit.normalizedCustomName != nil || visit.locationName != nil || visit.address != nil)
+    }
+
+    init(index: Int, latitude: Double, longitude: Double, arrivedAt: Date, departedAt: Date?,
+         displayName: String, hasCustomName: Bool, hasKnownName: Bool = true) {
+        self.index = index
+        self.latitude = latitude
+        self.longitude = longitude
+        self.arrivedAt = arrivedAt
+        self.departedAt = departedAt
+        self.displayName = displayName
+        self.hasCustomName = hasCustomName
+        self.hasKnownName = hasKnownName
+    }
+}
+
+struct DayStayPoint: Equatable, Sendable {
+    var timestamp: Date
+    var latitude: Double
+    var longitude: Double
+
+    init(_ point: LocationPoint) {
+        self.init(timestamp: point.timestamp, latitude: point.latitude, longitude: point.longitude)
+    }
+
+    init(timestamp: Date, latitude: Double, longitude: Double) {
+        self.timestamp = timestamp
+        self.latitude = latitude
+        self.longitude = longitude
+    }
+}
+
+/// The saved Home, as `SavedPlace.contains` sees it.
+struct DayStayHome: Equatable, Sendable {
+    var name: String
+    var latitude: Double
+    var longitude: Double
+    var radiusMeters: Double
+
+    init(_ place: SavedPlace) {
+        self.init(name: place.name, latitude: place.latitude, longitude: place.longitude, radiusMeters: place.radiusMeters)
+    }
+
+    init(name: String, latitude: Double, longitude: Double, radiusMeters: Double = 150) {
+        self.name = name
+        self.latitude = latitude
+        self.longitude = longitude
+        self.radiusMeters = radiusMeters
+    }
+
+    func contains(latitude: Double, longitude: Double) -> Bool {
+        CLLocation(latitude: self.latitude, longitude: self.longitude)
+            .distance(from: CLLocation(latitude: latitude, longitude: longitude)) <= radiusMeters
+    }
+}
+
+/// One stay of the day, clipped to midnight and the day's end.
+struct DayStayPlan: Equatable, Sendable {
+    /// The visit's `DayStayVisit.index`; nil for the stretch at Home before the first recorded stop.
+    var visitIndex: Int?
+    /// What Today calls it, and what it counts places by.
+    var name: String
+    var start: Date
+    var end: Date
+    /// The Home stretch still runs (nothing recorded outside Home yet today).
+    var isOngoingHomeStretch = false
+}
+
+/// How Today turns a day's visits and points into stays. `TodayDay` (Today, the map's day sheet, peek card and
+/// mini dial) and the evening recap both call it, so "N PLACES" and the recap's count can't drift apart.
+enum DayStayPlanner {
+    /// Inside a saved Home, stays read as Home unless renamed by hand.
+    static func placeName(for visit: DayStayVisit, home: DayStayHome?) -> String {
+        if let home, !visit.hasCustomName, home.contains(latitude: visit.latitude, longitude: visit.longitude) {
+            return home.name
+        }
         return visit.displayName
+    }
+
+    /// The visits Today shows for a day: every visit overlapping `start...end` (an open one runs to `end`),
+    /// by arrival (`LocationViewModel.visitsOverlappingDateRange`).
+    static func visits(_ visits: [DayStayVisit], overlapping start: Date, _ end: Date) -> [DayStayVisit] {
+        visits
+            .filter { $0.arrivedAt <= end && ($0.departedAt ?? end) >= start }
+            .sorted { $0.arrivedAt < $1.arrivedAt }
+    }
+
+    /// Where a finished day ends (`TodayDay(pastDay:)`): its last point or departure, at most midnight.
+    static func pastDayEnd(visits: [DayStayVisit], points: [DayStayPoint], endOfDay: Date) -> Date {
+        let lastRecord = ([points.map(\.timestamp).max()] + visits.map { $0.departedAt ?? endOfDay }).compactMap { $0 }.max()
+        return min(lastRecord ?? endOfDay, endOfDay)
+    }
+
+    /// The day's stays in order: each visit clipped to midnight and `now`, with Home's stretch before the first
+    /// stop when the day began there. `points` are the day's non-outlier points.
+    static func stays(visits: [DayStayVisit], points: [DayStayPoint], startOfDay: Date, now: Date,
+                      home: DayStayHome?) -> [DayStayPlan] {
+        var stays: [DayStayPlan] = visits.compactMap { visit in
+            let start = max(visit.arrivedAt, startOfDay)
+            let end = min(visit.departedAt ?? now, now)
+            guard end > start else { return nil }
+            return DayStayPlan(visitIndex: visit.index, name: placeName(for: visit, home: home), start: start, end: end)
+        }
+
+        // With a saved Home, the day starts there when that is where the phone was: the first stretch
+        // reads "Home until 8:12" instead of starting at the first recorded stop.
+        if let home, let homeStretch = homeStretch(home: home, firstStayStart: stays.first?.start, points: points,
+                                                   startOfDay: startOfDay, now: now) {
+            let firstIsHome = stays.first.flatMap { first in
+                visits.first { $0.index == first.visitIndex }
+            }.map { home.contains(latitude: $0.latitude, longitude: $0.longitude) } ?? false
+            if let first = stays.first, homeStretch.end >= first.start, firstIsHome {
+                // At Home until the first stay, which is Home too: it runs from midnight.
+                stays[0].start = startOfDay
+            } else {
+                stays.insert(DayStayPlan(visitIndex: nil, name: home.name, start: startOfDay, end: homeStretch.end,
+                                         isOngoingHomeStretch: homeStretch.isCurrent), at: 0)
+            }
+        }
+        return stays
+    }
+
+    /// When the day began at Home and when that stretch ended, if the record shows it: the first points of
+    /// the day are inside Home. The stretch ends at the last point inside Home before leaving, at the first
+    /// stop, or runs to now.
+    static func homeStretch(home: DayStayHome, firstStayStart: Date?, points: [DayStayPoint],
+                            startOfDay: Date, now: Date) -> (end: Date, isCurrent: Bool)? {
+        if let firstStayStart, firstStayStart <= startOfDay.addingTimeInterval(60) { return nil }
+        let limit = firstStayStart ?? now
+        let early = points.filter { $0.timestamp >= startOfDay && $0.timestamp < limit }.sorted { $0.timestamp < $1.timestamp }
+
+        if let first = early.first {
+            guard home.contains(latitude: first.latitude, longitude: first.longitude) else { return nil }
+            if let leftAt = early.firstIndex(where: { !home.contains(latitude: $0.latitude, longitude: $0.longitude) }) {
+                let end = early[max(0, leftAt - 1)].timestamp
+                return end > startOfDay.addingTimeInterval(60) ? (end, false) : nil
+            }
+            return firstStayStart == nil ? (now, true) : (limit, false)
+        }
+
+        // Nothing recorded before the first stop. A Home visit running past midnight already starts the day
+        // there; without one, there is no sign the night was spent at Home.
+        return nil
+    }
+
+    /// One calendar day's stays as the app shows that day. The day still going on runs to `now`, like Today
+    /// (`TodayDay(viewModel:now:)`); a finished day ends with its last record, like the day sheet for a picked
+    /// day (`TodayDay(pastDay:)`). A day after `now` has none. `visits` and `points` may cover other days too
+    /// (points are expected without outliers); only what overlaps this day is used, so a stay that began the
+    /// evening before counts here.
+    static func dayStays(visits: [DayStayVisit], points: [DayStayPoint], dayStart: Date, nextMidnight: Date,
+                         now: Date, home: DayStayHome?) -> [DayStayPlan] {
+        guard dayStart < now else { return [] }
+        let dayPoints = points.filter { $0.timestamp >= dayStart && $0.timestamp < nextMidnight }
+        if now < nextMidnight {
+            let dayVisits = Self.visits(visits, overlapping: dayStart, now)
+            return stays(visits: dayVisits, points: dayPoints, startOfDay: dayStart, now: now, home: home)
+        }
+        let dayVisits = Self.visits(visits, overlapping: dayStart, nextMidnight)
+        let end = pastDayEnd(visits: dayVisits, points: dayPoints, endOfDay: nextMidnight)
+        return stays(visits: dayVisits, points: dayPoints, startOfDay: dayStart, now: end, home: home)
+    }
+
+    /// Distinct place names in the order Today first shows them; its count is Today's "N PLACES".
+    static func placeNames(_ stays: [DayStayPlan]) -> [String] {
+        distinctNames(stays.map(\.name))
+    }
+
+    static func distinctNames(_ names: [String]) -> [String] {
+        var seen = Set<String>()
+        return names.filter { seen.insert($0).inserted }
     }
 }
 
@@ -228,8 +422,12 @@ struct TodayDay {
 
     var currentStay: Stay? { stays.last(where: \.isCurrent) }
 
-    /// Distinct places stayed at today, as the map's peek card and day sheet count them.
-    var placeCount: Int { Set(stays.map(\.name)).count }
+    /// Distinct places stayed at today, as the map's peek card and day sheet count them (and the evening recap,
+    /// through `DayStayPlanner.placeNames`).
+    var placeCount: Int { placeNames.count }
+
+    /// Distinct place names in the order the day first reaches them.
+    var placeNames: [String] { DayStayPlanner.distinctNames(stays.map(\.name)) }
 
     init(viewModel: LocationViewModel, now: Date, home: SavedPlace? = nil, marksUnrecordedGaps: Bool = false) {
         let startOfDay = Calendar.current.startOfDay(for: now)
@@ -251,12 +449,12 @@ struct TodayDay {
         let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay) ?? startOfDay.addingTimeInterval(86_400)
         let visits = viewModel.visitsOverlappingDateRange(startOfDay...endOfDay, referenceDate: endOfDay)
         let dayPoints = points.filter { !$0.isOutlier && $0.timestamp >= startOfDay && $0.timestamp < endOfDay }
-        let lastRecord = ([dayPoints.last?.timestamp] + visits.map { $0.departedAt ?? endOfDay }).compactMap { $0 }.max()
         self.init(
             visits: visits,
             points: dayPoints,
             startOfDay: startOfDay,
-            now: min(lastRecord ?? endOfDay, endOfDay),
+            now: DayStayPlanner.pastDayEnd(visits: visits.map { DayStayVisit($0) }, points: dayPoints.map(DayStayPoint.init),
+                                           endOfDay: endOfDay),
             home: home,
             isCurrentVisit: { _ in false }
         )
@@ -272,44 +470,24 @@ struct TodayDay {
         isCurrentVisit: (Visit) -> Bool
     ) {
 
-        // Inside a saved Home, stays read as Home unless renamed by hand.
-        func name(for visit: Visit) -> String {
-            PlaceInkOrder.placeName(for: visit, home: home)
-        }
-
         // The map colours its markers and route legs with the same order.
         var inkOrder = PlaceInkOrder(leading: home?.name)
         func ink(for name: String) -> Color {
             PlaceInkOrder.ink(at: inkOrder.index(for: name))
         }
 
-        var stays: [Stay] = visits.compactMap { visit in
-            let start = max(visit.arrivedAt, startOfDay)
-            let end = min(visit.departedAt ?? now, now)
-            guard end > start else { return nil }
-            let placeName = name(for: visit)
-            return Stay(visit: visit, name: placeName, start: start, end: end,
-                        isCurrent: isCurrentVisit(visit), ink: ink(for: placeName))
-        }
-
-        // With a saved Home, the day starts there when that is where the phone was: the first stretch
-        // reads "Home until 8:12" instead of starting at the first recorded stop.
-        if let home, let homeStretch = Self.homeStretch(
-            home: home,
-            firstStay: stays.first,
-            points: points,
+        // The stays (names, clipping, Home's stretch) come from the planner the evening recap uses too.
+        let plans = DayStayPlanner.stays(
+            visits: visits.enumerated().map { DayStayVisit($1, index: $0) },
+            points: points.map(DayStayPoint.init),
             startOfDay: startOfDay,
-            now: now
-        ) {
-            if let first = stays.first, homeStretch.end >= first.start,
-               first.visit.map({ home.contains($0.coordinate) }) == true {
-                // At Home until the first stay, which is Home too: it runs from midnight.
-                stays[0] = Stay(visit: first.visit, name: first.name, start: startOfDay, end: first.end,
-                                isCurrent: first.isCurrent, ink: first.ink)
-            } else {
-                stays.insert(Stay(visit: nil, name: home.name, start: startOfDay, end: homeStretch.end,
-                                  isCurrent: homeStretch.isCurrent, ink: ink(for: home.name)), at: 0)
-            }
+            now: now,
+            home: home.map(DayStayHome.init)
+        )
+        var stays: [Stay] = plans.map { plan in
+            let visit = plan.visitIndex.map { visits[$0] }
+            return Stay(visit: visit, name: plan.name, start: plan.start, end: plan.end,
+                        isCurrent: visit.map(isCurrentVisit) ?? plan.isOngoingHomeStretch, ink: ink(for: plan.name))
         }
 
         var entries: [Entry] = []
@@ -373,34 +551,6 @@ struct TodayDay {
         } else {
             awayDuration = nil
         }
-    }
-
-    /// When the day began at Home and when that stretch ended, if the record shows it: the first points of
-    /// the day are inside Home. The stretch ends at the last point inside Home before leaving, at the first
-    /// stop, or runs to now.
-    static func homeStretch(
-        home: SavedPlace,
-        firstStay: Stay?,
-        points: [LocationPoint],
-        startOfDay: Date,
-        now: Date
-    ) -> (end: Date, isCurrent: Bool)? {
-        if let firstStay, firstStay.start <= startOfDay.addingTimeInterval(60) { return nil }
-        let limit = firstStay?.start ?? now
-        let early = points.filter { $0.timestamp >= startOfDay && $0.timestamp < limit }.sorted { $0.timestamp < $1.timestamp }
-
-        if let first = early.first {
-            guard home.contains(first.coordinate) else { return nil }
-            if let leftAt = early.firstIndex(where: { !home.contains($0.coordinate) }) {
-                let end = early[max(0, leftAt - 1)].timestamp
-                return end > startOfDay.addingTimeInterval(60) ? (end, false) : nil
-            }
-            return firstStay == nil ? (now, true) : (limit, false)
-        }
-
-        // Nothing recorded before the first stop. A Home visit running past midnight already starts the day
-        // there; without one, there is no sign the night was spent at Home.
-        return nil
     }
 
     /// The most recent earlier day with any stays, newest stay first.

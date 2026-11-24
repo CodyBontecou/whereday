@@ -13,6 +13,7 @@ struct SettingsView: View {
     @ObservedObject private var locationManager: LocationManager
     @ObservedObject private var storeManager = StoreManager.shared
     @ObservedObject private var webhookManager = WebhookManager.shared
+    @ObservedObject private var recapScheduler = RecapReminderScheduler.shared
     @State private var showingMyselfClaim = false
     @State private var showingPaywall = false
     @State private var showingClearConfirmation = false
@@ -449,6 +450,15 @@ struct SettingsView: View {
 
             BackPageDivider()
             NavigationLink {
+                RemindersSettingsView()
+            } label: {
+                BackPageRowLabel(title: Text("Reminders"), value: Text(verbatim: remindersSummary))
+            }
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("settings-reminders")
+
+            BackPageDivider()
+            NavigationLink {
                 SavedLocationsView(viewModel: viewModel)
             } label: {
                 BackPageRowLabel(title: Text("Manage saved places"))
@@ -474,6 +484,18 @@ struct SettingsView: View {
                 subtitle: "Hidden by default; turn on to inspect raw data",
                 isOn: $showOutliers
             )
+        }
+    }
+
+    /// "Every evening · 9 PM", or "Off".
+    private var remindersSummary: String {
+        let settings = recapScheduler.settings
+        let time = RecapTimeFormatter.string(hour: settings.hour, minute: settings.minute)
+        switch settings.frequency {
+        case .off: return String(localized: "Off")
+        case .daily: return String(localized: "Every evening · \(time)")
+        case .weekdays: return String(localized: "Weekdays · \(time)")
+        case .weekly: return String(localized: "Sundays · \(time)")
         }
     }
 
@@ -1299,6 +1321,8 @@ struct BackPageSegmented<Value: Hashable>: View {
     let label: LocalizedStringKey
     let options: [(Value, LocalizedStringKey)]
     @Binding var selection: Value
+    /// An optional accessibility identifier per option, for UI tests.
+    var identifier: ((Value) -> String)? = nil
 
     var body: some View {
         HStack(spacing: 0) {
@@ -1317,6 +1341,7 @@ struct BackPageSegmented<Value: Hashable>: View {
                 }
                 .buttonStyle(.plain)
                 .accessibilityAddTraits(isSelected ? .isSelected : [])
+                .accessibilityIdentifier(identifier?(option.0) ?? "")
             }
         }
         .background(TE.card)

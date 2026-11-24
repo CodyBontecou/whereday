@@ -119,6 +119,67 @@ final class LocationManagerTrackingTests: XCTestCase {
         XCTAssertEqual(manager.currentLocation?.timestamp, locations.last?.timestamp)
     }
 
+    /// Fast travel is real movement: a flight's fixes, each step far over 40 m/s and none coming back, stay
+    /// unflagged and their distance counts.
+    func testFastTravelIsNotFlaggedAndItsDistanceCounts() async throws {
+        defaults.set(false, forKey: "allowNetworkGeocoding")
+        let container = try makeInMemoryContainer()
+        manager.setModelContext(container.mainContext)
+        manager.isTrackingEnabled = true
+        manager.isLiveActivityEnabled = false
+
+        // Heading east at cruise: about 0.135° of longitude (~15 km) a minute, about 250 m/s.
+        let start = Date()
+        let locations = (0..<4).map { step in
+            makeLocation(latitude: 40.0, longitude: -100.0 + 0.135 * Double(step),
+                         timestamp: start.addingTimeInterval(60 * Double(step)))
+        }
+
+        manager.locationManager(CLLocationManager(), didUpdateLocations: locations)
+        try await waitForSavedPointCount(4)
+
+        let savedPoints = try savedPointsInTimeOrder(container)
+        XCTAssertEqual(savedPoints.count, 4)
+        for (previous, next) in zip(savedPoints, savedPoints.dropFirst()) {
+            let speed = DayDistance.leg(DistanceFix(previous), DistanceFix(next))
+                / next.timestamp.timeIntervalSince(previous.timestamp)
+            XCTAssertGreaterThan(speed, 40, "Each step is faster than the old teleport limit")
+        }
+        XCTAssertEqual(savedPoints.map(\.isOutlier), [false, false, false, false])
+
+        let expected = zip(savedPoints, savedPoints.dropFirst())
+            .map { DayDistance.leg(DistanceFix($0), DistanceFix($1)) }
+            .reduce(0, +)
+        XCTAssertGreaterThan(expected, 30_000)
+        XCTAssertEqual(DayDistance.distances(savedPoints).totalMeters, expected, accuracy: 0.01)
+    }
+
+    /// The out-and-back spike rule still catches a GPS glitch: a fix that jumps far out and lands back within
+    /// 30 m of the fix before it is flagged, and only that fix.
+    func testOutAndBackSpikeIsStillFlagged() async throws {
+        defaults.set(false, forKey: "allowNetworkGeocoding")
+        let container = try makeInMemoryContainer()
+        manager.setModelContext(container.mainContext)
+        manager.isTrackingEnabled = true
+        manager.isLiveActivityEnabled = false
+
+        let start = Date()
+        let locations = [
+            makeLocation(latitude: 37.7599, longitude: -122.4148, timestamp: start),
+            // About 5 km north, then straight back to within a few metres of the first fix.
+            makeLocation(latitude: 37.8049, longitude: -122.4148, timestamp: start.addingTimeInterval(30)),
+            makeLocation(latitude: 37.7600, longitude: -122.4148, timestamp: start.addingTimeInterval(60))
+        ]
+
+        manager.locationManager(CLLocationManager(), didUpdateLocations: locations)
+        try await waitForSavedPointCount(3)
+
+        let savedPoints = try savedPointsInTimeOrder(container)
+        XCTAssertEqual(savedPoints.map(\.isOutlier), [false, true, false])
+        XCTAssertEqual(DayDistance.distances(savedPoints).totalMeters,
+                       DayDistance.leg(DistanceFix(savedPoints[0]), DistanceFix(savedPoints[2])), accuracy: 0.01)
+    }
+
     func testReconcilingOpenVisitsLeavesOnlyLatestVisitCurrent() throws {
         let container = try makeInMemoryContainer()
         let context = container.mainContext
@@ -275,6 +336,12 @@ final class LocationManagerTrackingTests: XCTestCase {
         XCTAssertEqual(sessions.count, 1)
         XCTAssertEqual(sessions.first?.startedAt, base)
         XCTAssertEqual(sessions.first?.endedAt, end)
+    }
+
+    private func savedPointsInTimeOrder(_ container: ModelContainer) throws -> [LocationPoint] {
+        var descriptor = FetchDescriptor<LocationPoint>()
+        descriptor.sortBy = [SortDescriptor(\.timestamp, order: .forward)]
+        return try container.mainContext.fetch(descriptor)
     }
 
     private func makeInMemoryContainer() throws -> ModelContainer {
