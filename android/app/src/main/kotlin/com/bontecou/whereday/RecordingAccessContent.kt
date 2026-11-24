@@ -28,10 +28,13 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import java.util.concurrent.atomic.AtomicBoolean
 
-/** Recording-access callout: rust ink on paper with quiet text actions, as in the iOS permission cards. */
+/** Recording-access callout: rust ink on paper with quiet text actions, as in the iOS permission cards.
+ *  [deniedOnly] is for onboarding's own permission steps, which ask first: there access reads as off only once it was refused. */
 @Composable internal fun RecordingAccessNotice(state:RecordingAccessState,options:(PermissionAccessKind)->Unit,location:Boolean=true,notifications:Boolean=true,
-    contentPadding:PaddingValues=PaddingValues(horizontal=20.dp,vertical=12.dp)) {
-    if((!location || state.location==LocationPrecision.precise) && (!notifications || state.notifications) && state.failure==null) return
+    contentPadding:PaddingValues=PaddingValues(horizontal=20.dp,vertical=12.dp),deniedOnly:Boolean=false) {
+    val showLocation=location && state.location!=LocationPrecision.precise && (!deniedOnly || state.location==LocationPrecision.approximate || state.locationRefused)
+    val showNotifications=notifications && !state.notifications && (!deniedOnly || state.notificationsRefused)
+    if(!showLocation && !showNotifications && state.failure==null) return
     val shape=RoundedCornerShape(16.dp)
     val ink=wd.onSecondaryContainer
     // The Location-off board: a secondary-container status band with its own actions.
@@ -39,13 +42,13 @@ import java.util.concurrent.atomic.AtomicBoolean
         .clip(shape).background(wd.secondaryContainer)
         .padding(vertical=6.dp)) {
         var first=true
-        if(location && state.location!=LocationPrecision.precise) {
+        if(showLocation) {
             AccessNoticeItem(if(state.location==LocationPrecision.approximate) Icons.Outlined.LocationSearching else Icons.Outlined.LocationOff,
                 stringResource(when {state.location==LocationPrecision.approximate->R.string.permission_approximate_body;state.locationDeclined->R.string.permission_location_denied;else->R.string.permission_location_none}),
                 stringResource(R.string.permission_location_options),Modifier.testTag("location-access-options")) {options(if(state.location==LocationPrecision.approximate) PermissionAccessKind.precise else PermissionAccessKind.location)}
             first=false
         }
-        if(notifications && !state.notifications) {
+        if(showNotifications) {
             if(!first) WdDivider(Modifier.padding(start=46.dp))
             AccessNoticeItem(Icons.Outlined.NotificationsOff,stringResource(R.string.permission_notifications_body),
                 stringResource(R.string.permission_notification_options),Modifier.testTag("notification-access-options")) {options(PermissionAccessKind.notifications)}

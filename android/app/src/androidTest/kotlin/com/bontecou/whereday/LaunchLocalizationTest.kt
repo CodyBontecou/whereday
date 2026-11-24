@@ -95,8 +95,10 @@ class LaunchLocalizationTest {
             // Location is already allowed here, so the permission step continues; the glance primary asks for notifications.
             if(i<titles.lastIndex) compose.onNodeWithTag("onboarding-continue").performScrollTo().performClick()
         }
-        compose.onNodeWithTag("onboarding-start-now").performScrollTo().assertIsOff().performClick()
+        // On by default; turning it off survives restoration, and so does turning it back on.
+        compose.onNodeWithTag("onboarding-start-now").performScrollTo().assertIsOn().performClick()
         tester.emulateSavedInstanceStateRestore()
+        compose.onNodeWithTag("onboarding-start-now").performScrollTo().assertIsOff().performClick()
         compose.onNodeWithTag("onboarding-start-now").performScrollTo().assertIsOn().assertIsDisplayed()
         assertTrue(completed.isEmpty());assertEquals(0,locations);assertEquals(1,notifications)
         compose.onNodeWithTag("onboarding-continue").performScrollTo().assertIsDisplayed()

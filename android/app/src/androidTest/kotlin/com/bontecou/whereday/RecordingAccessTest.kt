@@ -105,12 +105,34 @@ class RecordingAccessTest {
         compose.onNodeWithTag("permission-review-confirm").performClick()
         assertEquals(listOf("dismiss:1","request:2"),actions)
     }
-    @Test fun approximateOnboardingKeepsImmediateRecordingAnExplicitDefaultOffChoice() {
+    @Test fun onboardingLocationStepSaysAccessIsOffOnlyAfterARefusal() {
+        var access by mutableStateOf(RecordingAccessState(LocationPrecision.none,false))
+        compose.setContent {MaterialTheme {Onboarding({},{},access=access,initialStep=OnboardingStep.perm) {}}}
+        compose.onNodeWithTag("onboarding-progress").assertExists()
+        // Not asked yet: the step's own "Allow location" asks, so nothing reads as off.
+        compose.onNodeWithTag("recording-access-notice").assertDoesNotExist()
+        compose.runOnIdle {access=RecordingAccessState(LocationPrecision.none,false,locationDeclined=true)}
+        compose.onNodeWithText(target.getString(R.string.permission_location_denied)).performScrollTo().assertIsDisplayed()
+        // A refusal from an earlier run (or "Don't allow" twice, when Android stops asking) also counts.
+        compose.runOnIdle {access=RecordingAccessState(LocationPrecision.none,false,locationRefused=true)}
+        compose.onNodeWithTag("location-access-options").performScrollTo().assertIsDisplayed()
+        // Notifications never show on the location step.
+        compose.onNodeWithTag("notification-access-options").assertDoesNotExist()
+    }
+    @Test fun onboardingNotificationStepSaysAccessIsOffOnlyAfterARefusal() {
+        var access by mutableStateOf(RecordingAccessState(LocationPrecision.precise,false))
+        compose.setContent {MaterialTheme {Onboarding({},{},authorization=UsageAuthorization.foreground,access=access,initialStep=OnboardingStep.glance) {}}}
+        compose.onNodeWithTag("onboarding-glance-notification").assertExists()
+        compose.onNodeWithTag("recording-access-notice").assertDoesNotExist()
+        compose.runOnIdle {access=RecordingAccessState(LocationPrecision.precise,false,notificationsRefused=true)}
+        compose.onNodeWithTag("notification-access-options").performScrollTo().assertIsDisplayed()
+    }
+    @Test fun approximateOnboardingStartsRecordingByDefault() {
         var completed:OnboardingDecision?=null
         compose.setContent {MaterialTheme {Onboarding({},{},authorization=UsageAuthorization.foreground,access=RecordingAccessState(LocationPrecision.approximate,false)) {completed=it}}}
         compose.walkOnboarding()
         compose.onNodeWithText(target.getString(R.string.permission_approximate_body)).performScrollTo().assertIsDisplayed()
-        compose.onNodeWithTag("onboarding-start-now").performScrollTo().assertIsOff().performClick()
+        compose.onNodeWithTag("onboarding-start-now").performScrollTo().assertIsOn()
         assertNull(completed)
         compose.onNodeWithTag("onboarding-continue").performScrollTo().performClick()
         compose.waitUntil {completed!=null};assertTrue(completed!!.start)
