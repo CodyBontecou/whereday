@@ -168,7 +168,7 @@ private val frequencyRows=listOf(
             }
         }
         // Google Play's billing state here does not expose the trial's end, so the design's read-only "Trial ending" row is left out.
-        WdSectionFooter(stringResource(R.string.reminders_footer),Modifier.padding(top=4.dp))
+        WdSectionFooter(stringResource(R.string.reminders_footer),Modifier.padding(top=4.dp).testTag("reminders-footer"))
     }
     if(picking) RecapTimeDialog(settings,{picking=false}) {minute->picking=false;change(settings.copy(minuteOfDay=minute))}
 }

@@ -140,8 +140,9 @@ object RecapRules {
         return lastForeground>=start && lastForeground<fire.toInstant()
     }
 
-    fun skip(settings:RecapSettings,fire:ZonedDateTime,facts:RecapFacts,hasAccess:Boolean,lastForeground:Instant?):RecapSkip?=when {
-        !RecapSchedule.firesOn(settings.frequency,fire.toLocalDate())->RecapSkip.off
+    /** [anyDay] is for the QA trigger only: it runs a frequency's recap on a day that frequency would not fire. */
+    fun skip(settings:RecapSettings,fire:ZonedDateTime,facts:RecapFacts,hasAccess:Boolean,lastForeground:Instant?,anyDay:Boolean=false):RecapSkip?=when {
+        !settings.enabled || (!anyDay && !RecapSchedule.firesOn(settings.frequency,fire.toLocalDate()))->RecapSkip.off
         !hasAccess->RecapSkip.noAccess
         !facts.recorded->RecapSkip.nothingRecorded
         !facts.tracked->RecapSkip.trackingOff

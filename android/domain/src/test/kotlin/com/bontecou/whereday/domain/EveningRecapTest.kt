@@ -150,6 +150,9 @@ class EveningRecapTest {
         assertEquals(RecapSkip.off,skip(settings=settings(RecapFrequency.weekly)))
         assertNull(skip(settings=settings(RecapFrequency.weekly),at=at("2026-11-29","21:00")))
         assertEquals(RecapSkip.off,skip(settings=settings(RecapFrequency.weekdays),at=at("2026-11-28","21:00")))
+        // The QA trigger runs a weekly recap on a Monday, but never one that is off.
+        assertNull(RecapRules.skip(settings(RecapFrequency.weekly),fire,busy,true,null,anyDay=true))
+        assertEquals(RecapSkip.off,RecapRules.skip(settings(RecapFrequency.off),fire,busy,true,null,anyDay=true))
     }
     @Test fun skipsWithoutAccess() {assertEquals(RecapSkip.noAccess,skip(access=false))}
     @Test fun skipsWhenNothingWasRecorded() {

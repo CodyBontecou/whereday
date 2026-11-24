@@ -87,7 +87,7 @@ object EveningRecap {
     /** From inside a running recap: REPLACE would cancel the job that is queueing it, so the next one is appended. */
     internal fun scheduleAfterRun(context:Context,settings:RecapSettings,now:ZonedDateTime)=enqueue(context,settings,now,ExistingWorkPolicy.APPEND_OR_REPLACE)
 
-    /** mapQa only: runs the real recap job now, as if it were [frequency]'s evening, ignoring the foreground rule and
+    /** mapQa only: runs the real recap job now with [frequency] (any day of the week), ignoring the foreground rule and
      *  queueing nothing afterwards. The result is in [lastResult]. */
     fun runNowForQa(context:Context,frequency:RecapFrequency?) {
         check(context.packageName.endsWith(".mapqa")) {"The immediate recap is for the disposable QA package only"}
@@ -119,12 +119,12 @@ object EveningRecap {
     }
 
     /** Works out the recap for [fire] and posts it, or says why not. */
-    internal suspend fun deliver(context:Context,graph:AppGraph,settings:RecapSettings,fire:ZonedDateTime,ignoreForeground:Boolean):RunResult {
-        if(!RecapSchedule.firesOn(settings.frequency,fire.toLocalDate())) return RunResult(RecapSkip.off.name)
+    internal suspend fun deliver(context:Context,graph:AppGraph,settings:RecapSettings,fire:ZonedDateTime,qa:Boolean):RunResult {
+        if(!settings.enabled || (!qa && !RecapSchedule.firesOn(settings.frequency,fire.toLocalDate()))) return RunResult(RecapSkip.off.name)
         val weekly=settings.frequency==RecapFrequency.weekly
         val facts=facts(graph,RecapSchedule.period(settings.frequency,fire),weekly)
         val access=graph.purchases.hasAccess(com.bontecou.whereday.billing.Capability.recording)
-        val skip=RecapRules.skip(settings,fire,facts,access,if(ignoreForeground) null else lastForeground(context))
+        val skip=RecapRules.skip(settings,fire,facts,access,if(qa) null else lastForeground(context),anyDay=qa)
         if(skip!=null) return RunResult(skip.name)
         val content=RecapContent.of(facts,weekly,settings.placeNames)
         val metric=graph.preferences.settings.first().metric
@@ -204,7 +204,7 @@ class EveningRecapWork(context:Context,parameters:WorkerParameters):CoroutineWor
             graph.journalClear.awaitReady()
             var settings=graph.preferences.settings.first().recap
             if(qa) RecapFrequency.fromKey(inputData.getString(EveningRecap.QA_FREQUENCY))?.let {settings=settings.copy(frequency=it)}
-            EveningRecap.deliver(context,graph,settings,fire,ignoreForeground=qa)
+            EveningRecap.deliver(context,graph,settings,fire,qa=qa)
         } catch(e:CancellationException) {throw e} catch(_:Exception) {EveningRecap.RunResult("failed")}
         EveningRecap.record(context,result)
         // The next one is queued from the settings as they are now; never the evening that just ran.

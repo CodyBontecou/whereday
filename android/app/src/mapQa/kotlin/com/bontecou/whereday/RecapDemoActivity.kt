@@ -17,8 +17,9 @@ import kotlinx.coroutines.delay
 import java.time.Instant
 
 /** QA-only (mapQa): runs the real evening recap job right now through WorkManager, against whatever this disposable package's
- *  journal holds (seed it first with DemoJournalActivity), and shows what it did. Only the "app was open this evening" rule is
- *  ignored, since this screen is itself in the foreground; every other skip rule applies. Nothing is queued afterwards.
+ *  journal holds (seed it first with DemoJournalActivity), and shows what it did. The "app was open this evening" rule is
+ *  ignored, since this screen is itself in the foreground, and the chosen frequency runs on any weekday (a weekly recap on a
+ *  Monday covers the last seven days); every other skip rule applies. Nothing is queued afterwards.
  *  `adb shell am start -n com.bontecou.whereday.mapqa/com.bontecou.whereday.RecapDemoActivity --es frequency daily`
  *  Extras: `frequency` (`daily`, `weekdays` or `weekly`; default: the saved Settings › Reminders choice). */
 class RecapDemoActivity:androidx.activity.ComponentActivity() {
