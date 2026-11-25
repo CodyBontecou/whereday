@@ -101,7 +101,7 @@ For the full list of warnings and what to do about each, see [Check a GPX file b
 
 ## Convert or combine GPX files
 
-To choose between GPX, KML, GeoJSON and CSV, read the [format comparison](https://whereday.com/blog/gpx-kml-geojson-location-history/). Several GPX files, such as one per day, can be [merged into one](https://whereday.com/tools/merge-gpx/). The viewer can also save the points as CSV or GeoJSON. The [visited countries map](https://whereday.com/tools/visited-countries-map/) accepts GPX as input too. GPX holds coordinates and times, not photos or app-specific notes, and it is not a backup format for a location journal.
+To choose between GPX, KML, GeoJSON and CSV, read the [format comparison](https://whereday.com/blog/gpx-kml-geojson-location-history/). Several GPX files, such as one per day, can be [merged into one](https://whereday.com/tools/merge-gpx/). To trim, split or clean a recorded track, use the [GPX editor](https://whereday.com/tools/gpx-editor/). The viewer can also save the points as CSV or GeoJSON. The [visited countries map](https://whereday.com/tools/visited-countries-map/) accepts GPX as input too. GPX holds coordinates and times, not photos or app-specific notes, and it is not a backup format for a location journal.
 
 ## Make a GPX of your own trips
 

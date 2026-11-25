@@ -7,7 +7,7 @@ iPhone location journals
 
 Practical tools for checking your own files before importing or converting them.
 
-By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed November 20, 2026
+By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed November 25, 2026
 
 ## [Visited countries map](https://whereday.com/tools/visited-countries-map/)
 
@@ -20,6 +20,12 @@ Borders and coastlines are simplified, so points near them are listed rather tha
 Combine several GPX files into one, such as a week of daily exports. Keep tracks separate, join them as segments or make one continuous line, drop exact duplicate points, and check the summary and preview before you download.
 
 Then [open the result in the GPX viewer](https://whereday.com/tools/gpx-viewer/). Your files stay in your browser.
+
+## [GPX editor](https://whereday.com/tools/gpx-editor/)
+
+Trim a recorded track, split it into one file per day or at gaps, hide a home or work zone, remove GPS spikes and reverse it. See what changed before you download. Your file stays in your browser.
+
+Need to join files first? [Merge GPX files](https://whereday.com/tools/merge-gpx/).
 
 ## [KML and KMZ viewer](https://whereday.com/tools/kml-viewer/)
 
