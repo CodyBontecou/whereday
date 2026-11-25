@@ -49,7 +49,7 @@ CSV:     latitude=0, longitude=10</code></pre>
 </section>
 <section aria-labelledby="spreadsheet">
   <h2 id="spreadsheet">Open a GPX-derived CSV without losing its meaning</h2>
-  <p>Start with the <a href="/samples/synthetic-format-trip.csv" download>five-row synthetic CSV</a> above, or open its <a href="/samples/synthetic-format-trip.gpx" download>source GPX</a> in the <a href="/tools/gpx-viewer/">local viewer</a> and choose <strong>Download points as CSV</strong>. This is a point table for inspection, not a Whereday restore file.</p>
+  <p>Start with the <a href="/samples/synthetic-format-trip.csv" download>five-row synthetic CSV</a> above, or open its <a href="/samples/synthetic-format-trip.gpx" download>source GPX</a> in the <a href="/tools/gpx-viewer/">local viewer</a> and choose <strong>Download points as CSV</strong>. This is a point table for inspection, not a Whereday restore file. To turn a spreadsheet of coordinates into GPX, or this CSV back into GPX, use the <a href="/tools/csv-to-gpx/">local CSV to GPX converter</a>.</p>
   <ol>
     <li><strong>Import a copy with a preview.</strong> Select a comma delimiter and check that the header becomes nine columns, from <code>kind</code> through <code>original_time</code>. If everything appears in one column, fix the delimiter before editing any values.</li>
     <li><strong>Keep timestamps as text initially.</strong> Preserve both <code>time_utc</code> and <code>original_time</code> exactly. Automatic date conversion can hide the offset or change the display; make a separate column if you need spreadsheet date calculations.</li>

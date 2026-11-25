@@ -27,6 +27,12 @@ Trim a recorded track, split it into one file per day or at gaps, hide a home or
 
 Need to join files first? [Merge GPX files](https://whereday.com/tools/merge-gpx/).
 
+## [CSV to GPX converter](https://whereday.com/tools/csv-to-gpx/)
+
+Turn a CSV of latitude and longitude, from a spreadsheet or a GPS logger, into a GPX track or waypoints, or turn a GPX file into CSV. Columns are detected for you, and times, skipped rows and segments are shown before you download. Your file stays in your browser.
+
+Then [check the GPX in the viewer](https://whereday.com/tools/gpx-viewer/).
+
 ## [KML and KMZ viewer](https://whereday.com/tools/kml-viewer/)
 
 Open a KML or KMZ file and see its placemarks, lines, polygons and timed gx:Track points, plus a list of what the viewer skips. Your file stays in your browser.

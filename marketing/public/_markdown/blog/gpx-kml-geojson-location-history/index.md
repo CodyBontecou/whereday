@@ -86,7 +86,7 @@ Need to switch? [Convert KML ⇄ GPX in your browser](https://whereday.com/tools
 
 ## Open a GPX-derived CSV without losing its meaning
 
-Start with the [five-row synthetic CSV](https://whereday.com/samples/synthetic-format-trip.csv) above, or open its [source GPX](https://whereday.com/samples/synthetic-format-trip.gpx) in the [local viewer](https://whereday.com/tools/gpx-viewer/) and choose Download points as CSV. This is a point table for inspection, not a Whereday restore file.
+Start with the [five-row synthetic CSV](https://whereday.com/samples/synthetic-format-trip.csv) above, or open its [source GPX](https://whereday.com/samples/synthetic-format-trip.gpx) in the [local viewer](https://whereday.com/tools/gpx-viewer/) and choose Download points as CSV. This is a point table for inspection, not a Whereday restore file. To turn a spreadsheet of coordinates into GPX, or this CSV back into GPX, use the [local CSV to GPX converter](https://whereday.com/tools/csv-to-gpx/).
 
 - Import a copy with a preview. Select a comma delimiter and check that the header becomes nine columns, from `kind` through `original_time`. If everything appears in one column, fix the delimiter before editing any values.
 - Keep timestamps as text initially. Preserve both `time_utc` and `original_time` exactly. Automatic date conversion can hide the offset or change the display; make a separate column if you need spreadsheet date calculations.
