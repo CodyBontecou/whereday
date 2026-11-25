@@ -76,6 +76,8 @@ def build():
     (PUBLIC / "assets/gpx-merge-demo.mjs").write_text("export const MERGE_SAMPLES = " + json.dumps(merge_samples) + ";\n")
     editor_sample = {"name": "synthetic-two-day-walk.gpx", "text": (PUBLIC / "samples/synthetic-two-day-walk.gpx").read_text()}
     (PUBLIC / "assets/gpx-editor-demo.mjs").write_text("export const EDITOR_SAMPLE = " + json.dumps(editor_sample) + ";\n")
+    csv_gpx = {key: {"name": name, "text": (PUBLIC / "samples" / name).read_bytes().decode("utf-8")} for key, name in (("csv", "synthetic-format-trip.csv"), ("gpx", "synthetic-format-trip.gpx"))}
+    (PUBLIC / "assets/csv-gpx-demo.mjs").write_text("export const CSV_GPX_SAMPLES = " + json.dumps(csv_gpx) + ";\n")
     kml_gpx = {key: {"name": name, "text": (PUBLIC / "samples" / name).read_text()} for key, name in (("kml", "synthetic-kml-to-gpx.kml"), ("gpx", "synthetic-kml-to-gpx.expected.gpx"))}
     (PUBLIC / "assets/kml-gpx-demo.mjs").write_text("export const KML_GPX_SAMPLES = " + json.dumps(kml_gpx) + ";\n")
     build_kmz_samples()

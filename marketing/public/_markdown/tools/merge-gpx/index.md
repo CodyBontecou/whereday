@@ -166,4 +166,8 @@ Record in Whereday and export points as GPX.
 
 Trim, split by day or hide your home in the GPX editor.
 
+- [Have a CSV of coordinates?](https://whereday.com/tools/csv-to-gpx/)
+
+Convert it to GPX first, then merge it with other files.
+
 Source: https://whereday.com/tools/merge-gpx/

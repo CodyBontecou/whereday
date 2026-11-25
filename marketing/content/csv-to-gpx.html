@@ -1,0 +1,195 @@
+<link rel="stylesheet" href="/assets/gpx-viewer.css">
+<link rel="stylesheet" href="/assets/csv-gpx.css">
+<section class="gpx-tool csvgpx-tool" aria-labelledby="convert">
+  <h2 id="convert">Add a CSV or GPX file. It stays on this device.</h2>
+  <p>Convert a CSV of coordinates to a GPX file, or a GPX file to CSV, in your browser. Nothing is uploaded. Add a <code>.csv</code> or <code>.txt</code> file, or paste the rows, to get a GPX file. Add a <code>.gpx</code> file to get a CSV. No account and no analytics. Files are read with your browser’s <a href="https://developer.mozilla.org/en-US/docs/Web/API/File_API">File API</a> and never leave the page.</p>
+  <noscript><p>JavaScript is needed to read and convert files in your browser. The explanations and the sample downloads below work without it.</p></noscript>
+  <div id="cg-tool" hidden>
+    <div id="cg-drop" class="csvgpx-drop">
+      <label for="cg-file"><strong>Choose a CSV, TXT or GPX file</strong> or drop it here · up to 10 MiB and 50,000 rows</label>
+      <input id="cg-file" type="file" accept=".csv,.txt,.gpx,text/csv,text/plain,application/gpx+xml,application/xml,text/xml" aria-describedby="cg-status">
+      <label for="cg-paste" style="margin-top:12px"><strong>Or paste the rows here</strong> (include the header row)</label>
+      <textarea id="cg-paste" spellcheck="false" autocomplete="off" aria-describedby="cg-status"></textarea>
+    </div>
+    <div class="gpx-actions"><button id="cg-demo" type="button">Try a synthetic example</button><button id="cg-demo-gpx" type="button">Try a synthetic GPX (GPX to CSV)</button><button id="cg-clear" type="button">Clear</button></div>
+    <p id="cg-status" class="gpx-small" role="status" aria-live="polite">Add a file, or try the synthetic example first. It is invented and contains no personal data.</p>
+    <p id="cg-error" class="csvgpx-warn" role="alert" hidden></p>
+
+    <div id="cg-csv" hidden>
+      <fieldset>
+        <legend>1. Columns</legend>
+        <p class="gpx-small">The tool picks columns by header name (<code>lat</code>, <code>lon</code>, <code>time</code> and the others listed under <a href="#columns">what your CSV needs</a>). Change any of them here. Latitude and longitude are required and must be decimal degrees.</p>
+        <div class="csvgpx-grid">
+          <div><label for="cg-col-lat">Latitude</label><select id="cg-col-lat"></select></div>
+          <div><label for="cg-col-lon">Longitude</label><select id="cg-col-lon"></select></div>
+          <div><label for="cg-col-time">Time (optional)</label><select id="cg-col-time"></select></div>
+          <div><label for="cg-col-ele">Elevation in metres (optional)</label><select id="cg-col-ele"></select></div>
+          <div><label for="cg-col-name">Name (optional)</label><select id="cg-col-name"></select></div>
+          <div><label for="cg-col-group">Group or segment (optional)</label><select id="cg-col-group"></select></div>
+        </div>
+        <div class="csvgpx-grid" style="margin-top:12px">
+          <div><label for="cg-delimiter">Separator</label><select id="cg-delimiter"><option value="auto">Detect (comma, semicolon or tab)</option><option value="comma">Comma</option><option value="semicolon">Semicolon</option><option value="tab">Tab</option></select></div>
+          <div><label for="cg-header">First row</label><select id="cg-header"><option value="auto">Detect</option><option value="yes">Is a header</option><option value="no">Is a point</option></select></div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>2. Track or waypoints</legend>
+        <p class="gpx-small">A <strong>track</strong> is one recorded line through the rows in file order. <strong>Waypoints</strong> are separate named places with no line between them. <a href="/blog/what-is-a-gpx-file/">Track, route and waypoint explained</a>. A time column selects Track by default; without one the default is Waypoints.</p>
+        <label class="csvgpx-choice" for="cg-mode-track"><input id="cg-mode-track" type="radio" name="cg-mode" value="track"><span><strong>Track</strong><span class="gpx-small">Rows become <code>&lt;trkpt&gt;</code> points in <code>&lt;trk&gt;</code> and <code>&lt;trkseg&gt;</code>. A new segment starts where the group column changes.</span></span></label>
+        <label class="csvgpx-choice" for="cg-mode-waypoints"><input id="cg-mode-waypoints" type="radio" name="cg-mode" value="waypoints"><span><strong>Waypoints</strong><span class="gpx-small">Each row becomes a <code>&lt;wpt&gt;</code> with a <code>&lt;name&gt;</code> (the name column, or “Point 1”, “Point 2” and so on).</span></span></label>
+        <label id="cg-kinds-label" class="csvgpx-choice" for="cg-mode-kinds" hidden><input id="cg-mode-kinds" type="radio" name="cg-mode" value="kinds"><span><strong>As in the file</strong><span class="gpx-small">This CSV has a <code>kind</code> column, like the one the <a href="/tools/gpx-viewer/">GPX viewer</a> exports. Rows marked track, route or waypoint come back as those, with segments from the group column.</span></span></label>
+        <label for="cg-name" style="margin-top:12px;display:block;font-weight:600">File and track name</label>
+        <input id="cg-name" type="text" autocomplete="off" style="width:min(100%,22em)">
+      </fieldset>
+
+      <div id="cg-warnings"></div>
+      <div id="cg-output">
+        <h3>Summary and preview</h3>
+        <div class="csvgpx-view">
+          <div>
+            <svg id="cg-plot" viewBox="0 0 800 360" role="img" aria-label="Local plot of the points that will be written"></svg>
+            <p class="gpx-small">A local plot with no street tiles, so nothing is fetched. North is up. Separate segments alternate between two colours; single dots are waypoints.</p>
+          </div>
+          <div>
+            <div class="table-scroll" role="region" aria-label="Conversion summary" tabindex="0"><table class="csvgpx-table"><tbody id="cg-table"></tbody></table></div>
+            <ul id="cg-notes" class="csvgpx-notes"></ul>
+          </div>
+        </div>
+        <div class="csvgpx-download"><button id="cg-download" type="button" disabled>Download GPX</button><span id="cg-filename" class="gpx-small"></span></div>
+      </div>
+    </div>
+
+    <div id="cg-gpx" hidden>
+      <h3>GPX to CSV</h3>
+      <p id="cg-gpx-summary"></p>
+      <p class="gpx-small">The CSV has the same columns as the <a href="/tools/gpx-viewer/">GPX viewer</a> download: <code>kind, group, point, latitude, longitude, time_utc, elevation_m, name, original_time</code>. Text that a spreadsheet could read as a formula gets a leading apostrophe.</p>
+      <div class="csvgpx-download"><button id="cg-gpx-download" type="button" disabled>Download CSV</button></div>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="columns">
+  <h2 id="columns">What your CSV needs</h2>
+  <p>One row per point, a header row, and two columns that hold <strong>decimal degrees</strong>: latitude from −90 to 90 and longitude from −180 to 180. Everything else is optional. Headers are matched without regard to case; the first name in each list that your file has is used, and you can pick another column in the dropdowns.</p>
+  <div class="table-scroll" role="region" aria-label="Recognised column names" tabindex="0"><table>
+    <thead><tr><th scope="col">Field</th><th scope="col">Header names recognised</th><th scope="col">Written to GPX as</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Latitude (required)</th><td><code>lat</code>, <code>latitude</code>, <code>y</code></td><td><code>lat</code> attribute</td></tr>
+      <tr><th scope="row">Longitude (required)</th><td><code>lon</code>, <code>lng</code>, <code>long</code>, <code>longitude</code>, <code>x</code></td><td><code>lon</code> attribute</td></tr>
+      <tr><th scope="row">Time</th><td><code>time</code>, <code>timestamp</code>, <code>time_utc</code>, <code>date</code>, <code>datetime</code></td><td><code>&lt;time&gt;</code>, in UTC</td></tr>
+      <tr><th scope="row">Elevation</th><td><code>ele</code>, <code>elevation</code>, <code>elevation_m</code>, <code>alt</code>, <code>altitude</code></td><td><code>&lt;ele&gt;</code>, metres</td></tr>
+      <tr><th scope="row">Name</th><td><code>name</code>, <code>title</code>, <code>label</code></td><td><code>&lt;name&gt;</code>, XML-escaped</td></tr>
+      <tr><th scope="row">Group or segment</th><td><code>group</code>, <code>segment</code>, <code>track</code></td><td>A new <code>&lt;trkseg&gt;</code> when the value changes</td></tr>
+    </tbody>
+  </table></div>
+  <p>Separators can be commas, semicolons or tabs. In a file that uses semicolons or tabs, a comma is read as a decimal mark, so <code>52,5</code> means 52.5. A file with no header row is read as latitude, then longitude. Quoted fields follow <a href="https://www.rfc-editor.org/rfc/rfc4180">RFC 4180</a>. Row numbers in the skipped-row list count the header as row 1.</p>
+  <h3>Worked example: synthetic data</h3>
+  <p>This is <strong>synthetic, invented data</strong>, not anyone’s trip. <a href="/samples/synthetic-format-trip.csv" download>synthetic-format-trip.csv</a> has five rows in the GPX viewer’s CSV layout. The first point is latitude 0 and longitude 10, so a swapped pair would show up at once as latitude 10, longitude 0.</p>
+  <pre><code>kind,group,point,latitude,longitude,time_utc,elevation_m,name,original_time
+"track",1,1,0,10,"2000-01-01T12:00:00.000Z",,"","2000-01-01T12:00:00Z"
+"track",1,2,0.001,10.001,"2000-01-01T12:01:00.000Z",,"","2000-01-01T12:01:00Z"
+"track",1,3,0.002,10.002,"2000-01-01T12:02:00.000Z",,"","2000-01-01T12:02:00Z"
+"track",2,1,0.003,10.003,"2000-01-01T12:13:00.000Z",,"","2000-01-01T12:13:00Z"
+"track",2,2,0.004,10.004,"2000-01-01T12:14:00.000Z",,"","2000-01-01T12:14:00Z"</code></pre>
+  <p>Click <strong>Try a synthetic example</strong> and the tool detects <code>latitude</code>, <code>longitude</code>, <code>time_utc</code> and <code>group</code>, and writes <strong>5 points in 1 track with 2 segments</strong>, 0 rows skipped, from 2000-01-01T12:00:00Z to 2000-01-01T12:14:00Z. Segment 1 has 3 points and segment 2 has 2, because the group value changes from 1 to 2 after the third row. The file name here is <code>synthetic-format-trip</code>; the output is:</p>
+  <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;gpx version="1.1" creator="Whereday CSV to GPX (whereday.com/tools/csv-to-gpx/)" xmlns="http://www.topografix.com/GPX/1/1"&gt;
+  &lt;metadata&gt;&lt;name&gt;synthetic-format-trip&lt;/name&gt;&lt;/metadata&gt;
+  &lt;trk&gt;
+    &lt;name&gt;synthetic-format-trip&lt;/name&gt;
+    &lt;trkseg&gt;
+      &lt;trkpt lat="0" lon="10"&gt;&lt;time&gt;2000-01-01T12:00:00Z&lt;/time&gt;&lt;/trkpt&gt;
+      &lt;trkpt lat="0.001" lon="10.001"&gt;&lt;time&gt;2000-01-01T12:01:00Z&lt;/time&gt;&lt;/trkpt&gt;
+      &lt;trkpt lat="0.002" lon="10.002"&gt;&lt;time&gt;2000-01-01T12:02:00Z&lt;/time&gt;&lt;/trkpt&gt;
+    &lt;/trkseg&gt;
+    &lt;trkseg&gt;
+      &lt;trkpt lat="0.003" lon="10.003"&gt;&lt;time&gt;2000-01-01T12:13:00Z&lt;/time&gt;&lt;/trkpt&gt;
+      &lt;trkpt lat="0.004" lon="10.004"&gt;&lt;time&gt;2000-01-01T12:14:00Z&lt;/time&gt;&lt;/trkpt&gt;
+    &lt;/trkseg&gt;
+  &lt;/trk&gt;
+&lt;/gpx&gt;</code></pre>
+  <p>The same points are in <a href="/samples/synthetic-format-trip.gpx" download>synthetic-format-trip.gpx</a>. The site’s tests convert the sample, check the result against the official GPX 1.1 schema, and compare it point by point with that GPX.</p>
+  <p>A smaller file works too. A CSV with only <code>lat,lon</code> columns becomes waypoints named Point 1, Point 2 and so on. Add a <code>time</code> column and the default becomes a track.</p>
+</section>
+
+<section aria-labelledby="track-or-waypoints">
+  <h2 id="track-or-waypoints">Track or waypoints?</h2>
+  <p><strong>Choose Track</strong> when the rows are one journey in order, such as a GPS logger or phone recording. The points are joined into a line, and the times say when each was visited. <strong>Choose Waypoints</strong> when the rows are places, such as a list of addresses, campsites or photo locations. They are drawn as separate pins, with no line between them and no order implied.</p>
+  <p>GPX has a third kind, the route, which is a planned path. This tool writes a route only when it reads a CSV that was exported from a GPX file and has a <code>kind</code> column marking rows as route. The <a href="/blog/what-is-a-gpx-file/">GPX file guide</a> explains all three. The <a href="https://www.topografix.com/GPX/1/1/">GPX 1.1 documentation</a> defines them: a track is an ordered list of points describing a path, divided into segments, and a waypoint is a point of interest. How a particular app draws or lists each one is up to that app, so open the result in the <a href="/tools/gpx-viewer/">GPX viewer</a> to check it, then try your destination app with a small file first.</p>
+  <p><strong>Segments.</strong> If your rows come from several recordings, add a group column (<code>group</code>, <code>segment</code> or <code>track</code>). A new segment starts wherever its value changes from one row to the next, so the line does not run from the end of one recording to the start of the next. Values do not need to be numbers, and a value that comes back later starts another segment. Without a group column, all rows form one segment.</p>
+</section>
+
+<section aria-labelledby="time-zones">
+  <h2 id="time-zones">Time zones: why a bare time is a problem</h2>
+  <p>GPX stores times in UTC; the <a href="https://www.topografix.com/GPX/1/1/">GPX 1.1 schema</a> defines them as a date and time with a <code>Z</code> or offset. A CSV from a spreadsheet often has a time such as <code>2000-01-01 12:00:00</code> with no zone. That could be UTC, the logger’s local time or the time zone of your computer, and the file does not say.</p>
+  <ul>
+    <li><strong>With a zone</strong> (<code>Z</code>, or an offset such as <code>+02:00</code>), the time is converted to UTC and written as, for example, <code>2000-01-01T10:00:00Z</code>. The formats follow <a href="https://www.rfc-editor.org/rfc/rfc3339">RFC 3339</a>, a profile of ISO 8601.</li>
+    <li><strong>Without a zone</strong>, the tool treats the time as UTC and shows a warning with the number of times affected. If your times were local, every one of them will be off by your UTC offset. Add the offset to the column in your spreadsheet and convert again.</li>
+    <li><strong>Times it cannot read</strong> (for example <code>1/2/2000 10:00</code>, a date with no time of day, or a day that does not exist) are left out of that point. The point is kept, and the summary counts them.</li>
+  </ul>
+  <p>The tool does not guess a time zone from the coordinates or from your browser, and it does not shift times for daylight saving.</p>
+</section>
+
+<section aria-labelledby="gpx-to-csv">
+  <h2 id="gpx-to-csv">GPX to CSV</h2>
+  <p>Add a <code>.gpx</code> file in the box above, or press <strong>Try a synthetic GPX (GPX to CSV)</strong>. The tool reads GPX 1.0 and 1.1 with the same code as the <a href="/tools/gpx-viewer/">GPX viewer</a> and downloads the same CSV. The columns are:</p>
+  <ul>
+    <li><code>kind</code>: track, route or waypoint</li>
+    <li><code>group</code>: the number of the segment, route or waypoint the point belongs to</li>
+    <li><code>point</code>: the point’s number within its group</li>
+    <li><code>latitude</code>, <code>longitude</code>: decimal degrees</li>
+    <li><code>time_utc</code>: the time converted to UTC, blank when missing or unusable</li>
+    <li><code>elevation_m</code>: elevation in metres, blank when missing</li>
+    <li><code>name</code> and <code>original_time</code>: the point’s name and its time exactly as written in the file</li>
+  </ul>
+  <p>Names and times that start with <code>=</code>, <code>+</code>, <code>-</code> or <code>@</code> get a leading apostrophe so that a spreadsheet shows them as text rather than running them as a formula. When you convert that CSV back to GPX, a leading apostrophe in front of one of those characters is removed. Points with unusable coordinates are left out. In Excel, open the CSV through <em>Data → From Text/CSV</em> if you want to see the raw text of the time columns before the program reformats them. Microsoft’s <a href="https://support.microsoft.com/en-us/excel/get-started/import-or-export-text-txt-or-csv-files">text and CSV import guide</a> describes it.</p>
+  <p>Converting GPX to CSV and back keeps the points, their order and the segment boundaries. The test suite checks this with a file that has a waypoint, a route and several track segments. It does not keep anything else in the GPX, such as extensions.</p>
+</section>
+
+<section aria-labelledby="limits">
+  <h2 id="limits">Limits</h2>
+  <ul>
+    <li><strong>Decimal degrees only.</strong> Values like <code>52°31′12″N</code> or <code>52 31.2 N</code> are not converted, and those rows are skipped. Convert them to decimal degrees in your spreadsheet first. Scientific notation such as <code>1.2E+01</code> is not read either.</li>
+    <li><strong>One file at a time, up to 10 MiB and 50,000 rows</strong>, the same limits as the other tools here.</li>
+    <li><strong>No route reconstruction.</strong> Points are written in file order and are not snapped to roads or paths. Sort rows by time in the spreadsheet if the order matters.</li>
+    <li><strong>Not lossless.</strong> Only the columns above are written. Other columns, and GPX extensions or custom fields in a GPX file, are not carried over in either direction.</li>
+    <li><strong>Longitude 180</strong> is written as −180, which is the same place and the form the GPX 1.1 schema accepts.</li>
+    <li><strong>Browsers.</strong> It needs the File API in a desktop or mobile browser. We have not tested it in every browser, so we don’t promise one.</li>
+  </ul>
+  <p>The output is checked against the official <a href="https://www.topografix.com/GPX/1/1/gpx.xsd">GPX 1.1 schema</a> in the site’s tests. That shows the file is well-formed GPX. It does not show that your coordinates are right, so check the plot.</p>
+</section>
+
+<section aria-labelledby="open-it">
+  <h2 id="open-it">Open the GPX next</h2>
+  <ul>
+    <li><a href="/tools/gpx-viewer/">GPX viewer</a>: check points, segments and times.</li>
+    <li><a href="/tools/gpx-editor/">GPX editor</a>: trim, split by day or hide your home.</li>
+    <li><a href="/tools/merge-gpx/">Merge GPX files</a>: join several converted files.</li>
+    <li><a href="/tools/kml-to-gpx/">KML to GPX</a>: for files that are KML rather than CSV.</li>
+    <li><a href="/blog/gpx-to-google-maps/">Open a GPX file in Google Maps</a></li>
+    <li><a href="/blog/what-is-a-gpx-file/">What is a GPX file?</a></li>
+    <li><a href="/blog/gpx-kml-geojson-location-history/#spreadsheet">Opening a GPX-derived CSV</a>: the CSV checklist.</li>
+    <li><a href="/blog/record-iphone-route-gpx/">Record an iPhone route as GPX</a></li>
+  </ul>
+</section>
+
+<section aria-labelledby="file-privacy">
+  <h2 id="file-privacy">Your files stay in this page</h2>
+  <p>Reading, converting, the plot and the download all happen in your browser. The plot is drawn locally with no map tiles. This page blocks network connections and does not load the website’s analytics, and it stores nothing in your browser. The web server sees an ordinary request for the page and its scripts, not your file, its name or the result.</p>
+</section>
+
+<section aria-labelledby="faq">
+  <h2 id="faq">Questions</h2>
+  <h3>Can Excel save a GPX file?</h3>
+  <p>No. Excel has no GPX option. Save the sheet as CSV (<em>File → Save As → CSV</em>), then convert the CSV here.</p>
+  <h3>Does this upload my file?</h3>
+  <p>No. The file is read and converted in your browser. This page blocks network connections, so it cannot send the file anywhere.</p>
+  <h3>Why are some rows skipped?</h3>
+  <p>A row is skipped when its latitude or longitude is empty, is not a decimal number, or is out of range (latitude beyond ±90, longitude beyond ±180). The summary lists how many rows were skipped for each reason and the first row numbers, counting the header as row 1. A common cause is degrees-minutes-seconds text, or latitude and longitude in the wrong columns.</p>
+  <h3>Can I convert GPX to Excel?</h3>
+  <p>Convert it to CSV here, then open the CSV in Excel or any spreadsheet program. Use <em>Data → From Text/CSV</em> if you want control over how the columns are read.</p>
+</section>
+
+<section class="closing" aria-labelledby="record-your-own"><h2 id="record-your-own">Want a GPS log you don’t have to build in a spreadsheet?</h2><p>Whereday records your visits and routes on your iPhone and exports GPX, CSV and GeoJSON.</p><a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a></section>
+<script type="module" src="/assets/csv-gpx.mjs?v=20261125a"></script>

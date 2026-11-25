@@ -22,6 +22,8 @@ Have a KML file? It must be converted first: [convert KML to GPX](https://whered
 
 Try a synthetic exampleClear fileDownload points as CSVDownload as GeoJSON
 
+Have a CSV and need GPX? [Convert CSV to GPX](https://whereday.com/tools/csv-to-gpx/).
+
 Choose a file, or try the example without sharing any personal history.
 
 JavaScript is needed to read and plot files locally. The guide and sample downloads below work without it.
@@ -99,5 +101,9 @@ View a GeoJSON file locally and save points and lines as GPX or KML.
 - [Trim or split this file](https://whereday.com/tools/gpx-editor/)
 
 Cut the ends, split by day or hide your home, without uploading it.
+
+- [Have a CSV and need GPX?](https://whereday.com/tools/csv-to-gpx/)
+
+Convert a CSV of coordinates to GPX, or a GPX to CSV, locally.
 
 Source: https://whereday.com/tools/gpx-viewer/
