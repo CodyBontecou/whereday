@@ -177,7 +177,7 @@
   </url>
   <url>
     <loc>https://whereday.com/tools/</loc>
-    <lastmod>2026-11-20</lastmod>
+    <lastmod>2026-11-25</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/tools/country-days-calculator/</loc>
@@ -190,6 +190,10 @@
   <url>
     <loc>https://whereday.com/tools/google-timeline-inspector/</loc>
     <lastmod>2026-10-30</lastmod>
+  </url>
+  <url>
+    <loc>https://whereday.com/tools/gpx-editor/</loc>
+    <lastmod>2026-11-25</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/tools/gpx-viewer/</loc>

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <meta name="referrer" content="no-referrer">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GPX Editor Online, Free and Private (Nothing Uploaded) — Whereday</title>
+  <meta name="description" content="Free GPX editor that runs in your browser. Trim, split by day or gap, hide your home, remove GPS spikes and reverse a track. Nothing is uploaded; no account.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://whereday.com/tools/gpx-editor/">
+  <meta name="theme-color" content="#F3EFE6" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0F1626" media="(prefers-color-scheme: dark)">
+  <meta property="og:title" content="GPX Editor Online, Free and Private (Nothing Uploaded) — Whereday">
+  <meta property="og:description" content="Free GPX editor that runs in your browser. Trim, split by day or gap, hide your home, remove GPS spikes and reverse a track. Nothing is uploaded; no account.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://whereday.com/tools/gpx-editor/">
+  <meta property="og:image" content="https://whereday.com/screenshots/map-home.png">
+  <meta property="og:image:alt" content="Whereday’s map home, with today’s route coloured by place">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GPX Editor Online, Free and Private (Nothing Uploaded) — Whereday">
+  <meta name="twitter:description" content="Free GPX editor that runs in your browser. Trim, split by day or gap, hide your home, remove GPS spikes and reverse a track. Nothing is uploaded; no account.">
+  <meta name="twitter:image" content="https://whereday.com/screenshots/map-home.png">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <style>:root {
+  color-scheme: light dark;
+  --paper: #F3EFE6;
+  --card: #FBF9F4;
+  --ink: #1E2B45;
+  --muted: #66645D;
+  --rule: #D8D2C3;
+  --rule-soft: #E4DED0;
+  --accent: #A8381F;
+  --rust: #C2462A;
+  --serif: "Geist", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--ink); background: var(--paper); font-family: var(--sans); font-size: 17px; line-height: 1.6; }
+a { color: var(--accent); text-underline-offset: 4px; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--rust); outline-offset: 4px; }
+.skip-link { position: absolute; left: 16px; top: -80px; padding: 12px; background: var(--card); z-index: 10; }
+.skip-link:focus { top: 16px; }
+.site-nav, .site-footer { max-width: 1120px; margin: auto; padding: 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.brand { display: inline-flex; align-items: center; gap: 12px; color: var(--ink); font-family: var(--serif); font-size: 1.3rem; font-weight: 500; text-decoration: none; }
+.brand img { border-radius: 7px; }
+.nav-links, .footer-links { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+.nav-links a, .footer-links a { font-size: 14px; line-height: 20px; }
+.footer-links a { color: var(--ink); }
+.button { display: inline-flex; justify-content: center; align-items: center; min-height: 44px; padding: 10px 20px; border: 1px solid var(--ink); border-radius: 999px; background: var(--ink); color: var(--paper); font-size: 15px; line-height: 22px; font-weight: 600; text-decoration: none; }
+.button:hover { background: #8E2E19; border-color: #8E2E19; text-decoration: none; }
+.button:active { transform: translateY(1px); }
+main { max-width: 960px; margin: auto; padding: 32px 24px 72px; }
+.breadcrumbs { font-family: var(--mono); font-size: 12px; line-height: 20px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 32px; }
+.breadcrumbs a { color: var(--muted); }
+.breadcrumbs ol { padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.breadcrumbs li { margin: 0; }
+.breadcrumbs li + li::before { content: "·"; margin-right: 8px; }
+.eyebrow, .byline, .source-note { color: var(--muted); font-size: 14px; line-height: 20px; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; }
+h1, h2, h3 { font-family: var(--serif); text-wrap: balance; letter-spacing: -0.01em; color: var(--ink); }
+h1 { max-width: 760px; font-size: 52px; line-height: 1.05; margin: 16px 0 24px; font-weight: 400; }
+h2 { font-size: 32px; line-height: 1.15; font-weight: 400; margin: 0 0 16px; }
+h3 { font-size: 22px; line-height: 1.25; font-weight: 500; margin: 0 0 12px; }
+p { text-wrap: pretty; margin: 0 0 16px; }
+.lede { max-width: 680px; font-size: 20px; line-height: 1.55; color: var(--ink-soft, #3A465F); }
+header { padding-bottom: 40px; border-bottom: 1px solid var(--rule); }
+section { margin-top: 56px; }
+li { margin-bottom: 12px; }
+ul, ol { padding-left: 24px; }
+li::marker { color: var(--rust); }
+.table-scroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: 18px; margin-bottom: 16px; background: var(--card); }
+table { width: 100%; border-collapse: collapse; background: var(--card); }
+caption { text-align: left; font-family: var(--serif); font-size: 19px; font-weight: 500; padding: 16px; }
+th, td { text-align: left; vertical-align: top; padding: 16px; border-bottom: 1px solid var(--rule-soft); min-width: 160px; }
+th + th, td + td { border-left: 1px solid var(--rule-soft); }
+thead { background: var(--paper-deep, #ECE6D8); }
+thead th { font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.product-example { margin: 48px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 24px; }
+.product-example img { width: 240px; max-width: 100%; height: auto; border-radius: 28px; border: 6px solid var(--ink); }
+.route-example { margin: 48px 0; }
+.route-example img { display: block; width: 100%; height: auto; border-radius: 18px; border: 1px solid var(--rule); }
+.route-example figcaption { max-width: none; margin-top: 12px; }
+figcaption { max-width: 320px; color: var(--muted); font-size: 14px; line-height: 20px; }
+.closing { padding: 36px; border-radius: 22px; background: var(--ink); color: var(--paper); }
+.closing h2, .closing h3 { color: var(--paper); font-size: 36px; line-height: 1.1; }
+.closing a:not(.button) { color: #F08A6B; }
+.closing .button { background: var(--paper); border-color: var(--paper); color: var(--ink); }
+.closing .button:hover { background: #ECE6D8; border-color: #ECE6D8; }
+.card { padding: 24px; border: 1px solid var(--rule); border-radius: 18px; background: var(--card); }
+.site-footer { border-top: 1px solid var(--rule); }
+.article-toc { padding: 24px; border: 1px solid var(--rule); border-radius: 18px; background: var(--card); margin-top: 24px; }
+.article-toc ol { margin-bottom: 0; }
+pre { padding: 16px; border: 1px solid var(--rule); border-radius: 14px; background: var(--card); overflow-x: auto; font-size: 14px; line-height: 20px; }
+code, pre { font-family: var(--mono); }
+code { overflow-wrap: anywhere; font-size: 0.92em; }
+pre code { overflow-wrap: normal; }
+@media (max-width: 640px) {
+  .site-nav, .site-footer { padding: 16px; gap: 16px; }
+  .nav-links { gap: 12px; }
+  .nav-links a:not(.button) { display: none; }
+  main { padding: 24px 16px 48px; }
+  h1 { font-size: 38px; line-height: 1.08; }
+  h2 { font-size: 26px; line-height: 1.2; }
+  .lede { font-size: 18px; line-height: 28px; }
+  .closing { padding: 24px; }
+  .closing h2 { font-size: 30px; line-height: 36px; }
+  .product-example { flex-direction: column; align-items: flex-start; }
+}
+</style>
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://whereday.com/tools/gpx-editor/",
+      "url": "https://whereday.com/tools/gpx-editor/",
+      "name": "GPX Editor Online, Free and Private (Nothing Uploaded) — Whereday",
+      "description": "Free GPX editor that runs in your browser. Trim, split by day or gap, hide your home, remove GPS spikes and reverse a track. Nothing is uploaded; no account.",
+      "inLanguage": "en",
+      "dateModified": "2026-11-25",
+      "author": {
+        "@type": "Person",
+        "name": "Cody Bontecou",
+        "url": "https://isolated.tech"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Whereday",
+          "item": "https://whereday.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Tools",
+          "item": "https://whereday.com/tools/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "GPX editor",
+          "item": "https://whereday.com/tools/gpx-editor/"
+        }
+      ]
+    }
+  ]
+}</script>
+<style id="shared-navigation-styles">/* Whereday "Reimagined" theme — shared fonts, tokens and base type. Inlined on every page by build_navigation.py, after each page's own styles, so these tokens win. */
+@font-face { font-family: "Inter"; src: url("/assets/fonts/inter-latin-var.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Geist"; src: url("/assets/fonts/geist-var.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "IBM Plex Mono"; src: url("/assets/fonts/ibm-plex-mono-latin-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "IBM Plex Mono"; src: url("/assets/fonts/ibm-plex-mono-latin-500.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+:root {
+  color-scheme: light dark;
+  --paper: #F3EFE6; --paper-deep: #ECE6D8; --paper-warm: #F7F4EC; --card: #FBF9F4;
+  --ink: #1E2B45; --ink-soft: #3A465F; --mute: #66645D; --muted: #66645D;
+  --rule: #D8D2C3; --rule-soft: #E4DED0;
+  --accent: #A8381F; --accent-deep: #8E2E19; --accent-soft: rgba(194, 70, 42, 0.10); --rust: #C2462A;
+  --ochre: #B7862B; --sage: #5E7F5A; --slate: #7A86A8;
+  --lcd: #3F5C3C; --lcd-bright: #5E7F5A; --lcd-bg: #DFE6D6;
+  --danger: #A8381F; --warning: #8A6420;
+  --serif: "Geist", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  --display: var(--serif);
+  --radius: 14px; --radius-lg: 22px;
+  --shadow: 0 18px 50px -30px rgba(30, 43, 69, 0.45);
+}
+html { background: var(--paper); }
+body { font-family: var(--sans); color: var(--ink); background: var(--paper); }
+::selection { background: rgba(194, 70, 42, 0.18); }
+:where(h1, h2, h3) { font-family: var(--serif); letter-spacing: -0.02em; }
+:where(h1, h2, h3) em { font-style: normal; }
+:where(a):focus-visible { outline: 2px solid var(--rust); outline-offset: 3px; border-radius: 4px; }
+/* Shared components across hand-built pages */
+.btn { border-radius: 999px; font-family: var(--sans); text-transform: none; letter-spacing: 0; font-weight: 600; }
+.btn-primary, .btn.btn-primary { background: var(--ink); border-color: var(--ink); color: var(--paper) !important; }
+.btn-primary:hover { background: var(--accent-deep); border-color: var(--accent-deep); }
+.btn-ghost { border-color: var(--ink); }
+.eyebrow::before { background: var(--rust); }
+.ticker { background: var(--ink); border-color: var(--ink); }
+.ticker-track { color: var(--paper); }
+.ticker-track span::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #F08A6B; }
+/* Navigation */
+.shared-navigation .brand { font-family: var(--serif); font-size: 1.3rem; font-weight: 500; letter-spacing: -0.01em; text-transform: none; color: var(--ink); }
+.shared-navigation .brand img { border-radius: 7px; border: 0; }
+.shared-navigation .brand-dot { display: none; }
+nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-color: var(--rule); }
+.shared-navigation .nav-links > .btn, .shared-navigation .nav-links > .button { border-radius: 999px; padding-inline: 18px; background: var(--ink); border-color: var(--ink); color: var(--paper) !important; font-family: var(--sans); text-transform: none; letter-spacing: 0; font-weight: 600; }
+.shared-navigation .nav-links > .btn:hover, .shared-navigation .nav-links > .button:hover { background: var(--accent-deep); border-color: var(--accent-deep); transform: none; }
+.shared-navigation .nav-links { display:flex; align-items:center; gap:16px; margin-left:auto; position:relative; }
+.shared-navigation .desktop-navigation { display:flex; align-items:center; gap:16px; }
+.shared-navigation .desktop-navigation a { display:inline-block; font:inherit; font-size:14px; line-height:20px; letter-spacing:normal; text-transform:none; color:var(--ink, #1E2B45); text-decoration:none; }
+.shared-navigation .desktop-navigation a:hover { text-decoration:underline; }
+.shared-navigation a[aria-current] { text-decoration:underline; text-underline-offset:4px; }
+.shared-navigation .mobile-navigation { display:none; }
+.shared-navigation summary { cursor:pointer; padding:8px 12px; min-height:44px; border:1px solid var(--rule, #D8D2C3); border-radius:999px; background:var(--paper, #F3EFE6); color:var(--ink, #1E2B45); font:inherit; font-size:14px; line-height:24px; font-weight:600; }
+.shared-navigation summary:active { transform:translateY(1px); }
+.shared-navigation summary:focus-visible, .shared-navigation a:focus-visible { outline:2px solid var(--rust, #C2462A); outline-offset:4px; }
+.shared-navigation .nav-links > .btn, .shared-navigation .nav-links > .button { min-height:44px; font-size:14px; line-height:20px; }
+.shared-navigation .mobile-navigation-links { position:absolute; right:0; top:calc(100% + 8px); width:min(320px, calc(100vw - 32px)); max-height:70vh; max-height:calc(100dvh - 160px); overflow-y:auto; background:var(--paper, #F3EFE6); border:1px solid var(--rule, #D8D2C3); border-radius:8px; padding:8px; z-index:100; }
+.shared-navigation .mobile-navigation-links a { display:block; font:inherit; font-size:16px; line-height:24px; letter-spacing:normal; text-transform:none; color:var(--ink, #1E2B45); padding:12px 16px; min-height:44px; text-decoration:none; border-radius:4px; }
+.shared-navigation .mobile-navigation-links a[aria-current] { text-decoration:underline; }
+.shared-navigation .mobile-navigation-links a:active { background:#ECE6D8; }
+@media (hover:hover) and (pointer:fine) { .shared-navigation summary:hover, .shared-navigation .mobile-navigation-links a:hover { background:#ECE6D8; } }
+@media (max-width:960px) {
+  .shared-navigation .desktop-navigation { display:none; }
+  .shared-navigation .mobile-navigation { display:block; }
+  .shared-navigation .nav-inner { flex-wrap:wrap; gap:12px; padding:16px; }
+  nav.site-nav.shared-navigation { padding:16px; gap:12px; }
+  .shared-navigation .nav-links { gap:8px; flex-wrap:nowrap; }
+}
+/* Night ink: dark appearance follows the system setting */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --paper: #0F1626; --paper-deep: #141C30; --paper-warm: #121A2C; --card: #18213A;
+    --ink: #ECE6D8; --ink-soft: #C9CEDA; --mute: #9AA3B8; --muted: #9AA3B8;
+    --rule: #2C3754; --rule-soft: #222C46;
+    --accent: #F0805F; --accent-deep: #F4A088; --accent-soft: rgba(240, 128, 95, 0.14); --rust: #F0805F;
+    --ochre: #E0B565; --sage: #9DC097; --slate: #8E9BC2;
+    --lcd: #9DC097; --lcd-bright: #9DC097; --lcd-bg: #1F2D24;
+    --danger: #F0805F; --warning: #E0B565; --warn-bg: #2A2416;
+    --shadow: 0 18px 50px -30px rgba(0, 0, 0, 0.8);
+  }
+  /* Panels that are ink-on-paper inverted in light mode stay dark here, one step above the page */
+  .privacy-strip, .trust-card, footer, .ticker, .closing, .cta-panel {
+    --paper: #ECE6D8; --ink: #1B2540; --card: #1B2540; --rule: #2C3754;
+    border: 1px solid #2C3754;
+  }
+  .privacy-readout { background: #141C30 !important; }
+  nav.top, nav.top.shared-navigation { background: rgba(15, 22, 38, 0.9); }
+  .hero-stats { background: var(--card); }
+  .phone { box-shadow: 0 40px 80px -36px rgba(0, 0, 0, 0.9); outline: 1px solid #2C3754; }
+  img[src*="app-store-qr"] { background: #FBF9F4; padding: 8px; border-radius: 10px; }
+  .shared-navigation .nav-links > .btn, .shared-navigation .nav-links > .button { color: #0F1626 !important; }
+  .btn-primary, .btn.btn-primary { color: #0F1626 !important; }
+  .pricing-side .anti-features li::before, .checklist li::before { background-color: #3F5C3C; }
+}
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <nav class="site-nav shared-navigation" aria-label="Primary navigation"><a class="brand" href="/"><img src="/app-icon-28.webp" srcset="/app-icon-28.webp 1x, /app-icon-84.webp 3x" width="28" height="28" alt="">Whereday</a><div class="nav-links"><div class="desktop-navigation"><a href="/blog/">Guides</a><a href="/tools/" aria-current="true">Tools</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/#pricing">Pricing</a></div><details class="mobile-navigation"><summary>Explore</summary><div class="mobile-navigation-links"><a href="/blog/">Guides</a><a href="/tools/" aria-current="true">Tools</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/#pricing">Pricing</a></div></details><a class="button" href="https://apps.apple.com/app/id6761960794">Download free</a></div></nav>
+  <main id="main">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Whereday</a></li><li><a href="/tools/">Tools</a></li><li>GPX editor</li></ol></nav>
+    
+    <header><p class="eyebrow">iPhone location journals</p><h1 id="article-title">Edit a GPX file in your browser: trim, split by day, hide home, reverse</h1><p class="lede">Clean up a recorded track before you share or archive it. Hide a home zone, split a long file by day, cut the ends and remove GPS spikes, then check what changed.</p><p class="byline">By <a href="https://isolated.tech">Cody Bontecou</a>, Whereday’s developer · Reviewed <time datetime="2026-11-25">November 25, 2026</time></p></header>
+    <link rel="stylesheet" href="/assets/gpx-viewer.css">
+<link rel="stylesheet" href="/assets/gpx-editor.css">
+<section class="gpx-tool editor-tool" aria-labelledby="edit">
+  <h2 id="edit">Add a GPX file. It stays on this device.</h2>
+  <p>Choose one GPX file, make your edits, check the “what changed” summary beside the map, then download. No account, upload or analytics. The file is read with your browser’s <a href="https://developer.mozilla.org/en-US/docs/Web/API/File_API">File API</a> and never leaves the page. Your original file is never changed.</p>
+  <noscript><p>JavaScript is needed to read and edit files in your browser. The explanations and the sample download below work without it.</p></noscript>
+  <div id="ged-tool" hidden>
+    <div id="ged-drop" class="editor-drop">
+      <label for="ged-file"><strong>Choose a GPX file</strong> or drop it here · up to 10 MiB and 50,000 points</label>
+      <input id="ged-file" type="file" accept=".gpx,application/gpx+xml,application/xml,text/xml" aria-describedby="ged-status">
+    </div>
+    <div class="gpx-actions"><button id="ged-demo" type="button">Try with the sample file</button><button id="ged-clear" type="button">Clear</button></div>
+    <p id="ged-status" class="gpx-small" role="status" aria-live="polite">Add a file, or try the synthetic two-day walk first.</p>
+    <div id="ged-editor" hidden>
+      <div class="editor-row">
+        <div><label for="ged-zone">Time zone for days, readouts and the time pickers</label><select id="ged-zone"></select></div>
+        <div class="gpx-actions"><button id="ged-undo" type="button" disabled>Undo</button><button id="ged-redo" type="button" disabled>Redo</button><button id="ged-reset" type="button">Reset all edits</button></div>
+      </div>
+      <p class="gpx-small">GPX stores times in UTC. The time zone only decides which calendar day a point belongs to and how times are shown here. It starts as this browser’s time zone.</p>
+
+      <fieldset id="ged-trim">
+        <legend>1. Trim</legend>
+        <p class="gpx-small">Keep only the points from the first to the last one you choose. Drag the sliders, or type a start and end time in the time zone above.</p>
+        <label for="ged-start">First point to keep</label>
+        <input id="ged-start" type="range" min="1" max="1" value="1" aria-describedby="ged-start-out">
+        <p id="ged-start-out" class="editor-readout"></p>
+        <label for="ged-end">Last point to keep</label>
+        <input id="ged-end" type="range" min="1" max="1" value="1" aria-describedby="ged-end-out">
+        <p id="ged-end-out" class="editor-readout"></p>
+        <div class="editor-row">
+          <div><label for="ged-from">Start time</label><input id="ged-from" type="datetime-local" step="1"></div>
+          <div><label for="ged-to">End time</label><input id="ged-to" type="datetime-local" step="1"></div>
+        </div>
+        <p id="ged-time-note" class="gpx-small"></p>
+      </fieldset>
+
+      <fieldset id="ged-spike-box">
+        <legend>2. Remove outlier points (spikes)</legend>
+        <div class="editor-row"><div><label for="ged-spikes">Flag a point when its speed from the previous good point is above (km/h)</label><input id="ged-spikes" type="number" min="1" step="1" value="300"></div></div>
+        <p id="ged-spike-summary" class="editor-readout" role="status"></p>
+        <ol id="ged-flagged" class="editor-flagged"></ol>
+        <label class="editor-check" for="ged-spike-remove"><input id="ged-spike-remove" type="checkbox"><span>Remove the flagged points<span class="gpx-small" style="display:block;font-weight:400">Nothing is deleted until you tick this.</span></span></label>
+      </fieldset>
+
+      <fieldset id="ged-hide-box">
+        <legend>3. Hide a home or work zone</legend>
+        <p class="gpx-small">Remove every track point, waypoint and route point within the radius of a spot. Click the map to pick the spot, type its coordinates, or use the first or last point.</p>
+        <label class="editor-check" for="ged-hide"><input id="ged-hide" type="checkbox"><span>Hide this zone</span></label>
+        <div class="editor-row">
+          <div><label for="ged-lat">Latitude</label><input id="ged-lat" type="number" step="any" min="-90" max="90"></div>
+          <div><label for="ged-lon">Longitude</label><input id="ged-lon" type="number" step="any" min="-180" max="180"></div>
+          <div class="gpx-actions"><button id="ged-use-first" type="button">Use first point</button><button id="ged-use-last" type="button">Use last point</button></div>
+        </div>
+        <label for="ged-radius">Radius: <output id="ged-radius-out" for="ged-radius">300 m</output></label>
+        <input id="ged-radius" type="range" min="100" max="1000" step="50" value="300">
+      </fieldset>
+
+      <fieldset id="ged-split-box">
+        <legend>4. Split</legend>
+        <label class="editor-choice" for="ged-split-none"><input id="ged-split-none" type="radio" name="ged-split" value="none" checked><span><strong>Don’t split</strong></span></label>
+        <label class="editor-choice" for="ged-split-day"><input id="ged-split-day" type="radio" name="ged-split" value="day"><span><strong>One file per calendar day</strong><span class="gpx-small">Days in the time zone above. A segment that crosses midnight there is cut at midnight. Several files are saved in one ZIP.</span></span></label>
+        <label class="editor-choice" for="ged-split-gap"><input id="ged-split-gap" type="radio" name="ged-split" value="gap"><span><strong>Start something new after a gap</strong><span class="gpx-small">When two points in a row are further apart in time than this many minutes.</span></span></label>
+        <div class="editor-row">
+          <div><label for="ged-gap">Gap (minutes)</label><input id="ged-gap" type="number" min="1" step="1" value="30"></div>
+          <div><label for="ged-gap-action">After a gap, start a new</label><select id="ged-gap-action"><option value="segment">segment (same file)</option><option value="file">file (saved in a ZIP)</option></select></div>
+        </div>
+      </fieldset>
+
+      <fieldset id="ged-more-box">
+        <legend>5. Reverse and rename</legend>
+        <label class="editor-check" for="ged-reverse"><input id="ged-reverse" type="checkbox"><span>Reverse the track<span class="gpx-small" style="display:block;font-weight:400">Points keep their own times, so times will run backwards.</span></span></label>
+        <div class="editor-row">
+          <div><label for="ged-track-name">Track name (blank keeps the original)</label><input id="ged-track-name" type="text" autocomplete="off"></div>
+          <div><label for="ged-file-name">File name</label><input id="ged-file-name" type="text" autocomplete="off"></div>
+        </div>
+      </fieldset>
+
+      <p id="ged-error" class="gpx-small" role="alert" hidden></p>
+      <div id="ged-output">
+        <h3>Preview and what changed</h3>
+        <div class="editor-view">
+          <div>
+            <svg id="ged-plot" viewBox="0 0 800 420" role="img" aria-label="Local plot of the edited track: dashed grey is the original, dark is what remains, red circles are flagged points"></svg>
+            <p class="gpx-small">A local plot with no street tiles, so nothing is fetched. North is up. Dashed grey is the original, the dark line is what remains, the dashed red circle is the hidden zone and red rings are flagged points. Click the map to move the zone.</p>
+          </div>
+          <div>
+            <div class="table-scroll" role="region" aria-label="What changed" tabindex="0"><table class="editor-table">
+              <thead><tr><th scope="col"></th><th scope="col">In</th><th scope="col">Out</th></tr></thead>
+              <tbody id="ged-table"></tbody>
+            </table></div>
+            <ul id="ged-notes" class="editor-notes"></ul>
+          </div>
+        </div>
+        <div class="editor-download"><button id="ged-download" type="button" disabled>Download GPX</button><span id="ged-filename" class="gpx-small"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="samples">
+  <h2 id="samples">Sample file: an invented two-day walk</h2>
+  <p><strong>Try with the sample file</strong> loads a synthetic GPX file and sets the time zone to UTC so the numbers below match. The points are invented, near 0° N 10° E, and are not anyone’s recording. You can also <a href="/samples/synthetic-two-day-walk.gpx" download>download synthetic-two-day-walk.gpx</a> and add it with the file picker.</p>
+  <p>It holds 1 track with 3 segments and 140 track points, 1 waypoint (“Home (synthetic)”), 1 route with 3 points and one invented <code>&lt;extensions&gt;</code> value. The first 10 and last 10 track points sit in a “home” cluster at 0° N 10° E. One point, number 31, is a deliberate GPS spike about 31 km away. It runs from 2000-01-01 09:00 to 2000-01-02 17:59 UTC, with a segment of 20 points that crosses midnight UTC.</p>
+  <p>Every operation gives these results on it. The site’s tests check them against the same file:</p>
+  <div class="table-scroll" role="region" aria-label="Expected results for the sample file" tabindex="0"><table class="merge-counts">
+    <thead><tr><th scope="col">Edit</th><th scope="col">Result</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Nothing changed</th><td>140 track points, 3 segments, 1 track, 1 waypoint, 3 route points, 1 file</td></tr>
+      <tr><th scope="row">Hide zone at 0, 10 with a 300 m radius</th><td>140 → 114 track points (26 removed), waypoint 1 → 0, route points 3 → 2, still 3 segments</td></tr>
+      <tr><th scope="row">Speed check at 300 km/h</th><td>1 point flagged (point 31, 2000-01-01 09:30 UTC). Removing it gives 139 track points.</td></tr>
+      <tr><th scope="row">Split by day, UTC</th><td>2 files: 2000-01-01 with 70 track points and 2000-01-02 with 70 (the midnight segment is cut into 10 + 10)</td></tr>
+      <tr><th scope="row">Split by day, Australia/Brisbane (UTC+10)</th><td>3 files with 60, 20 and 60 track points, because the same instants fall on different local days</td></tr>
+      <tr><th scope="row">Split by a 60-minute gap into files</th><td>3 files with 60, 20 and 60 track points</td></tr>
+      <tr><th scope="row">Trim to points 11 to 130</th><td>120 track points kept, 20 removed</td></tr>
+      <tr><th scope="row">Reverse</th><td>140 track points, same segments, in the opposite order. The last point becomes first.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section aria-labelledby="operations">
+  <h2 id="operations">What each edit does</h2>
+  <p>A GPX file can hold waypoints (<code>&lt;wpt&gt;</code>), routes (<code>&lt;rte&gt;</code>, a planned path) and tracks (<code>&lt;trk&gt;</code>, a recorded path). A track is a list of segments (<code>&lt;trkseg&gt;</code>), and each segment is a list of points (<code>&lt;trkpt&gt;</code>) that viewers draw as one connected line. These are defined in the <a href="https://www.topografix.com/GPX/1/1/">GPX 1.1 schema documentation</a>; the format is introduced in the <a href="https://www.topografix.com/gpx.asp">GPX overview</a>. Edits are applied in this order: trim, remove spikes, hide a zone, reverse, split, rename.</p>
+  <div class="table-scroll" role="region" aria-label="What each edit does to GPX elements" tabindex="0"><table class="merge-counts">
+    <thead><tr><th scope="col">Edit</th><th scope="col"><code>&lt;trk&gt;</code> and <code>&lt;trkseg&gt;</code></th><th scope="col"><code>&lt;wpt&gt;</code> and <code>&lt;rte&gt;</code></th><th scope="col"><code>&lt;time&gt;</code>, <code>&lt;ele&gt;</code>, <code>&lt;extensions&gt;</code></th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Trim</th><td>Points before the first and after the last you chose are removed. A segment or track left with no points is dropped.</td><td>Not changed.</td><td>Kept on every remaining point. Picking by time only chooses which points are the first and last.</td></tr>
+      <tr><th scope="row">Remove spikes</th><td>Flagged points are removed; their segment stays one segment.</td><td>Not checked or changed.</td><td>The speed check reads <code>&lt;time&gt;</code>. Other values are not touched.</td></tr>
+      <tr><th scope="row">Hide a zone</th><td>Points inside the radius are removed. If that leaves points on both sides, the segment is cut in two, so no line is drawn across the zone.</td><td>Waypoints and route points inside the radius are removed. A route with no points left is dropped.</td><td>Kept on remaining points.</td></tr>
+      <tr><th scope="row">Reverse</th><td>Tracks, segments and points are put in the opposite order.</td><td>Route points are reversed. Waypoints keep their order.</td><td>Not changed. Each point keeps its own time, so times decrease along the reversed line.</td></tr>
+      <tr><th scope="row">Split by day</th><td>Each point goes to the file for its local day. A segment that spans midnight is cut there. The track header is repeated in each file.</td><td>A waypoint goes to the file for its own day, or the first file if it has no time or no point falls on that day. Routes go in the first file.</td><td>Kept. Times stay in UTC in the file.</td></tr>
+      <tr><th scope="row">Split by gap</th><td>A new segment, or a new file, starts when two timed points in a row are further apart than your limit.</td><td>New segments leave them as they are. With new files, waypoints and routes go in the first file.</td><td>Kept.</td></tr>
+      <tr><th scope="row">Rename</th><td>Sets the <code>&lt;name&gt;</code> of each output track (blank keeps the original). The file name only changes the download.</td><td>Not changed.</td><td>Not changed.</td></tr>
+    </tbody>
+  </table></div>
+  <p><strong>Always dropped or recalculated:</strong> the output is GPX 1.1 with its own <code>creator</code> and recalculated <code>&lt;bounds&gt;</code>. Of the file’s <code>&lt;metadata&gt;</code> the name and description are kept; the summary lists anything else that was in the file, such as author, copyright, links, keywords, a file time or file-level extensions, as dropped. <code>&lt;extensions&gt;</code> on points, tracks and routes are copied as they are, but the tool does not read them, so it cannot promise another app understands them. Distances for the radius and the speed check use the haversine great-circle formula on a sphere with a 6,371 km radius; <a href="https://www.movable-type.co.uk/scripts/latlong.html">Movable Type Scripts describes the formula</a>.</p>
+  <p>Trimming by time sets the first and last point from the nearest timed points, in the time zone you chose. Points that have no time are kept if they lie between the two.</p>
+</section>
+
+<section aria-labelledby="hide-home">
+  <h2 id="hide-home">Hide your home before you share a track</h2>
+  <p>A recording almost always starts and ends where you live, because that is where you pick up your phone or watch, or put it down. Anyone who gets the file can read the first and last coordinates and see the doorstep. The same goes for a work place, a school or a regular parking spot.</p>
+  <p>Removing the start and end by hand is fiddly, because the points near a door are the most crowded. <strong>Hide a zone</strong> picks the spot for you and removes everything inside a circle around it: track points, waypoints and route points. A track that passes through the zone in the middle is cut in two so there is no straight line pointing at the spot.</p>
+  <ol>
+    <li>Add the file and tick <strong>Hide this zone</strong>. Click the map where you live, or choose <strong>Use first point</strong> or <strong>Use last point</strong>.</li>
+    <li>Choose a radius from 100 m to 1,000 m. Watch the dashed red circle on the map and the “Removed” line in the summary.</li>
+    <li>Look at the plot. The dark line should start and end outside the circle, with no short stub left that still leads back to the door.</li>
+    <li>Download, and open the result in the <a href="/tools/gpx-viewer/">GPX viewer</a> to check where it now starts.</li>
+  </ol>
+  <p><strong>Picking a radius.</strong> The circle must be big enough that the first point you share is not recognisable as one particular building. In a dense street 100 m can still be one block; in a quiet area it can leave the lane to your house visible, so a larger radius is safer. A bigger radius removes more of your route, so there is a trade-off. If you want to remove a whole neighbourhood, use 1,000 m. Check the map each time rather than trusting a number.</p>
+  <p>This removes points from the file you share. It does not change the original, anything you already sent, or a copy kept somewhere else.</p>
+</section>
+
+<section aria-labelledby="split-by-day">
+  <h2 id="split-by-day">Split a multi-day file into one file per day</h2>
+  <p>Choose <strong>One file per calendar day</strong>. The tool reads each point’s <code>&lt;time&gt;</code>, works out which date it falls on in the time zone shown at the top, and writes one GPX file per date. When there is more than one file, they are saved together in a single ZIP, with names such as <code>my-track-2000-01-01.gpx</code>. One file is saved on its own as a normal <code>.gpx</code>.</p>
+  <p><strong>The time zone matters.</strong> GPX times are UTC (the <a href="https://www.topografix.com/GPX/1/1/">GPX 1.1 schema</a> defines <code>time</code> as a UTC date and time), but a person’s day is local. The tool starts with your browser’s zone and shows its name. Change it if you recorded somewhere else. On the sample, the same instants make 2 files in UTC and 3 files in Australia/Brisbane.</p>
+  <p><strong>A segment that crosses midnight is cut at midnight local time.</strong> The last point before midnight stays in one day’s file and the first point after in the next. No point is invented at midnight, so each day’s line ends at its own last recorded point. Waypoints go to their own day; routes go in the first file. Points with no time follow the day of the point before them.</p>
+  <p>You can also <strong>start something new after a gap</strong>: a gap of N minutes between two timed points starts a new segment in the same file, or a new file. Use it for a recording that paused for lunch or an overnight stop.</p>
+</section>
+
+<section aria-labelledby="spikes">
+  <h2 id="spikes">Spikes: why tracks have jumps, and how the check works</h2>
+  <p>A phone or watch works out its position from signals, and when the signal is weak the position can briefly be wrong. This is common right after you start recording, indoors, in a car park or between tall buildings. The result is a lone point far from the rest of the track and a long straight line out and back.</p>
+  <p>The check is generic: for each point it works out the speed implied by the distance and time from the previous point, and flags it when the speed is above your threshold. The default of 300 km/h is a suggestion, well above anything you do on foot, by bike or in a car; lower it for a walk, raise it for a plane. Because a real point after a spike would otherwise look like a jump too, each point is compared with the last point that was <em>not</em> flagged.</p>
+  <p>Nothing is deleted until you tick <strong>Remove the flagged points</strong>. Flagged points are listed and circled on the map first. The check cannot look at points with no time or with equal or backwards times, and a spike at the very start of a segment can’t be told from a real jump, so look at the map as well.</p>
+</section>
+
+<section aria-labelledby="whereday">
+  <h2 id="whereday">Clean up a Whereday GPX export</h2>
+  <p>Whereday can export GPX for any date range, and it can write one file per day. Each daily file holds one track called “Whereday track”, with a new segment wherever points are more than 10 minutes apart. Load a file here to trim it, hide your home or reverse it before sharing. The <a href="/docs/export-import/">export and import reference</a> has the options and limits, and the <a href="/blog/record-iphone-route-gpx/">route recording guide</a> covers a single GPX export step by step.</p>
+  <p>Whereday does not import GPX, so an edited file can’t be brought back into the app. Keep a Whereday JSON backup for restoring your records, and treat the edited GPX as a copy for sharing or archiving. To join daily files first, use the <a href="/tools/merge-gpx/#daily-exports">GPX merge tool</a>.</p>
+</section>
+
+<section aria-labelledby="limits">
+  <h2 id="limits">What the tool accepts</h2>
+  <ul>
+    <li><strong>GPX 1.0 and 1.1.</strong> Output is always GPX 1.1, checked against the official <a href="https://www.topografix.com/GPX/1/1/gpx.xsd">GPX 1.1 XSD</a> in the site’s tests. GPX 1.0 fields with no 1.1 equivalent, such as speed and course, are left out and counted.</li>
+    <li><strong>One file at a time</strong>, up to 10 MiB and 50,000 points, the same limit as the <a href="/tools/gpx-viewer/">GPX viewer</a>. The site’s logic tests run every edit on a 50,000-point synthetic file.</li>
+    <li><strong>Tracks, routes and waypoints.</strong> All three are read and written. Hide a zone and reverse touch routes; the others work on tracks.</li>
+    <li><strong>Passed through unchanged:</strong> <code>&lt;time&gt;</code>, <code>&lt;ele&gt;</code>, point and track names, and vendor <code>&lt;extensions&gt;</code> on points, tracks and routes. <strong>Dropped:</strong> other metadata (listed in the summary), file-level extensions, and values that are not valid GPX, such as an unreadable time or a point with missing coordinates.</li>
+    <li><strong>GPX only.</strong> Renaming a file does not convert it. Turn KML into GPX with the <a href="/tools/kml-to-gpx/">KML to GPX converter</a> first.</li>
+    <li><strong>Browsers.</strong> This is a browser tool that needs the File API, for desktop or mobile browsers. We have not tested it in iOS Safari, so we don’t promise it there.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="file-privacy">
+  <h2 id="file-privacy">Your files stay in this page</h2>
+  <p>Reading, editing, the preview and the download all happen in your browser, and the map is drawn locally with no tiles fetched. This page blocks network connections and does not load the website’s analytics. The web server receives an ordinary request when you open the page and its scripts, but not your file, its name or the result. Clear, or closing the tab, removes the file from the page; your original file is never changed. Edits only exist in the page until you choose Download. For a plain explanation of the file format, read <a href="/blog/what-is-a-gpx-file/">What is a GPX file?</a>, and to check the result, follow <a href="/blog/check-gpx-file/">how to check a GPX file</a>.</p>
+</section>
+
+<section aria-labelledby="faq">
+  <h2 id="faq">Questions</h2>
+  <h3>Can I edit GPX on iPhone in Safari?</h3>
+  <p>This is a browser tool for desktop or mobile browsers. We haven’t tested it in iOS Safari, so this page doesn’t claim it works there.</p>
+  <h3>Does it change timestamps?</h3>
+  <p>No. Every point keeps the exact <code>&lt;time&gt;</code> text it had. Trimming, splitting and hiding only choose which points stay. Reversing keeps each point’s own time, so times run backwards along the reversed line. The time zone setting only affects how days and pickers are read, never the times in the file.</p>
+  <h3>Can I undo?</h3>
+  <p>Yes. Each change you make is a step. <strong>Undo</strong> and <strong>Redo</strong> move between them and <strong>Reset all edits</strong> returns to the original. The edits are only applied to the copy you download, so your original file on disk is never altered.</p>
+  <h3>Can I merge files?</h3>
+  <p>Not here. Use the <a href="/tools/merge-gpx/">GPX merge tool</a> to join files, then come back to cut or split the result.</p>
+  <h3>Can I convert to KML or GeoJSON?</h3>
+  <p>Edit the GPX here, then convert it with the <a href="/tools/kml-to-gpx/">KML ⇄ GPX converter</a> or save points and lines from a GeoJSON file with the <a href="/tools/geojson-viewer/">GeoJSON viewer</a>.</p>
+  <h3>Is this a route planner?</h3>
+  <p>No. It edits tracks that were already recorded, such as an exercise recording or a location-history export. It doesn’t draw new routes.</p>
+</section>
+
+<section class="closing" aria-labelledby="record-next"><h2 id="record-next">Record routes without editing files afterwards.</h2><p>Want routes and places recorded automatically, then exported as GPX, KML, GeoJSON, CSV, JSON or Markdown for any date range? Whereday keeps your location history on your iPhone.</p><a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a></section>
+<script type="module" src="/assets/gpx-editor.mjs?v=20261125a"></script>
+
+    
+    <nav class="article-toc" aria-labelledby="read-next-title"><h2 id="read-next-title">Read next</h2><ul><li><a href="/tools/merge-gpx/">Merge several GPX files</a><p>Join daily or split files into one, without uploading them.</p></li><li><a href="/tools/gpx-viewer/">Check the edited file</a><p>Open it in the GPX viewer and compare points, segments and times.</p></li><li><a href="/tools/kml-to-gpx/">Convert KML to GPX or back</a><p>Keep gx:Track times and see what was dropped.</p></li><li><a href="/blog/record-iphone-route-gpx/">Record your next route</a><p>Record in Whereday and export points as GPX.</p></li></ul></nav>
+  </main>
+  <footer class="site-footer"><a class="brand" href="/">Whereday · isolated.tech</a><div class="footer-links"><a href="/blog/">Guides</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:cody.bontecou@gmail.com">Support</a></div></footer>
+  
+<script id="shared-navigation-script" type="module" src="/assets/navigation.mjs?v=20261030"></script>
+</body>
+</html>

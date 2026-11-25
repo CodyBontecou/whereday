@@ -84,6 +84,8 @@ Want the file on Google Maps? Follow [how to open a GPX file in Google Maps via 
 
 Exporting a trip with One file per day turned on under Output? [Merge the daily GPX files into one trip file](https://whereday.com/tools/merge-gpx/#daily-exports) in your browser.
 
+Sharing the file? Your route probably starts and ends at home. [Hide your home zone](https://whereday.com/tools/gpx-editor/#hide-home) in your browser first.
+
 ![Example Whereday export interface with data types and file format choices](https://whereday.com/screenshots/export-480.webp)
 
 The export interface. This screenshot illustrates the workflow and may show sample data or earlier labels.

@@ -47,6 +47,7 @@ const pages = {
   "/tools/country-days-calculator/": "/_markdown/tools/country-days-calculator/index.md",
   "/tools/geojson-viewer/": "/_markdown/tools/geojson-viewer/index.md",
   "/tools/google-timeline-inspector/": "/_markdown/tools/google-timeline-inspector/index.md",
+  "/tools/gpx-editor/": "/_markdown/tools/gpx-editor/index.md",
   "/tools/gpx-viewer/": "/_markdown/tools/gpx-viewer/index.md",
   "/tools/": "/_markdown/tools/index.md",
   "/tools/kml-to-gpx/": "/_markdown/tools/kml-to-gpx/index.md",

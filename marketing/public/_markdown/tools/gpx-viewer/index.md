@@ -96,4 +96,8 @@ Expected counts and warnings for an invented five-point file.
 
 View a GeoJSON file locally and save points and lines as GPX or KML.
 
+- [Trim or split this file](https://whereday.com/tools/gpx-editor/)
+
+Cut the ends, split by day or hide your home, without uploading it.
+
 Source: https://whereday.com/tools/gpx-viewer/

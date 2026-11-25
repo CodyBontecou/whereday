@@ -101,7 +101,7 @@ Export options, filename templates and saving limits are described in the [expor
 
 ## Check the merged file
 
-Open the download in the [GPX viewer](https://whereday.com/tools/gpx-viewer/) and compare its counts with the summary here. The viewer flags missing times, gaps over 10 minutes within a segment, and backwards timestamps. The [GPX checking tutorial](https://whereday.com/blog/check-gpx-file/) explains each warning. Need a different file type for another app? [Compare GPX, KML, GeoJSON and CSV](https://whereday.com/blog/gpx-kml-geojson-location-history/).
+Open the download in the [GPX viewer](https://whereday.com/tools/gpx-viewer/) and compare its counts with the summary here. The viewer flags missing times, gaps over 10 minutes within a segment, and backwards timestamps. The [GPX checking tutorial](https://whereday.com/blog/check-gpx-file/) explains each warning. Need to cut or split the result? Use the [GPX editor](https://whereday.com/tools/gpx-editor/). Need a different file type for another app? [Compare GPX, KML, GeoJSON and CSV](https://whereday.com/blog/gpx-kml-geojson-location-history/).
 
 ## What the tool accepts
 
@@ -161,5 +161,9 @@ Follow a worked example of gaps, missing times and segments.
 - [Record your next route](https://whereday.com/blog/record-iphone-route-gpx/)
 
 Record in Whereday and export points as GPX.
+
+- [Cut or split the result](https://whereday.com/tools/gpx-editor/)
+
+Trim, split by day or hide your home in the GPX editor.
 
 Source: https://whereday.com/tools/merge-gpx/

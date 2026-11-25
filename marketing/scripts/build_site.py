@@ -74,6 +74,8 @@ def build():
     country_days = (PUBLIC / "samples/synthetic-country-days.csv").read_bytes().decode("utf-8")
     merge_samples = [{"name": f"synthetic-walk-day-{day}.gpx", "text": (PUBLIC / f"samples/synthetic-walk-day-{day}.gpx").read_text()} for day in (1, 2, 3)]
     (PUBLIC / "assets/gpx-merge-demo.mjs").write_text("export const MERGE_SAMPLES = " + json.dumps(merge_samples) + ";\n")
+    editor_sample = {"name": "synthetic-two-day-walk.gpx", "text": (PUBLIC / "samples/synthetic-two-day-walk.gpx").read_text()}
+    (PUBLIC / "assets/gpx-editor-demo.mjs").write_text("export const EDITOR_SAMPLE = " + json.dumps(editor_sample) + ";\n")
     kml_gpx = {key: {"name": name, "text": (PUBLIC / "samples" / name).read_text()} for key, name in (("kml", "synthetic-kml-to-gpx.kml"), ("gpx", "synthetic-kml-to-gpx.expected.gpx"))}
     (PUBLIC / "assets/kml-gpx-demo.mjs").write_text("export const KML_GPX_SAMPLES = " + json.dumps(kml_gpx) + ";\n")
     build_kmz_samples()

@@ -1,0 +1,37 @@
+.editor-tool .editor-drop { border:2px dashed var(--rule, #D8D2C3); border-radius:10px; padding:16px 20px; margin:16px 0; background:var(--paper-warm, #F7F4EC); }
+.editor-tool .editor-drop.dragging { border-color:var(--accent, #A8381F); background:var(--paper, #F3EFE6); }
+.editor-tool .editor-drop label { display:block; }
+.editor-tool fieldset { border:1px solid var(--rule, #D8D2C3); border-radius:12px; padding:12px 20px 16px; margin:20px 0; min-width:0; }
+.editor-tool legend { font-family:var(--serif); font-size:19px; font-weight:500; padding:0 6px; }
+.editor-tool fieldset:disabled { opacity:.55; }
+.editor-tool .editor-row { display:flex; flex-wrap:wrap; gap:8px 16px; align-items:flex-end; margin:8px 0; }
+.editor-tool .editor-row label { display:block; font-weight:600; font-size:15px; }
+.editor-tool .editor-row input[type="number"], .editor-tool .editor-row input[type="text"], .editor-tool .editor-row input[type="datetime-local"], .editor-tool .editor-row select { margin:4px 0 0; }
+.editor-tool input[type="number"] { width:9em; }
+.editor-tool input[type="text"] { width:min(100%, 22em); }
+.editor-tool input[type="range"] { display:block; width:100%; margin:8px 0 2px; }
+.editor-tool .editor-check { display:flex; gap:10px; align-items:flex-start; margin:10px 0 0; font-weight:600; }
+.editor-tool .editor-check input { display:inline-block; margin:4px 0 0; width:20px; height:20px; flex:0 0 auto; }
+.editor-tool .editor-choice { display:flex; gap:10px; align-items:flex-start; margin:10px 0 0; }
+.editor-tool .editor-choice input { display:inline-block; margin:4px 0 0; width:20px; height:20px; flex:0 0 auto; }
+.editor-tool .editor-choice span { display:block; }
+.editor-tool .editor-readout { font-size:15px; margin:0 0 10px; overflow-wrap:anywhere; }
+.editor-tool .editor-flagged { margin:8px 0 0; padding-left:22px; font-size:15px; }
+.editor-tool .editor-flagged li { margin-bottom:4px; overflow-wrap:anywhere; }
+.editor-view { display:grid; grid-template-columns:minmax(0,1fr); gap:20px; align-items:start; margin-top:16px; }
+.editor-view > * { min-width:0; }
+#ged-plot { display:block; width:100%; height:auto; background:var(--paper-warm, #F7F4EC); border:1px solid var(--rule, #D8D2C3); border-radius:8px; cursor:crosshair; }
+#ged-plot .ged-orig { fill:none; stroke:var(--mute, #66645D); stroke-opacity:.55; stroke-width:2; stroke-dasharray:4 4; stroke-linejoin:round; }
+#ged-plot .ged-out { fill:none; stroke:var(--ink, #1E2B45); stroke-width:3; stroke-linejoin:round; stroke-linecap:round; }
+#ged-plot .ged-out.alt { stroke:var(--ink-soft, #2A3A5C); stroke-opacity:.75; }
+#ged-plot .ged-zone { fill:var(--accent, #A8381F); fill-opacity:.12; stroke:var(--accent, #A8381F); stroke-width:2; stroke-dasharray:6 4; }
+#ged-plot .ged-flag { fill:var(--card, #FBF9F4); stroke:var(--accent, #A8381F); stroke-width:3; }
+.editor-tool .editor-table { width:100%; border-collapse:collapse; font-size:15px; }
+.editor-tool .editor-table th, .editor-tool .editor-table td { text-align:left; padding:6px 8px; border-bottom:1px solid var(--rule, #D8D2C3); overflow-wrap:anywhere; vertical-align:top; }
+.editor-tool .editor-table thead th { font-family:var(--mono); font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--mute, #66645D); }
+.editor-tool .editor-notes li { margin-bottom:6px; font-size:15px; }
+.editor-tool .editor-download { display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin:20px 0 0; }
+.editor-tool .editor-download button { font-weight:600; background:var(--ink, #1E2B45); color:var(--paper, #F3EFE6); }
+.editor-tool .editor-download button:disabled { background:var(--card, #FBF9F4); color:var(--ink, #16203A); }
+@media(max-width:640px) { .editor-tool .editor-table { font-size:13px; } .editor-tool .editor-table th, .editor-tool .editor-table td { padding:5px 4px; } .editor-tool fieldset { padding:10px 12px 14px; } .editor-tool input[type="number"] { width:7.5em; } }
+@media(hover:hover) and (pointer:fine) { .editor-tool .editor-download button:hover:not(:disabled) { background:var(--ink-soft, #2A3A5C); } }
