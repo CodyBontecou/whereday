@@ -49,7 +49,7 @@ Turning these on does not reveal earlier days. If you only just enabled them, th
 
 ## Why Settings → Significant Locations looks empty
 
-Most answers say to open Settings → Privacy & Security → Location Services → System Services → Significant Locations. Older iOS versions use that label; newer ones say Significant Locations & Routes. That screen is a switch and a Clear History button. It is not a list you scroll through by date.
+Most answers say to open Settings → Privacy & Security → Location Services → System Services → Significant Locations. Older iOS versions use that label (once called [Frequent Locations](https://whereday.com/blog/significant-locations-iphone/#frequent-locations)); newer ones say Significant Locations & Routes. That screen is a switch and a Clear History button. It is not a list you scroll through by date.
 
 Apple’s [Location Services & Privacy](https://www.apple.com/legal/privacy/data/en/location-services/) page describes it as tracking places you recently visited, how often and when, and the routes you took, and says it syncs with end-to-end encryption. The browsable list is in Maps → Places → Visited Places. The [full guide to Significant Locations and Visited Places](https://whereday.com/blog/significant-locations-iphone/) covers clearing it, turning it off and why neither feature exports.
 
