@@ -119,11 +119,11 @@ final class OnboardingFreeWeekTests: XCTestCase {
     func testTimelineDatesCrossMonthEnd() {
         let now = date(2026, 11, 28, 9)
         let entries = OnboardingTrialTimeline.entries(
-            offer: .trial(.week, displayPrice: "$0.99"), today: .init(canRecord: true),
+            offer: .trial(.week, displayPrice: "$2.99"), today: .init(canRecord: true),
             recapTime: nine, now: now, calendar: calendar, locale: locale, bundle: english)
         XCTAssertEqual(entries[2].when, "Day 5 · Dec 3")
         XCTAssertEqual(entries[3].when, "Day 7 · Dec 5")
-        XCTAssertEqual(entries[3].text, "Weekly plan begins: $0.99 a week. Cancel before then and pay nothing.")
+        XCTAssertEqual(entries[3].text, "Weekly plan begins: $2.99 a week. Cancel before then and pay nothing.")
     }
 
     func testRecapEntryFollowsTheConfiguredTimeAndMakesNoTonightPromise() {
@@ -161,10 +161,10 @@ final class OnboardingFreeWeekTests: XCTestCase {
     func testLifetimeAndNonTrialTimelinesMakeNoFreeClaims() {
         let now = date(2026, 11, 23, 14)
         let lifetime = OnboardingTrialTimeline.entries(
-            offer: .lifetime(displayPrice: "$49.99"), today: .init(canRecord: true),
+            offer: .lifetime(displayPrice: "$79.99"), today: .init(canRecord: true),
             recapTime: nine, now: now, calendar: calendar, locale: locale, bundle: english)
         XCTAssertEqual(lifetime.map(\.kind), [.today, .recap, .lifetime])
-        XCTAssertEqual(lifetime[2].text, "One payment of $49.99. No renewals, no reminders.")
+        XCTAssertEqual(lifetime[2].text, "One payment of $79.99. No renewals, no reminders.")
 
         let subscribe = OnboardingTrialTimeline.entries(
             offer: .subscription(.year, displayPrice: "$29.99"), today: .init(canRecord: true),
@@ -197,9 +197,9 @@ final class OnboardingFreeWeekTests: XCTestCase {
                        "Subscribe")
         XCTAssertEqual(OnboardingFreeWeekCopy.eyebrow(for: .subscription(.year, displayPrice: "$29.99"), bundle: english), "YOUR PLAN")
         XCTAssertEqual(OnboardingFreeWeekCopy.headline(for: .subscription(.year, displayPrice: nil), bundle: english), "Recording starts\nnow.")
-        let fine = OnboardingFreeWeekCopy.finePrint(for: .familyWeekly, displayPrice: "$1.99", hasTrial: false, now: now,
+        let fine = OnboardingFreeWeekCopy.finePrint(for: .familyWeekly, displayPrice: "$4.99", hasTrial: false, now: now,
                                                     calendar: calendar, locale: locale, bundle: english)
-        XCTAssertEqual(fine, "$1.99 per week, automatically renewing until canceled. "
+        XCTAssertEqual(fine, "$4.99 per week, automatically renewing until canceled. "
                        + "Cancel in Apple subscription settings at least 24 hours before renewal.")
         XCTAssertFalse(fine.localizedCaseInsensitiveContains("free"))
         XCTAssertNil(OnboardingFreeWeekCopy.planTag(for: .individualYearly, hasTrial: false, bundle: english))
@@ -208,15 +208,15 @@ final class OnboardingFreeWeekTests: XCTestCase {
     }
 
     func testLifetimeCopyNamesThePriceAndNoRenewal() {
-        XCTAssertEqual(OnboardingFreeWeekCopy.primaryTitle(for: .individual, displayPrice: "$49.99", hasTrial: false, bundle: english),
-                       "Buy Lifetime · $49.99")
+        XCTAssertEqual(OnboardingFreeWeekCopy.primaryTitle(for: .individual, displayPrice: "$79.99", hasTrial: false, bundle: english),
+                       "Buy Lifetime · $79.99")
         XCTAssertEqual(OnboardingFreeWeekCopy.primaryTitle(for: .family, displayPrice: nil, hasTrial: false, bundle: english),
                        "Buy Lifetime")
-        XCTAssertEqual(OnboardingFreeWeekCopy.finePrint(for: .individual, displayPrice: "$49.99", hasTrial: true,
+        XCTAssertEqual(OnboardingFreeWeekCopy.finePrint(for: .individual, displayPrice: "$79.99", hasTrial: true,
                                                         now: Date(), bundle: english),
-                       "$49.99 charged once to your Apple Account. No subscription.")
+                       "$79.99 charged once to your Apple Account. No subscription.")
         // A lifetime product never reports a trial, whatever eligibility says.
-        XCTAssertEqual(OnboardingOffer(option: .individual, displayPrice: "$49.99", hasTrial: true), .lifetime(displayPrice: "$49.99"))
+        XCTAssertEqual(OnboardingOffer(option: .individual, displayPrice: "$79.99", hasTrial: true), .lifetime(displayPrice: "$79.99"))
     }
 
     func testNewOnboardingCopyIsTranslatedInEveryShippedLocale() throws {

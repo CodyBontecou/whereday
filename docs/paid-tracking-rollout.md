@@ -1,5 +1,7 @@
 # Paid tracking rollout
 
+> **Current prices (verified live November 26, 2026, U.S.):** prices were raised in the stores. App Store: Individual Weekly $2.99, Individual Yearly $29.99, Family Weekly $4.99, Family Yearly $49.99, Individual Lifetime $79.99, Family Lifetime $129.99, Family Lifetime Upgrade $49.99. Google Play: Weekly $2.99, Yearly $29.99, Lifetime $79.99. Prices elsewhere in this document are dated history.
+
 > **October 30, 2026 launch update:** The owner explicitly authorized applying Lifetime prices immediately, overriding the earlier live-app prerequisite, and then releasing the approved app. ASC readback confirms **1.8/build 52 READY_FOR_DISTRIBUTION**, all four subscriptions APPROVED, and U.S. Lifetime prices of **$49.99 Individual / $89.99 Family / $40.00 Family Upgrade**. All existing non-U.S. manual price overrides were preserved. Evidence: `.asc/artifacts/lifetime-launch-20261030/`. The historical holds and pending-review states below are superseded. The separate phone QA build is not the distributed binary.
 
 > Earlier integration instruction (historical):

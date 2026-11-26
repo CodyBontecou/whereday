@@ -7,7 +7,7 @@
 
 ## Current paid-access policy
 
-The feature-by-feature free/paid labels below are the August 2026 baseline. They do not define the subscription-enabled release. New users need an eligible store-backed trial, weekly/yearly subscription, or Lifetime purchase before recording visits/routes or manual check-ins. Existing free users retain tracking and their previous export purchase requirement. New-cohort users retain viewing/export of existing records after expiration. Family Sharing shares access, not journals. See [paid tracking rollout](paid-tracking-rollout.md) for current product IDs and migration rules. Lifetime prices remain on hold; no new price or release is authorized by this inventory.
+The feature-by-feature free/paid labels below are the August 2026 baseline. They do not define the subscription-enabled release. New users need an eligible store-backed trial, weekly/yearly subscription, or Lifetime purchase before recording visits/routes or manual check-ins. Existing free users retain tracking and their previous export purchase requirement. New-cohort users retain viewing/export of existing records after expiration. Family Sharing shares access, not journals. See [paid tracking rollout](paid-tracking-rollout.md) for current product IDs and migration rules. Current U.S. App Store prices (verified live November 26, 2026) are listed in the [README pricing table](../README.md#pricing); the MON-1 prices below are the August 2026 baseline.
 
 **Conventions**
 - Feature IDs are stable (`DOMAIN-NUMBER`). Reference them from docs, release notes, and issues.

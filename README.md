@@ -84,15 +84,15 @@ iOS lock screen widget via Live Activities and watchOS complications for quick t
 
 ## Pricing
 
-Version 1.8 introduces paid tracking for **new users only**. Build 52 and the four subscriptions were submitted; the app is now `IN_REVIEW`, with manual release. The current working checkout contains newer, unsubmitted changes; qualify a new candidate before replacing build 52. See [release status](docs/subscription-staging-1.8.md). Weekly/yearly subscriptions are the rollout choice; Android is outside this rollout. The table below contains future Lifetime targets, not current Lifetime prices:
+Version 1.8 introduced paid tracking for **new users only**. Current U.S. prices (raised in the stores; verified live in App Store Connect and Google Play on November 26, 2026):
 
 | Plan | Individual | Apple Family Sharing |
 |---|---:|---:|
-| Weekly | $0.99 | $1.99 |
+| Weekly | $2.99 | $4.99 |
 | Yearly | $29.99 | $49.99 |
-| Lifetime | $49.99 | $89.99 |
+| Lifetime | $79.99 | $129.99 |
 
-**Live pricing is on hold:** Individual Lifetime remains $19.99, Family Lifetime $39.99, and Family Upgrade $19.99 in the U.S. Apply the new lifetime targets only after the subscriptions are approved, the subscription-enabled app is live, and the user authorizes the price changes. No future increase is scheduled.
+Owners of Individual Lifetime can upgrade to Family Lifetime for $49.99 on the App Store. Google Play offers Weekly $2.99, Yearly $29.99 and Lifetime $79.99. For release history, see [the 1.8 release record](docs/subscription-staging-1.8.md).
 
 Weekly and yearly subscriptions offer a 7-day free trial to eligible subscribers, then renew automatically. Lifetime is a one-time purchase without a trial. For users joining under the subscription model, viewing and exporting existing records remain available after subscription expiration; new tracking and manual check-ins require access. Deleting the app or buying Lifetime does not cancel an existing subscription. Family Sharing shares access, not a location journal.
 
