@@ -1,0 +1,94 @@
+<section aria-labelledby="quick-answer">
+  <h2 id="quick-answer">Does Apple Watch keep a location history?</h2>
+  <p><strong>Not as a day-by-day timeline you can browse.</strong> What a Watch records is spread across separate places: workout routes in the Fitness app on your iPhone, the Watch’s current or last known position in Find My, and, on the paired iPhone, Significant Locations.</p>
+  <p>If you want a continuous log you can keep, record it with an app and export it. This guide covers only your own Watch and your own data.</p>
+  <nav class="article-toc" aria-label="In this post"><strong>In this post</strong><ol><li><a href="#where-it-lives">Where your Watch’s location data goes</a></li><li><a href="#workout-routes">See a workout route</a></li><li><a href="#find-my">Find My: where the Watch is, not where it has been</a></li><li><a href="#iphone-side">What your iPhone keeps</a></li><li><a href="#log-with-watch">Keep a continuous log with Whereday</a></li><li><a href="#check-file">Check the exported file</a></li><li><a href="#privacy">Keeping Watch location data private</a></li><li><a href="#questions">Common questions</a></li></ol></nav>
+</section>
+
+<section aria-labelledby="where-it-lives">
+  <h2 id="where-it-lives">Where your Watch’s location data actually goes</h2>
+  <p>Each row below is a different feature. Cells say “Not documented by Apple” where the cited Apple pages don’t give an answer.</p>
+  <div class="table-scroll" role="region" aria-label="Where Apple Watch location data lives" tabindex="0"><table>
+    <caption>Where each kind of Watch-related location data lives</caption>
+    <thead><tr><th scope="col">Source</th><th scope="col">What it records</th><th scope="col">Where you view it</th><th scope="col">How far back</th><th scope="col">Export</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Workout route</th><td>A route for outdoor walk, hiking, run, open water swim and cycle workouts, while the workout runs</td><td>Fitness app on iPhone, in the workout’s summary</td><td>Not documented by Apple</td><td>Not documented by Apple</td></tr>
+      <tr><th scope="row">Find My</th><td>Where the Watch is, and with Send Last Location its last known location when the battery is critically low</td><td>Find My app, on a map</td><td>A current or last known point, not a history</td><td>None</td></tr>
+      <tr><th scope="row">Significant Locations (on the iPhone)</th><td>Places your iPhone learns; a Location Services setting on the phone</td><td>iPhone Settings</td><td>Not documented by Apple</td><td>Not documented by Apple</td></tr>
+      <tr><th scope="row">Whereday Watch recording</th><td>GPS points recorded on the Watch, without the iPhone nearby</td><td>Whereday on the Watch, then Timeline on the iPhone after sync</td><td>From the day you start recording</td><td>GPX, CSV, GeoJSON and more, from the iPhone</td></tr>
+    </tbody>
+  </table></div>
+  <p>Sources: Apple Watch User Guide, <a href="https://support.apple.com/guide/watch/apd91635a9e6/watchos">End and review your workout</a>; Apple’s <a href="https://www.apple.com/legal/privacy/data/en/find-my/">Find My &amp; Privacy</a> and <a href="https://www.apple.com/legal/privacy/data/en/location-services/">Location Services &amp; Privacy</a>; Whereday’s <a href="/docs/apple-watch/">Apple Watch reference</a>.</p>
+</section>
+
+<section aria-labelledby="workout-routes">
+  <h2 id="workout-routes">See a workout route from your Watch</h2>
+  <p>According to Apple’s <a href="https://support.apple.com/guide/watch/apd91635a9e6/watchos">End and review your workout</a>, a route is available for outdoor walk, hiking, run, open water swim and cycle workouts. Other workout types, such as indoor ones, don’t record a GPS route. A route exists only while a workout is running, so it isn’t an all-day history.</p>
+  <ol>
+    <li>Finish the workout on the Watch.</li>
+    <li>On the iPhone, open the <strong>Fitness</strong> app and tap <strong>Summary</strong>, then the workout. The route is shown on its map. Apple describes this in <a href="https://support.apple.com/HT210385">Run with your Apple Watch</a>.</li>
+  </ol>
+  <p>To see a route at all, route tracking has to be allowed. Apple’s guide says to go to <strong>Settings &gt; Privacy &amp; Security &gt; Location Services</strong>, tap <strong>Apple Watch Workout</strong>, then choose <strong>While Using the App</strong>. Menus can vary by version, so check Apple’s page for yours.</p>
+</section>
+
+<section aria-labelledby="find-my">
+  <h2 id="find-my">Find My shows where the Watch is, not where it has been</h2>
+  <p>Per Apple’s <a href="https://www.apple.com/legal/privacy/data/en/find-my/">Find My &amp; Privacy</a>, turning on Find My on your iPhone turns it on for a paired Apple Watch, and Find My locates the device on a map. If you turn on Send Last Location, the device’s last known location is sent to Apple when its battery reaches a critically low level.</p>
+  <p>That’s one point per device, not a trail. See <a href="/blog/find-my-location-history/">Does Find My show location history?</a> for the details. If you want to see where family members are, use Find My or Check In instead.</p>
+</section>
+
+<section aria-labelledby="iphone-side">
+  <h2 id="iphone-side">What your iPhone keeps</h2>
+  <p>The paired iPhone has its own location features, Significant Locations and, in Apple Maps, Visited Places. They’re controlled by Location Services on the phone; Apple’s <a href="https://support.apple.com/en-us/102515">privacy and Location Services article</a> gives the on/off switch at <strong>Settings &gt; Privacy &amp; Security &gt; Location Services</strong>. See <a href="/blog/significant-locations-iphone/">Significant Locations and Visited Places on iPhone</a> for where to find them and why they show few places.</p>
+  <p>To check every other place a history can live, use <a href="/blog/view-location-history-iphone/">how to see your location history on iPhone</a>, or <a href="/blog/iphone-location-history-by-date/">where you were on a specific date</a>.</p>
+</section>
+
+<section aria-labelledby="log-with-watch">
+  <h2 id="log-with-watch">Keep a continuous log from your Watch with Whereday</h2>
+  <p>Whereday can record GPS points on Apple Watch without the iPhone nearby. The Watch keeps a local queue for transfer to the companion iPhone, as described in the <a href="/docs/apple-watch/">Apple Watch reference</a>.</p>
+  <ol>
+    <li><strong>Record.</strong> Open Whereday on the Watch, allow its location request if asked, and tap <strong>Start</strong>. Check that the status changes to tracking and the point count moves.</li>
+    <li><strong>Sync.</strong> Stop the recording, bring the paired devices together and open Whereday on both. If available, tap <strong>Sync Now</strong> on the Watch.</li>
+    <li><strong>Check the phone copy.</strong> Open the recording’s date in Timeline on the iPhone and inspect the outing’s map, times and point count. “Sync queued” alone isn’t proof that every point arrived.</li>
+    <li><strong>Export.</strong> Follow the <a href="/blog/record-iphone-route-gpx/#watch-to-gpx">Apple Watch to GPX walkthrough</a> to save GPX, or choose another format in Export.</li>
+  </ol>
+  <p><strong>The limit:</strong> this uses Whereday’s own recorded points. Whereday does not extract Apple Workout or Apple Health routes, so a route that exists only in the Fitness app doesn’t come into Whereday.</p>
+  <p>Access rules differ for new and existing users; the <a href="/docs/apple-watch/">Apple Watch reference</a> states them. For an example, the <a href="/blog/record-iphone-route-gpx/#watch-to-gpx">walkthrough</a> uses a synthetic 503-point Watch recording with invented coordinates and times.</p>
+</section>
+
+<section aria-labelledby="check-file">
+  <h2 id="check-file">Check the exported file</h2>
+  <p>Open the file in the <a href="/tools/gpx-viewer/">local GPX viewer</a>, which runs in your browser, and compare the first and last point times and the count with the phone copy. <a href="/blog/check-gpx-file/">How to check a GPX file</a> lists what to look for.</p>
+</section>
+
+<section aria-labelledby="privacy">
+  <h2 id="privacy">Keeping Watch location data private</h2>
+  <ul>
+    <li><strong>Use Location Services controls.</strong> Per Apple’s <a href="https://support.apple.com/en-us/102515">article</a>, you can turn Location Services on or off and control which apps have access individually, including <strong>While In Use</strong> and <strong>Allow Once</strong>. More in Apple’s <a href="https://www.apple.com/legal/privacy/data/en/location-services/">Location Services &amp; Privacy</a>.</li>
+    <li><strong>Whereday keeps history on your device.</strong> There’s no Whereday account and no cloud sync; see the <a href="/docs/privacy-data/">privacy and data reference</a>.</li>
+    <li><strong>Export is the backup path.</strong> With no server copy, save your own exports. See <a href="/blog/back-up-iphone-location-history/">back up your iPhone location history</a>.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="questions">
+  <h2 id="questions">Common questions</h2>
+  <h3>Does a cellular Apple Watch track location without my iPhone?</h3>
+  <p>Apple doesn’t publish a location log for it in the pages cited here. What Apple documents is workout routes, Find My locating and Send Last Location. Whereday’s Watch app can record GPS points without the iPhone nearby, then needs the phone later for transfer.</p>
+  <h3>Can I see where I walked yesterday on my Watch?</h3>
+  <p>Only if you ran an outdoor walk workout, and then in the Fitness app on iPhone rather than on the Watch. Otherwise there’s no all-day trail. For another day, see <a href="/blog/iphone-location-history-by-date/">where you were on a specific date</a>.</p>
+  <h3>Can I export my Apple Watch routes?</h3>
+  <p>Apple’s pages cited here don’t document a route export. Whereday exports its own recorded points, not Apple Workout or Health routes.</p>
+  <h3>Does Find My keep a trail of my Watch?</h3>
+  <p>No. It shows where the Watch is and a last known location. See <a href="/blog/find-my-location-history/">Find My location history</a>.</p>
+  <h3>Which app should I use?</h3>
+  <p><a href="/compare/location-history-apps-iphone/">Compare location history apps for iPhone</a>.</p>
+</section>
+
+<section class="closing" aria-labelledby="start-watch-log">
+  <h2 id="start-watch-log">Record on your Watch, keep the history on your phone.</h2>
+  <p>Whereday records your own routes on your Watch and iPhone, keeps the history on your phone, and exports it any time.</p>
+  <a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a>
+  <p><a href="/docs/apple-watch/">Read how Watch recording works</a></p>
+</section>
+
+<p class="source-note">Apple details checked November 26, 2026 against the Apple pages linked above. Menus can vary by watchOS and iOS version. Whereday behaviour follows its Apple Watch and privacy references.</p>

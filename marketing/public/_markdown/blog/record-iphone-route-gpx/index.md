@@ -45,7 +45,7 @@ If you recorded in the Whereday Watch app, transfer the route to its companion i
 - On the phone, choose Points and GPX in Export, then select the recording’s dates. Review filters and Preview before saving. Points can include other recordings in that period; use the specific outing’s Export action when you need that outing alone.
 - Open the saved file in the [local GPX viewer](https://whereday.com/tools/gpx-viewer/). Compare its first and last point times, count, and shape with the phone copy. Keep pending Watch data while investigating missing points.
 
-The [Watch sync reference](https://whereday.com/docs/apple-watch/#checked-transfer) explains pending points and acknowledgements. Sync retries with the same record IDs are separate from importing a GPX file. Whereday does not import GPX.
+The [Watch sync reference](https://whereday.com/docs/apple-watch/#checked-transfer) explains pending points and acknowledgements. Sync retries with the same record IDs are separate from importing a GPX file. Whereday does not import GPX. For what Apple itself keeps from a Watch, see [Apple Watch location history](https://whereday.com/blog/apple-watch-location-history/).
 
 ### A readable GPX can still be incomplete
 

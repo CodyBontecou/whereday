@@ -1,6 +1,7 @@
 // The site builder replaces this token with the public-page Markdown manifest.
 const pages = {
   "/about": "/_markdown/about.md",
+  "/blog/apple-watch-location-history/": "/_markdown/blog/apple-watch-location-history/index.md",
   "/blog/back-up-iphone-location-history/": "/_markdown/blog/back-up-iphone-location-history/index.md",
   "/blog/check-gpx-file/": "/_markdown/blog/check-gpx-file/index.md",
   "/blog/find-my-location-history/": "/_markdown/blog/find-my-location-history/index.md",
