@@ -19,9 +19,9 @@ class OnboardingFreeWeekTest {
     @Before fun guard() {check(InstrumentationRegistry.getInstrumentation().targetContext.packageName=="com.bontecou.whereday.mapqa")}
     private val target get()=InstrumentationRegistry.getInstrumentation().targetContext
 
-    private fun weekly(trial:Int=7)=StoreProduct("whereday_individual",StorePlan.weekly,"$0.99",990_000,"USD",trial)
+    private fun weekly(trial:Int=7)=StoreProduct("whereday_individual",StorePlan.weekly,"$2.99",2_990_000,"USD",trial)
     private fun yearly(trial:Int=7)=StoreProduct("whereday_individual",StorePlan.yearly,"$29.99",29_990_000,"USD",trial)
-    private val lifetime=StoreProduct("whereday_export_lifetime",StorePlan.lifetime,"$49.99",49_990_000,"USD")
+    private val lifetime=StoreProduct("whereday_export_lifetime",StorePlan.lifetime,"$79.99",79_990_000,"USD")
     private fun catalog(trial:Int=7)=listOf(weekly(trial),yearly(trial),lifetime)
 
     private var billing by mutableStateOf(BillingState(AccessState.free,catalog(),enforced=true))
@@ -112,9 +112,9 @@ class OnboardingFreeWeekTest {
     @Test fun lifetimeChangesTheActionAndTimeline() {
         show()
         compose.onNodeWithTag("onboarding-plan-lifetime").performScrollTo().performClick().assertIsSelected()
-        startTrial().assertTextEquals(target.getString(R.string.onboarding_trial_buy_lifetime,"$49.99"))
-        compose.onNodeWithTag("onboarding-trial-timeline").assert(hasContentDescription(target.getString(R.string.onboarding_trial_for_good_body,"$49.99"),substring=true))
-        compose.onNodeWithTag("onboarding-trial-disclosure").assertTextEquals(target.getString(R.string.paywall_disclosure_lifetime,"$49.99"))
+        startTrial().assertTextEquals(target.getString(R.string.onboarding_trial_buy_lifetime,"$79.99"))
+        compose.onNodeWithTag("onboarding-trial-timeline").assert(hasContentDescription(target.getString(R.string.onboarding_trial_for_good_body,"$79.99"),substring=true))
+        compose.onNodeWithTag("onboarding-trial-disclosure").assertTextEquals(target.getString(R.string.paywall_disclosure_lifetime,"$79.99"))
         startTrial().performClick()
         assertEquals(listOf(StorePlan.lifetime),bought)
     }

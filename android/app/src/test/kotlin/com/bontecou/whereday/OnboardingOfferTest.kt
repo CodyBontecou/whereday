@@ -13,9 +13,9 @@ class OnboardingOfferTest {
     private val zone=ZoneId.of("America/Los_Angeles")
     private val morning=ZonedDateTime.of(2026,11,23,10,0,0,0,zone)
     private val today=morning.toLocalDate()
-    private fun weekly(trial:Int=7)=StoreProduct("whereday_individual",StorePlan.weekly,"$0.99",990_000,"USD",trial)
+    private fun weekly(trial:Int=7)=StoreProduct("whereday_individual",StorePlan.weekly,"$2.99",2_990_000,"USD",trial)
     private fun yearly(trial:Int=7)=StoreProduct("whereday_individual",StorePlan.yearly,"$29.99",29_990_000,"USD",trial)
-    private val lifetime=StoreProduct("whereday_export_lifetime",StorePlan.lifetime,"$49.99",49_990_000,"USD")
+    private val lifetime=StoreProduct("whereday_export_lifetime",StorePlan.lifetime,"$79.99",79_990_000,"USD")
     private fun billing(access:AccessState,enforced:Boolean=true,products:List<StoreProduct> = listOf(weekly(),yearly(),lifetime))=BillingState(access,products,enforced=enforced)
 
     @Test fun nothingToSellKeepsTheTonightStep() {

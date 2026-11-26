@@ -1,7 +1,7 @@
 # Free week as onboarding's last step on Android, with a FAKE configured billing.
 # Real Play billing can't run here (the purchase verifier isn't deployed), so this drives the mapQa-only
 # FreeWeekDemoActivity: the real Onboarding composable on its last step, fed synthetic Play products
-# (Yearly $29.99 and Weekly $0.99, each with a 7-day trial, and Lifetime $49.99) and a checkout that
+# (Yearly $29.99 and Weekly $2.99, each with a 7-day trial, and Lifetime $79.99) and a checkout that
 # succeeds after about 0.8 s. The routing, timeline, plan chooser, All plans sheet, disclosure, "You're in"
 # screen and the post-purchase notification request are the production code; the store is not.
 # Prerequisites: a fresh install of the disposable QA package com.bontecou.whereday.mapqa (never the owner's
@@ -28,9 +28,9 @@ steps:
   - assert: { text: { in: { id: onboarding-start-trial }, equals: Start my free week } }
   - assert: { visible: { text: "Recording starts now, on us." } }
   - assert: { text: { in: { id: onboarding-trial-timeline }, contains: "A short recap of your day: where you went and how far." } }
-  - echo: Yearly is preselected. Pick Lifetime; expect "Buy Lifetime · $49.99" as the primary.
+  - echo: Yearly is preselected. Pick Lifetime; expect "Buy Lifetime · $79.99" as the primary.
   - tap: { id: onboarding-plan-lifetime }
-  - await: { text: { in: { id: onboarding-start-trial }, equals: Buy Lifetime · $49.99 } }
+  - await: { text: { in: { id: onboarding-start-trial }, equals: Buy Lifetime · $79.99 } }
   - tap: { id: onboarding-plan-yearly }
   - await: { text: { in: { id: onboarding-start-trial }, equals: Start my free week } }
   - echo: Open All plans; expect the sheet led by the "Remember my days" card (default intent), then choose
@@ -42,7 +42,7 @@ steps:
   - tap: { id: paywall-plan-weekly }
   - tap: { id: paywall-sheet-close }
   - await: { hidden: { id: paywall-sheet } }
-  - await: { text: { in: { id: onboarding-trial-disclosure }, contains: $0.99 per week } }
+  - await: { text: { in: { id: onboarding-trial-disclosure }, contains: $2.99 per week } }
   - echo: Weekly is chosen. Start the free week (fake checkout succeeds after ~0.8 s); expect "You're in"
       with the Evening recap switch off because notifications aren't granted.
   - tap: { id: onboarding-start-trial }
