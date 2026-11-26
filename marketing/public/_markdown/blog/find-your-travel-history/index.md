@@ -79,7 +79,7 @@ Count each date carefully. A late flight can land on a different calendar day th
 
 ## 6. Keep it automatically from now on
 
-In Whereday, open Timeline → Country Days. It counts the local dates covered by your recorded visits, route points and manual stays. If a past trip is missing, use Add stay to enter the country and dates. A manual stay records your account of a trip; it does not create a GPS path.
+In Whereday, open Timeline → Country Days. It counts the local dates covered by your recorded visits, route points and manual stays. If a past trip is missing, use Add stay to enter the country and dates. A manual stay records your account of a trip; it does not create a GPS path. Once you have the dates, the [Schengen calculator](https://whereday.com/tools/schengen-calculator/) turns past trips into days used and days left.
 
 You can save a CSV with `country_code`, `local_date` and `source` columns. Viewing the counts and adding manual stays are free. The CSV export follows the export access rules, which differ for new users and existing users; see [current pricing](https://whereday.com/#pricing). For details, read [how Whereday tracks days in each country](https://whereday.com/blog/track-days-in-country-iphone/) and [how to back up your location history](https://whereday.com/blog/back-up-iphone-location-history/).
 
@@ -108,6 +108,10 @@ See how Whereday records country days and adds a missing stay.
 - [Count the days](https://whereday.com/tools/country-days-calculator/)
 
 Count days per country from a Country Days CSV.
+
+- [Check the Schengen 90/180 rule](https://whereday.com/tools/schengen-calculator/)
+
+Enter past trips to see days used and days left.
 
 - [Map the countries](https://whereday.com/tools/visited-countries-map/)
 

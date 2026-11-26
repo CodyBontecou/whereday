@@ -202,6 +202,12 @@ export function maxWindow(sortedDays, length, rangeFirst, rangeLast) {
   return { max: best.max, end: best.end, start: best.end - length + 1 };
 }
 
+/** The dates in the 180-day window that ends on and includes `reference` (sorted day numbers in, subset out). */
+export function schengenWindow(sortedDays, reference) {
+  const windowStart = reference - SCHENGEN.window + 1;
+  return { windowStart, used: sortedDays.filter(day => day >= windowStart && day <= reference) };
+}
+
 /**
  * Schengen 90/180 check on a reference date. The 180-day window ends on and
  * includes the reference date: it covers reference-179 … reference. A date spent
@@ -212,8 +218,7 @@ export function maxWindow(sortedDays, length, rangeFirst, rangeLast) {
  */
 export function schengenCheck(index, reference) {
   const days = daysFor(index, SCHENGEN.members);
-  const windowStart = reference - SCHENGEN.window + 1;
-  const used = days.filter(day => day >= windowStart && day <= reference);
+  const { windowStart, used } = schengenWindow(days, reference);
   const before = days.filter(day => day <= reference);
   const latest = before.length ? before.at(-1) : null;
   const earliestFull90 = latest === null ? reference : Math.max(reference, latest + SCHENGEN.limit + 1);
@@ -245,7 +250,7 @@ function csvField(value) {
   const safe = /^[=+\-@\t\r]/.test(text) ? `'${text}` : text;
   return /[",\r\n]/.test(safe) ? `"${safe.replace(/"/g, '""')}"` : safe;
 }
-const csvRows = rows => rows.map(row => row.map(csvField).join(',')).join('\r\n') + '\r\n';
+export const csvRows = rows => rows.map(row => row.map(csvField).join(',')).join('\r\n') + '\r\n';
 
 /** CSV of per-country totals for a period. */
 export function totalsCSV(index, first, last, name = code => code) {

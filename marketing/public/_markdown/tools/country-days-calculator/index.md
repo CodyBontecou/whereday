@@ -109,6 +109,8 @@ Short stays in the Schengen area are limited to 90 days in any 180-day period ([
 
 Days drop out of the window as time passes, so your allowance comes back gradually. To be sure of another full 90-day stay, you need 90 days in a row with no Schengen presence before it. The calculator shows that date as the earliest start for a full 90 days, assuming you spend no more Schengen days after the reference date. The European Commission’s [short-stay calculator](https://home-affairs.ec.europa.eu/policies/schengen/schengen-visas/short-stay-calculator_en) uses the same rolling count.
 
+Only need Schengen? [Use the Schengen calculator and planner](https://whereday.com/tools/schengen-calculator/) to see days used, the last day you can stay and the longest trip you can plan.
+
 ### A worked example with invented dates
 
 This trip is made up. A traveller spends 60 days in France (5 January to 5 March 2026), leaves the Schengen area for 40 days (6 March to 14 April), then spends 30 days in Italy (15 April to 14 May). Press Add the Schengen worked example above to load the same two stays.
@@ -179,6 +181,10 @@ Whereday records the countries you visit on your iPhone and exports this CSV. Vi
 [Download free for iPhone](https://apps.apple.com/app/id6761960794)
 
 ## Read next
+
+- [Only need Schengen? Use the Schengen calculator and planner](https://whereday.com/tools/schengen-calculator/)
+
+Days used, days left, the last day you can stay and a trip planner.
 
 - [Apply the US substantial presence test](https://whereday.com/tools/substantial-presence-test-calculator/)
 

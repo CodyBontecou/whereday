@@ -1,0 +1,120 @@
+<link rel="stylesheet" href="/assets/gpx-viewer.css">
+<link rel="stylesheet" href="/assets/country-days.css">
+<section class="gpx-tool cdc-tool" aria-labelledby="sc-title">
+  <h2 id="sc-title">Add your trips. They stay in this page.</h2>
+  <p class="cdc-limits"><strong>This is a count, not a ruling.</strong> It is not legal or immigration advice. Border officials use official records, and it only knows the dates you give it. <a href="#limits">Read the limits</a>.</p>
+  <noscript><p>JavaScript is needed to count dates in your browser. The explanations below work without it.</p></noscript>
+  <div id="sc-tool" hidden>
+    <fieldset>
+      <legend>Your Schengen trips</legend>
+      <form id="sc-trip-form" novalidate>
+        <div class="cdc-row">
+          <div><label for="sc-first">Entry date</label><input id="sc-first" type="date" min="1900-01-01" max="2100-12-31" required></div>
+          <div><label for="sc-last">Exit date <span class="gpx-small">(inclusive; empty = still there)</span></label><input id="sc-last" type="date" min="1900-01-01" max="2100-12-31"></div>
+        </div>
+        <div class="gpx-actions"><button type="submit">Add trip</button></div>
+        <p id="sc-trip-error" class="cdc-error" role="alert"></p>
+      </form>
+      <h3 id="sc-trips-title">Trips entered</h3>
+      <p id="sc-trips-empty" class="gpx-small">None yet. A trip counts every date from its entry date to its exit date, both included, so 1 to 3 January is 3 days. Overlapping trips count each date once.</p>
+      <ul id="sc-trips" aria-labelledby="sc-trips-title"></ul>
+    </fieldset>
+    <fieldset>
+      <legend>Reference date</legend>
+      <label for="sc-reference">Count the 180 days ending on <span class="gpx-small">(defaults to today)</span></label>
+      <input id="sc-reference" type="date" min="1900-01-01" max="2100-12-31">
+    </fieldset>
+    <div class="gpx-actions"><button id="sc-demo" type="button">Try the synthetic example</button><button id="sc-clear" type="button" disabled>Clear everything</button></div>
+    <p id="sc-status" role="status" aria-live="polite">Add a trip or try the example. The example uses invented dates.</p>
+
+    <h2 id="sc-results-title">Days used and days left</h2>
+    <div id="sc-results" aria-live="polite" aria-labelledby="sc-results-title"></div>
+
+    <h2 id="sc-planner-title">Plan a trip</h2>
+    <p>Enter the date you plan to enter. The planner shows the longest stay allowed from that date, with every day of the stay checked against its own 180-day window, plus the earliest date a stay of a length you choose could start.</p>
+    <div class="cdc-row">
+      <div><label for="sc-entry">Planned entry date</label><input id="sc-entry" type="date" min="1900-01-01" max="2100-12-31"></div>
+      <div><label for="sc-length">Stay length to fit (days, 1 to 90)</label><input id="sc-length" type="number" min="1" max="90" step="1" value="90" inputmode="numeric"></div>
+    </div>
+    <div id="sc-planner-results" aria-live="polite"></div>
+    <p id="sc-start-result" aria-live="polite"></p>
+    <details>
+      <summary>Show the day-by-day check for the longest stay</summary>
+      <div class="table-scroll" role="region" aria-label="Day-by-day check of the planned stay" tabindex="0"><table><thead><tr><th scope="col">Date of the stay</th><th scope="col">Days in its 180-day window</th><th scope="col">Left</th></tr></thead><tbody id="sc-planner-rows"></tbody></table></div>
+    </details>
+
+    <h2 id="sc-window-title">The 180-day window</h2>
+    <p id="sc-window-note" class="gpx-small"></p>
+    <div class="table-scroll" role="region" aria-labelledby="sc-window-title" tabindex="0"><table><thead><tr><th scope="col">Counted date</th><th scope="col">Where it came from</th><th scope="col">Stops counting on</th></tr></thead><tbody id="sc-window-rows"></tbody></table></div>
+    <p class="gpx-small">“Stops counting on” is the first reference date whose 180-day window no longer includes that day.</p>
+
+    <fieldset>
+      <legend>Optional: load a Country Days CSV</legend>
+      <label for="sc-file">Choose a Whereday Country Days CSV <span class="gpx-small">(columns <code>country_code</code> and <code>local_date</code>; up to 10 MiB)</span></label>
+      <input id="sc-file" type="file" accept=".csv,text/csv">
+      <p class="gpx-small">Only Schengen country codes are used. Other rows are ignored and the status line above says how many.</p>
+    </fieldset>
+    <div class="gpx-actions"><button id="sc-download" type="button" disabled>Download window (CSV)</button></div>
+  </div>
+</section>
+
+<section aria-labelledby="how-it-works">
+  <h2 id="how-it-works">How the 90/180 rule works</h2>
+  <p>Short stays in the Schengen area are limited to 90 days in any 180-day period (<a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32016R0399">Regulation (EU) 2016/399, Article 6</a>). The 180 days are a rolling window, not a calendar half-year. On any day you check, look back over the 180 days that end on that day, including it.</p>
+  <ul>
+    <li><strong>Entry and exit days both count.</strong> A trip from 1 to 3 January is 3 days.</li>
+    <li><strong>A date in two Schengen states counts once.</strong> Overlapping trips do too.</li>
+    <li><strong>Every day of a stay has its own window.</strong> That is why the planner checks each day, not only the last one.</li>
+    <li><strong>Days drop out.</strong> The date a day stops counting is 180 days after it, so your allowance returns gradually and a stay can be longer than “90 minus days used”.</li>
+  </ul>
+  <p>The European Commission’s <a href="https://home-affairs.ec.europa.eu/policies/schengen/schengen-visas/short-stay-calculator_en">short-stay calculator</a> is the official reference for the same count. To count days in every country, or 183-day totals, use the <a href="/tools/country-days-calculator/">days-in-country calculator</a>.</p>
+</section>
+
+<section aria-labelledby="worked-example">
+  <h2 id="worked-example">A worked example with invented dates</h2>
+  <p><strong>Synthetic.</strong> Three made-up trips: 5 January to 3 February 2026 (30 days), 1 to 25 April (25 days) and a stay that began on 20 June 2026. Press <strong>Try the synthetic example</strong> above to load them. The figures below are the calculator’s own output.</p>
+  <div class="table-scroll" role="region" aria-labelledby="worked-example-caption" tabindex="0"><table id="schengen-example-results"><caption id="worked-example-caption">Calculator output for the invented trips</caption><thead><tr><th scope="col">Reference date</th><th scope="col">Third trip</th><th scope="col">180-day window</th><th scope="col">Days used</th><th scope="col">Days left</th><th scope="col">Last day you can be there</th></tr></thead><tbody>
+    <tr data-reference="2026-07-10" data-ongoing="1" data-window-start="2026-01-12" data-used="69" data-remaining="21" data-last="2026-08-23"><th scope="row">2026-07-10</th><td>Still there</td><td>2026-01-12 to 2026-07-10</td><td>69</td><td>21</td><td>2026-08-23</td></tr>
+    <tr data-reference="2026-08-15" data-ongoing="0" data-window-start="2026-02-17" data-used="46" data-remaining="44"><th scope="row">2026-08-15</th><td>Ended 2026-07-10</td><td>2026-02-17 to 2026-08-15</td><td>46</td><td>44</td><td>Not applicable</td></tr>
+    <tr data-reference="2027-01-10" data-ongoing="0" data-window-start="2026-07-15" data-used="0" data-remaining="90"><th scope="row">2027-01-10</th><td>Ended 2026-07-10</td><td>2026-07-15 to 2027-01-10</td><td>0</td><td>90</td><td>Not applicable</td></tr>
+  </tbody></table></div>
+  <p>On 2026-07-10 the traveller is still in the area with 69 days used and 21 left. The last day they can be there is 2026-08-23, which is 44 days later, not 21: while they stay, the days from 12 January to 3 February fall out of the window. To reproduce the later rows, remove trip 3 and add it again with the exit date 2026-07-10.</p>
+  <p>By 2026-08-15 only 46 days count, and by 2027-01-10 everything has dropped out of the window, so all 90 days are available again.</p>
+  <h3 id="worked-planner">Planner result</h3>
+  <p>With the trips closed as above and the reference date set to 2026-08-15, a planned entry on 2026-09-01 gives a longest stay of 69 days, with the latest exit on 2026-11-08. The next day, 2026-11-09, would be day 91 in its window. The earliest date a full 90-day stay could start is 2026-10-09.</p>
+</section>
+
+<section aria-labelledby="members">
+  <h2 id="members">Which countries count</h2>
+  <p class="cdc-members" data-schengen-checked="2026-11-18">Austria, Belgium, Bulgaria, Croatia, Czechia, Denmark, Estonia, Finland, France, Germany, Greece, Hungary, Iceland, Italy, Latvia, Liechtenstein, Lithuania, Luxembourg, Malta, Netherlands, Norway, Poland, Portugal, Romania, Slovakia, Slovenia, Spain, Sweden and Switzerland (29 states). Cyprus and Ireland are not members.</p>
+  <p class="gpx-small">List checked on 18 November 2026 against the <a href="https://home-affairs.ec.europa.eu/policies/schengen/schengen-area_en">European Commission’s Schengen area page</a>. The current list is applied to every date, so days in Bulgaria and Romania before they joined on 1 January 2025, or in Croatia before 1 January 2023, are counted as Schengen days.</p>
+</section>
+
+<section aria-labelledby="what-doesnt-count">
+  <h2 id="what-doesnt-count">What doesn’t count towards the 90 days</h2>
+  <p>Stays covered by a national long-stay visa or a residence permit are outside the short-stay count, and some nationalities have bilateral agreements with individual Schengen states. This calculator does not model either, so leave those stays out. Check with the state concerned, and see the European Commission’s <a href="https://home-affairs.ec.europa.eu/policies/schengen/schengen-visas/short-stay-calculator_en">short-stay calculator page</a> and <a href="https://home-affairs.ec.europa.eu/policies/schengen/schengen-area_en">Schengen area page</a>.</p>
+</section>
+
+<section aria-labelledby="ees">
+  <h2 id="ees">Official records win</h2>
+  <p>At the Schengen external border, the <a href="https://home-affairs.ec.europa.eu/policies/schengen/smart-borders/entry-exit-system_en">Entry/Exit System</a> records entries and exits of non-EU short-stay travellers and has replaced passport stamping since 10 April 2026. Where your record and an official record differ, the official record is what counts. Need past dates? See how to <a href="/blog/find-your-travel-history/">find your travel history</a> from official and personal records.</p>
+</section>
+
+<section aria-labelledby="limits">
+  <h2 id="limits">Limits of this calculator</h2>
+  <ul>
+    <li><strong>Not legal advice.</strong> It does not decide your visa or status.</li>
+    <li><strong>It counts dates you enter.</strong> It does not know your visa type, and missing trips make the count too low.</li>
+    <li><strong>Overstays are judged by border authorities</strong>, not by this page.</li>
+    <li><strong>Planned stays check their own days.</strong> Trips you have already entered after the planned dates are counted, but are not re-checked.</li>
+    <li><strong>Not modelled:</strong> microstates and special territories, long-stay visas and residence permits, bilateral agreements, and member-state join dates.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="privacy">
+  <h2 id="privacy">Your dates stay in this page</h2>
+  <p>Counting, planning and the CSV download all happen in your browser. This page blocks network connections and does not include the website’s analytics. There is no account. The web server receives an ordinary request when you open the page and its scripts, but not your trips or results. Closing the tab removes them.</p>
+</section>
+
+<section class="closing" aria-labelledby="record-next"><h2 id="record-next">Stop typing trips into calculators.</h2><p>Whereday records the countries you visit on your iPhone and exports a Country Days CSV this page reads. Viewing Country Days and adding manual stays are free. From version 1.8, new users keep exports after tracking access expires; existing free users keep their previous export-unlock requirement. <a href="/blog/track-days-in-country-iphone/">See how Whereday records country days</a>, or <a href="/tools/country-days-calculator/">count days in every country</a>.</p><a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a></section>
+<script type="module" src="/assets/schengen.mjs?v=20261126a"></script>

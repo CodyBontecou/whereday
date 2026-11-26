@@ -143,6 +143,10 @@ Whereday records the countries you’re in and keeps the dates on your iPhone. E
 
 Check Schengen 90/180, any rolling window and calendar-year totals.
 
+- [Schengen only?](https://whereday.com/tools/schengen-calculator/)
+
+Count days used and days left and plan a stay.
+
 - [Check your dates against official records](https://whereday.com/blog/find-your-travel-history/)
 
 Find past trips to fill gaps before you rely on a count.

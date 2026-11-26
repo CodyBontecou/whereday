@@ -51,6 +51,12 @@ Convert KML to GPX or GPX to KML, including Google Earth `gx:Track` timestamps, 
 
 Then [check the result in the GPX viewer](https://whereday.com/tools/gpx-viewer/).
 
+## [Schengen calculator and trip planner](https://whereday.com/tools/schengen-calculator/)
+
+Type your trips to see Schengen days used, days left and the last day you can stay, then plan a stay with every day checked against the 90/180 rule. The 180-day window is shown date by date. Your dates stay in your browser.
+
+Need every country or 183-day totals? [Count days in each country](https://whereday.com/tools/country-days-calculator/).
+
 ## [Days-in-country calculator](https://whereday.com/tools/country-days-calculator/)
 
 Count the days you spent in each country from a Whereday Country Days CSV or stays you type in. Check the Schengen 90/180 rule, any rolling window and calendar-year 183-day totals.
