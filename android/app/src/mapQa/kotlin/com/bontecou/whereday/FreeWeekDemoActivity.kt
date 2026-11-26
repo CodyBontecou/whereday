@@ -71,9 +71,9 @@ class FreeWeekDemoActivity:androidx.activity.ComponentActivity() {
 private class FakeBilling(private val scope:CoroutineScope,trial:Boolean,private var failFirst:Boolean,private val outcome:String) {
     private val days=if(trial) 7 else 0
     private val products=listOf(
-        StoreProduct("whereday_individual",StorePlan.weekly,"$0.99",990_000,"USD",days),
+        StoreProduct("whereday_individual",StorePlan.weekly,"$2.99",2_990_000,"USD",days),
         StoreProduct("whereday_individual",StorePlan.yearly,"$29.99",29_990_000,"USD",days),
-        StoreProduct("whereday_export_lifetime",StorePlan.lifetime,"$49.99",49_990_000,"USD"))
+        StoreProduct("whereday_export_lifetime",StorePlan.lifetime,"$79.99",79_990_000,"USD"))
     val state=MutableStateFlow(BillingState(AccessState.checking,busy=true,enforced=true))
     val checkout=MutableStateFlow(false)
     fun load() {
