@@ -221,15 +221,15 @@ Individual or Family. 7-day free trial when eligible; renews until canceled.
 
 [Start free trial](https://apps.apple.com/app/apple-store/id6761960794?pt=126424970&ct=seo-home&mt=8)
 
-LIFETIME · INDIVIDUALPAY ONCE $49.99
+LIFETIME · INDIVIDUALPAY ONCE $79.99
 
 One payment, yours for good. No renewals to remember.
 
 [Get Lifetime](https://apps.apple.com/app/apple-store/id6761960794?pt=126424970&ct=seo-home&mt=8)
 
-LIFETIME · FAMILY $89.99
+LIFETIME · FAMILY $129.99
 
-For your Family Sharing group. Individual owners can upgrade for $40.00.
+For your Family Sharing group. Individual owners can upgrade for $49.99.
 
 [Get Family](https://apps.apple.com/app/apple-store/id6761960794?pt=126424970&ct=seo-home&mt=8)
 
@@ -277,7 +277,7 @@ Yes. Webhooks POST GPS points in OwnTracks or Overland format to a receiver you 
 
 What does it cost?
 
-Free to download, and import is free. New users since version 1.8 choose a subscription, with a 7-day trial when eligible, or Lifetime: $49.99 Individual or $89.99 Family. Existing users keep the access they already had. See the [purchase terms](https://whereday.com/terms).
+Free to download, and import is free. New users since version 1.8 choose a subscription, with a 7-day trial when eligible, or Lifetime: $79.99 Individual or $129.99 Family. Existing users keep the access they already had. See the [purchase terms](https://whereday.com/terms).
 
 ## Start keeping your days.
 
