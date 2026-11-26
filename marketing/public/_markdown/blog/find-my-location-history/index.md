@@ -123,6 +123,10 @@ No. You get the last location it sent, which is the Send Last Location point if 
 
 See [where you were on a specific date on iPhone](https://whereday.com/blog/iphone-location-history-by-date/), which lists which sources can jump to a date.
 
+### Does an Apple Watch keep a history?
+
+Find My shows only where the Watch is or was last seen. See [Apple Watch location history](https://whereday.com/blog/apple-watch-location-history/) for workout routes and other sources.
+
 ### Is Significant Locations the same as Find My?
 
 No. Significant Locations & Routes is a Location Services setting that learns places that matter to you, and it can’t be exported. Find My locates devices, people and items. See the [Significant Locations guide](https://whereday.com/blog/significant-locations-iphone/).
@@ -140,6 +144,10 @@ Whereday records your own visits and routes on your iPhone from the day you inst
 Apple details checked November 19, 2026 against Apple’s Find My support article (HT210515), the iOS 26 iPhone User Guide page “Add your iPhone to Find My”, “How to find your lost iPhone or iPad” and the Personal Safety User Guide. Menus can vary by iOS version and region. Whereday features follow the published tracking, export and privacy references. The screenshot shows Whereday with invented data.
 
 ## Read next
+
+- [Using an Apple Watch?](https://whereday.com/blog/apple-watch-location-history/)
+
+See where workout routes, Find My and the iPhone keep Watch location data.
 
 - [Looking for one specific day?](https://whereday.com/blog/iphone-location-history-by-date/)
 

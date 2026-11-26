@@ -127,6 +127,14 @@ Find both Apple features, check why they show only a few places, and learn why n
 
 [Read the Apple location guide](https://whereday.com/blog/significant-locations-iphone/)
 
+Apple Watch
+
+### [Apple Watch Location History: What It Keeps and How to Log It](https://whereday.com/blog/apple-watch-location-history/)
+
+See where workout routes, Find My and your iPhone store Watch location data, and how to keep your own log.
+
+[Read the Apple Watch guide](https://whereday.com/blog/apple-watch-location-history/)
+
 Find My
 
 ### [Does Find My show location history?](https://whereday.com/blog/find-my-location-history/)

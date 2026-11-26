@@ -113,7 +113,7 @@ No. It describes pending transfer data. It does not recreate unrecorded movement
 
 ## Keep a portable copy after syncing
 
-Once the route is visible on the phone, follow [the GPX walkthrough](https://whereday.com/blog/record-iphone-route-gpx/) to open it in another route tool, or [back up supported visits and points](https://whereday.com/blog/back-up-iphone-location-history/) for later import. See [Timeline and outings](https://whereday.com/docs/timeline-outings/) for reviewing the transferred day.
+Once the route is visible on the phone, follow [the GPX walkthrough](https://whereday.com/blog/record-iphone-route-gpx/) to open it in another route tool, or [back up supported visits and points](https://whereday.com/blog/back-up-iphone-location-history/) for later import. See [Timeline and outings](https://whereday.com/docs/timeline-outings/) for reviewing the transferred day. To see what Apple itself keeps from a Watch, read [Apple Watch location history](https://whereday.com/blog/apple-watch-location-history/).
 
 If a recorded day looks incomplete, follow the [missing visits and route points checklist](https://whereday.com/blog/missing-location-history-iphone/) before deleting records or retrying an import.
 

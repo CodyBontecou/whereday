@@ -191,6 +191,10 @@ Reviewed November 24, 2026 against the linked Apple iOS 26 guides, Apple’s Loc
 
 ## Read next
 
+- [Check what an Apple Watch keeps](https://whereday.com/blog/apple-watch-location-history/)
+
+See where workout routes, Find My and the iPhone store Watch location data.
+
 - [Understand Significant Locations and Visited Places](https://whereday.com/blog/significant-locations-iphone/)
 
 See where each Apple feature lives, why it shows little, and why neither exports.

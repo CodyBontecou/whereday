@@ -280,6 +280,17 @@ PAGES.append({
 })
 
 PAGES.append({
+    "path": "/blog/apple-watch-location-history/", "section": "Guides", "section_path": "/blog/", "breadcrumb": "Apple Watch location history",
+    "type": "BlogPosting",
+    "title": "Apple Watch Location History: What It Keeps and How to Log It — Whereday",
+    "headline": "Apple Watch location history: what it keeps and how to log it",
+    "description": "Does Apple Watch keep a location history? See where workout routes, Find My and your iPhone store Watch location data, and how to keep your own log.",
+    "lede": "Where each kind of Apple Watch location data lives, how to see a workout route, and how to record, sync and export your own continuous log.",
+    "published": "2026-11-26", "modified": "2026-11-26",
+    "source": "apple-watch-location-history.html",
+})
+
+PAGES.append({
     "path": "/blog/iphone-location-history-by-date/", "section": "Guides", "section_path": "/blog/", "breadcrumb": "Location history by date",
     "type": "BlogPosting",
     "title": "See where you were on a specific date on iPhone — Whereday",
@@ -489,11 +500,16 @@ RELATED = {
      ('/blog/iphone-photos-map/', 'See your photos on a map', 'Use photos as dated evidence of where you were.'),
      ('/docs/timeline-outings/', 'Review a day in Whereday', 'Date chips, Pick a day and outings.')],
  '/blog/find-my-location-history/': [
+     ('/blog/apple-watch-location-history/', 'Using an Apple Watch?', 'See where workout routes, Find My and the iPhone keep Watch location data.'),
      ('/blog/iphone-location-history-by-date/', 'Looking for one specific day?', 'Which sources can jump to a date, and how to rebuild a day without them.'),
      ('/blog/significant-locations-iphone/', 'Check Significant Locations and Visited Places',
       'See the two Apple features that do remember places, and why neither exports.'),
      ('/blog/view-location-history-iphone/', 'Find any iPhone location history',
       'Check Apple Maps, Google Timeline and Whereday, and choose the right download.')],
+ '/blog/apple-watch-location-history/': [
+     ('/docs/apple-watch/', 'Record on the Watch', 'Start, sync and check a Watch recording.'),
+     ('/blog/record-iphone-route-gpx/', 'Export a route as GPX', 'Save and check a GPX file from the phone copy.'),
+     ('/blog/find-my-location-history/', 'Looking in Find My instead?', 'Find My keeps no history, only a current or last known location.')],
  '/blog/import-google-timeline-iphone/': [
      ('/blog/back-up-iphone-location-history/', 'Keep a restorable Whereday copy', 'Choose supported visit and point exports after checking the import.'),
      ('/compare/google-maps-timeline/', 'Compare recording workflows', 'Review access, backups, privacy, and portability before switching.')],
@@ -528,7 +544,11 @@ RELATED = {
       'Export visits and points as Whereday JSON and check the files.'),
      ('/blog/iphone-photos-map/', 'See your photos on a map',
       'Use the Photos map and place photos that have no GPS.')],
- '/blog/view-location-history-iphone/': [('/blog/significant-locations-iphone/',
+ '/blog/view-location-history-iphone/': [('/blog/apple-watch-location-history/',
+                                          'Check what an Apple Watch keeps',
+                                          'See where workout routes, Find My and the iPhone store '
+                                          'Watch location data.'),
+                                         ('/blog/significant-locations-iphone/',
                                           'Understand Significant Locations and Visited Places',
                                           'See where each Apple feature lives, why it shows '
                                           'little, and why neither exports.'),
