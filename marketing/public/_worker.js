@@ -52,6 +52,7 @@ const pages = {
   "/tools/gpx-editor/": "/_markdown/tools/gpx-editor/index.md",
   "/tools/gpx-viewer/": "/_markdown/tools/gpx-viewer/index.md",
   "/tools/": "/_markdown/tools/index.md",
+  "/tools/kml-to-csv/": "/_markdown/tools/kml-to-csv/index.md",
   "/tools/kml-to-gpx/": "/_markdown/tools/kml-to-gpx/index.md",
   "/tools/kml-viewer/": "/_markdown/tools/kml-viewer/index.md",
   "/tools/merge-gpx/": "/_markdown/tools/merge-gpx/index.md",

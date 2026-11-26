@@ -246,3 +246,6 @@ export function safeBase(name) {
   const base = String(name || 'points').replace(/^.*[\\/]/, '').replace(/\.(csv|txt|gpx)$/i, '').replace(/[^A-Za-z0-9._ -]+/g, '-').replace(/^[.\s-]+|[.\s-]+$/g, '');
   return base.slice(0, 80) || 'points';
 }
+
+// Shared with the KML to CSV converter. Exports only; behaviour is unchanged.
+export { number as parseNumber, unguard, xml as escapeXML, isoUTC };

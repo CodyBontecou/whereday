@@ -90,7 +90,7 @@ Times are written as UTC date-times ([RFC 3339](https://www.rfc-editor.org/rfc/r
 ## Limits
 
 - One file, up to 10 MiB and 50,000 points, the same limits as the [GPX viewer](https://whereday.com/tools/gpx-viewer/).
-- KMZ is not supported. A KMZ is a zip with a `doc.kml` inside; this page has no unzip step. Have a KMZ? [Open it in the KML/KMZ viewer](https://whereday.com/tools/kml-viewer/), or unzip it yourself and choose the KML. Images inside a KMZ are never converted.
+- KMZ is not supported. A KMZ is a zip with a `doc.kml` inside; this page has no unzip step. Have a KMZ? [Open it in the KML/KMZ viewer](https://whereday.com/tools/kml-viewer/), or unzip it yourself and choose the KML. Images inside a KMZ are never converted. Need a CSV instead? [Convert KML or KMZ to CSV](https://whereday.com/tools/kml-to-csv/), which reads KMZ directly.
 - Polygons are skipped and reported; GPX has no area shape.
 - Styles, icons, ExtendedData, folders and overlays are dropped.
 - NetworkLinks are not followed; this page makes no network requests.

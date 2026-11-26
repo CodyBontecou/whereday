@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+  <Document>
+    <name>Synthetic KML to CSV example</name>
+    <description>Invented data for testing the converter. Not a real recording.</description>
+    <Style id="invented-style"><IconStyle><scale>1.1</scale></IconStyle></Style>
+    <Folder>
+      <name>Invented park</name>
+      <Placemark>
+        <name>Made-up fountain</name>
+        <description><![CDATA[<b>Invented</b> landmark<br/>Water is <i>off</i> in winter &amp; spring]]></description>
+        <TimeStamp><when>2000-01-01T09:30:00-05:00</when></TimeStamp>
+        <ExtendedData>
+          <Data name="category"><value>landmark</value></Data>
+          <Data name="visitors"><value>120</value></Data>
+        </ExtendedData>
+        <Point><coordinates>-73.9654,40.7829,15</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Bench, "north" side</name>
+        <description>Plain text description</description>
+        <ExtendedData>
+          <SchemaData schemaUrl="#invented">
+            <SimpleData name="category">seating</SimpleData>
+            <SimpleData name="visitors">8</SimpleData>
+          </SchemaData>
+        </ExtendedData>
+        <Point><coordinates>-73.9660,40.7835</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>=SUM(1+1) invented formula</name>
+        <Point><coordinates>-73.9650,40.7821,12</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>Made-up loop path</name>
+        <ExtendedData><Data name="category"><value>path</value></Data></ExtendedData>
+        <LineString><coordinates>-73.9654,40.7829,15 -73.9658,40.7832,16 -73.9663,40.7834,17</coordinates></LineString>
+      </Placemark>
+      <Placemark>
+        <name>Invented lawn with a pond</name>
+        <Polygon>
+          <outerBoundaryIs><LinearRing><coordinates>-73.9680,40.7800,0 -73.9670,40.7800,0 -73.9670,40.7810,0 -73.9680,40.7810,0 -73.9680,40.7800,0</coordinates></LinearRing></outerBoundaryIs>
+          <innerBoundaryIs><LinearRing><coordinates>-73.9677,40.7803,0 -73.9673,40.7803,0 -73.9673,40.7807,0 -73.9677,40.7807,0 -73.9677,40.7803,0</coordinates></LinearRing></innerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Invented gate and trail</name>
+        <MultiGeometry>
+          <Point><coordinates>-73.9690,40.7790</coordinates></Point>
+          <LineString><coordinates>-73.9690,40.7790 -73.9692,40.7794</coordinates></LineString>
+        </MultiGeometry>
+      </Placemark>
+      <Placemark>
+        <name>Timed invented walk</name>
+        <gx:Track>
+          <when>2000-01-01T14:00:00Z</when>
+          <when>2000-01-01T14:01:00Z</when>
+          <when>2000-01-01T14:02:00Z</when>
+          <gx:coord>-73.9700 40.7780 20</gx:coord>
+          <gx:coord>-73.9702 40.7783 21</gx:coord>
+          <gx:coord>-73.9705 40.7786 22</gx:coord>
+        </gx:Track>
+      </Placemark>
+    </Folder>
+    <NetworkLink><name>Invented link</name><Link><href>https://example.invalid/feed.kml</href></Link></NetworkLink>
+    <GroundOverlay><name>Invented overlay</name><Icon><href>files/legend.png</href></Icon><LatLonBox><north>40.79</north><south>40.77</south><east>-73.96</east><west>-73.97</west></LatLonBox></GroundOverlay>
+  </Document>
+</kml>

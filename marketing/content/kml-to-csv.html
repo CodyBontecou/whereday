@@ -1,0 +1,259 @@
+<link rel="stylesheet" href="/assets/gpx-viewer.css">
+<link rel="stylesheet" href="/assets/csv-gpx.css">
+<link rel="stylesheet" href="/assets/kml-csv.css">
+<section class="gpx-tool csvgpx-tool kc-tool" aria-labelledby="convert">
+  <h2 id="convert">Drop a KML, KMZ or CSV file. It stays on this device.</h2>
+  <p>Drop a KML or KMZ to get a CSV for Excel or Google Sheets, or drop a CSV to get a KML. The file stays in your browser. The type is detected from the file’s content, not its name. You see a report of what was read, written and skipped before you download anything. No account, no upload and no analytics. Files are read with your browser’s <a href="https://developer.mozilla.org/en-US/docs/Web/API/File_API">File API</a>, and a KMZ is unzipped with the browser’s built-in <a href="https://developer.mozilla.org/en-US/docs/Web/API/DecompressionStream">DecompressionStream</a>.</p>
+  <noscript><p>JavaScript is needed to read and convert files in your browser. The explanations and the sample downloads below work without it.</p></noscript>
+  <div id="kc-tool" hidden>
+    <div id="kc-drop" class="csvgpx-drop">
+      <label for="kc-file"><strong>Choose a KML, KMZ or CSV file</strong> or drop it here · one file, up to 10 MiB and 50,000 coordinates or rows</label>
+      <input id="kc-file" type="file" accept=".kml,.kmz,.csv,.txt,application/vnd.google-earth.kml+xml,application/vnd.google-earth.kmz,text/csv,text/plain,application/xml,text/xml" aria-describedby="kc-status">
+    </div>
+    <div class="gpx-actions"><button id="kc-demo-kml" type="button">Try the synthetic sample</button><button id="kc-demo-kmz" type="button">Try the synthetic KMZ</button><button id="kc-demo-stored" type="button">Try the stored-method KMZ</button><button id="kc-demo-csv" type="button">Try a synthetic CSV (CSV to KML)</button><button id="kc-clear" type="button">Clear</button></div>
+    <p id="kc-status" class="gpx-small" role="status" aria-live="polite">Add a file, or try the synthetic sample first. It is invented and contains no personal data.</p>
+    <p id="kc-error" class="csvgpx-warn" role="alert" hidden></p>
+
+    <div id="kc-kml" hidden>
+      <h3>KML or KMZ to CSV</h3>
+      <p id="kc-source" class="gpx-small"></p>
+      <fieldset>
+        <legend>1. Rows for lines, tracks and polygons</legend>
+        <label class="csvgpx-choice" for="kc-mode-vertex"><input id="kc-mode-vertex" type="radio" name="kc-mode" value="vertex" checked><span><strong>One row per vertex</strong><span class="gpx-small">Every vertex of a LineString, <code>gx:Track</code> or polygon outer boundary gets a row, with its <code>placemark</code> and <code>vertex</code> numbers. A Point is one row either way.</span></span></label>
+        <label class="csvgpx-choice" for="kc-mode-placemark"><input id="kc-mode-placemark" type="radio" name="kc-mode" value="placemark"><span><strong>One row per placemark</strong><span class="gpx-small">One row for each geometry, with its first vertex and a <code>vertex_count</code>. A MultiGeometry still gets one row per part, numbered in <code>part</code>.</span></span></label>
+      </fieldset>
+      <fieldset>
+        <legend>2. Text and spreadsheet options</legend>
+        <label class="csvgpx-choice" for="kc-html"><input id="kc-html" type="checkbox"><span><strong>Keep HTML in descriptions</strong><span class="gpx-small">Off by default: descriptions become plain text, with line breaks kept.</span></span></label>
+        <label class="csvgpx-choice" for="kc-bom"><input id="kc-bom" type="checkbox" checked><span><strong>Add a UTF-8 byte-order mark (BOM)</strong><span class="gpx-small">Three bytes at the start of the file that mark it as UTF-8, which some spreadsheet programs use. Untick it if the first header shows stray characters. See <a href="#excel">open the CSV in Excel or Sheets</a>.</span></span></label>
+      </fieldset>
+      <div id="kc-kml-warnings"></div>
+      <div id="kc-kml-output">
+        <h3>Report</h3>
+        <div class="csvgpx-view">
+          <div>
+            <svg id="kc-kml-plot" class="kc-plot" viewBox="0 0 800 360" role="img" aria-label="Local plot of the geometry that will be written, without a map"></svg>
+            <p class="gpx-small">A local plot with no map tiles, so nothing is fetched. North is up. Check that it has the shape you expect: swapped latitude and longitude would show it mirrored or in the wrong place.</p>
+          </div>
+          <div>
+            <div class="table-scroll" role="region" aria-label="Conversion report" tabindex="0"><table class="csvgpx-table"><tbody id="kc-kml-table"></tbody></table></div>
+            <ul id="kc-kml-notes" class="csvgpx-notes"></ul>
+          </div>
+        </div>
+        <h4>Skipped, and why</h4>
+        <ul id="kc-kml-skipped" class="csvgpx-notes"></ul>
+        <h4>First rows of the CSV</h4>
+        <div class="table-scroll" role="region" aria-label="First rows of the CSV" tabindex="0"><table class="csvgpx-table kc-preview"><thead id="kc-kml-head"></thead><tbody id="kc-kml-rows"></tbody></table></div>
+        <div class="csvgpx-download"><button id="kc-kml-download" type="button" disabled>Download CSV</button><span id="kc-kml-filename" class="gpx-small"></span></div>
+      </div>
+    </div>
+
+    <div id="kc-csv" hidden>
+      <h3>CSV to KML</h3>
+      <fieldset>
+        <legend>1. Columns</legend>
+        <p class="gpx-small">Latitude and longitude are found by header name (<code>lat</code>, <code>latitude</code>, <code>lon</code>, <code>lng</code>, <code>longitude</code> and the others listed under <a href="#csv-to-kml">make a KML from a spreadsheet</a>). Change any of them here. They must be decimal degrees.</p>
+        <div class="csvgpx-grid">
+          <div><label for="kc-col-lat">Latitude</label><select id="kc-col-lat"></select></div>
+          <div><label for="kc-col-lon">Longitude</label><select id="kc-col-lon"></select></div>
+          <div><label for="kc-col-name">Name (optional)</label><select id="kc-col-name"></select></div>
+          <div><label for="kc-col-ele">Altitude in metres (optional)</label><select id="kc-col-ele"></select></div>
+          <div><label for="kc-col-time">Time (optional)</label><select id="kc-col-time"></select></div>
+        </div>
+        <div class="csvgpx-grid" style="margin-top:12px">
+          <div><label for="kc-delimiter">Separator</label><select id="kc-delimiter"><option value="auto">Detect (comma, semicolon or tab)</option><option value="comma">Comma</option><option value="semicolon">Semicolon</option><option value="tab">Tab</option></select></div>
+          <div><label for="kc-header">First row</label><select id="kc-header"><option value="auto">Detect</option><option value="yes">Is a header</option><option value="no">Is a point</option></select></div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>2. Points or a line</legend>
+        <label class="csvgpx-choice" for="kc-kml-points"><input id="kc-kml-points" type="radio" name="kc-kmode" value="points"><span><strong>Points</strong><span class="gpx-small">One Placemark per row. The name comes from the name column, and every other column becomes <code>ExtendedData</code>.</span></span></label>
+        <label class="csvgpx-choice" for="kc-kml-line"><input id="kc-kml-line" type="radio" name="kc-kmode" value="line"><span><strong>One line</strong><span class="gpx-small">One LineString through the rows in file order. If every row has a time, it is written as a <code>gx:Track</code> so the times are kept.</span></span></label>
+        <label id="kc-own-label" class="csvgpx-choice" for="kc-kml-placemarks" hidden><input id="kc-kml-placemarks" type="radio" name="kc-kmode" value="placemarks"><span><strong>As exported by this tool</strong><span class="gpx-small">This CSV has the <code>placemark</code>, <code>geometry</code> and <code>vertex</code> columns this page writes. Rows are grouped back into the same placemarks, with their folders, parts and ExtendedData.</span></span></label>
+        <label for="kc-name" style="margin-top:12px;display:block;font-weight:600">File and document name</label>
+        <input id="kc-name" type="text" autocomplete="off" style="width:min(100%,22em)">
+      </fieldset>
+      <div id="kc-csv-warnings"></div>
+      <div id="kc-csv-output">
+        <h3>Report</h3>
+        <div class="csvgpx-view">
+          <div>
+            <svg id="kc-csv-plot" class="kc-plot" viewBox="0 0 800 360" role="img" aria-label="Local plot of the points that will be written, without a map"></svg>
+            <p class="gpx-small">A local plot with no map tiles. North is up.</p>
+          </div>
+          <div>
+            <div class="table-scroll" role="region" aria-label="Conversion report" tabindex="0"><table class="csvgpx-table"><tbody id="kc-csv-table"></tbody></table></div>
+            <ul id="kc-csv-notes" class="csvgpx-notes"></ul>
+          </div>
+        </div>
+        <div class="csvgpx-download"><button id="kc-csv-download" type="button" disabled>Download KML</button><button id="kc-csv-download-kmz" type="button" disabled>Download KMZ</button><span id="kc-csv-filename" class="gpx-small"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<nav class="article-toc" aria-label="On this page"><strong>On this page</strong><ol>
+  <li><a href="#columns">What’s in the CSV</a></li><li><a href="#lines">Why more rows than placemarks</a></li><li><a href="#coordinate-order">Longitude first</a></li><li><a href="#kmz">KMZ files</a></li><li><a href="#excel">Excel and Sheets</a></li><li><a href="#csv-to-kml">CSV to KML</a></li><li><a href="#limits">Limits</a></li><li><a href="#faq">Questions</a></li><li><a href="#sources">Sources</a></li>
+</ol></nav>
+
+<section aria-labelledby="columns">
+  <h2 id="columns">What’s in the CSV</h2>
+  <p>Every row has the same fixed columns, in this order, followed by one column for each <code>ExtendedData</code> name found in the file. Each <code>&lt;Data name="…"&gt;</code> and each <code>&lt;SimpleData name="…"&gt;</code> becomes a column named after it. The header row is always written. The column names for latitude and longitude are spelled out, so the file does not depend on anyone remembering KML’s order.</p>
+  <div class="table-scroll" role="region" aria-label="CSV columns" tabindex="0"><table>
+    <thead><tr><th scope="col">Column</th><th scope="col">What it holds</th></tr></thead>
+    <tbody>
+      <tr><th scope="row"><code>placemark</code></th><td>The placemark’s number in the file, starting at 1. Rows with the same number belong together.</td></tr>
+      <tr><th scope="row"><code>name</code>, <code>description</code></th><td>The placemark’s <code>name</code> and <code>description</code>. Descriptions are turned into plain text unless you choose to keep the HTML.</td></tr>
+      <tr><th scope="row"><code>folder</code></th><td>The names of the folders it sits in, joined with “ / ”.</td></tr>
+      <tr><th scope="row"><code>geometry</code></th><td><code>Point</code>, <code>LineString</code>, <code>LinearRing</code>, <code>Polygon</code> or <code>gx:Track</code>.</td></tr>
+      <tr><th scope="row"><code>part</code></th><td>The number of the part inside a <code>MultiGeometry</code> or <code>gx:MultiTrack</code>. Empty for a placemark with one geometry.</td></tr>
+      <tr><th scope="row"><code>vertex</code>, <code>vertex_count</code></th><td>The vertex’s number within its part, and how many vertices the part has.</td></tr>
+      <tr><th scope="row"><code>latitude</code>, <code>longitude</code></th><td>Decimal degrees, WGS 84, written exactly as they appear in the file.</td></tr>
+      <tr><th scope="row"><code>altitude_m</code></th><td>The third number of a KML coordinate, as written. Empty when there is none.</td></tr>
+      <tr><th scope="row"><code>time_utc</code></th><td>From <code>TimeStamp</code>/<code>when</code>, or from each <code>when</code> of a <code>gx:Track</code>, converted to UTC.</td></tr>
+      <tr><th scope="row"><code>original_time</code></th><td>The time exactly as written, when it is not already plain UTC (for example <code>2000-01-01T09:30:00-05:00</code>), or when it could not be read, such as a date with no time of day.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Example: synthetic data</h3>
+  <p>This is <strong>synthetic, invented data</strong>, from a made-up park. It is not anyone’s trip. <a href="/samples/synthetic-kml-to-csv.kml" download>synthetic-kml-to-csv.kml</a> has seven placemarks. These are five of the 17 rows it produces in the default one-row-per-vertex mode, with some columns left out to fit. The full output is in <a href="/samples/synthetic-kml-to-csv.expected.csv" download>synthetic-kml-to-csv.expected.csv</a>.</p>
+  <div class="table-scroll" role="region" aria-label="Five example rows" tabindex="0"><table>
+    <thead><tr><th scope="col">placemark</th><th scope="col">name</th><th scope="col">geometry</th><th scope="col">vertex</th><th scope="col">latitude</th><th scope="col">longitude</th><th scope="col">altitude_m</th><th scope="col">time_utc</th><th scope="col">category</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Made-up fountain</td><td>Point</td><td>1</td><td>40.7829</td><td>-73.9654</td><td>15</td><td>2000-01-01T14:30:00Z</td><td>landmark</td></tr>
+      <tr><td>2</td><td>Bench, "north" side</td><td>Point</td><td>1</td><td>40.7835</td><td>-73.9660</td><td></td><td></td><td>seating</td></tr>
+      <tr><td>4</td><td>Made-up loop path</td><td>LineString</td><td>1</td><td>40.7829</td><td>-73.9654</td><td>15</td><td></td><td>path</td></tr>
+      <tr><td>4</td><td>Made-up loop path</td><td>LineString</td><td>2</td><td>40.7832</td><td>-73.9658</td><td>16</td><td></td><td>path</td></tr>
+      <tr><td>4</td><td>Made-up loop path</td><td>LineString</td><td>3</td><td>40.7834</td><td>-73.9663</td><td>17</td><td></td><td>path</td></tr>
+    </tbody>
+  </table></div>
+  <p>The fountain’s time in the file is <code>2000-01-01T09:30:00-05:00</code>, so <code>time_utc</code> shows 14:30 UTC and <code>original_time</code> keeps the original text. The <code>category</code> column came from the placemarks’ <code>ExtendedData</code>. The sample’s third placemark has a name that starts with <code>=</code>, which is why <a href="#excel">cells get an apostrophe</a>.</p>
+</section>
+
+<section aria-labelledby="lines">
+  <h2 id="lines">Why there are more rows than placemarks</h2>
+  <p>A KML placemark can hold a whole line. A CSV row can hold only one position. So by default the tool writes <strong>one row per vertex</strong>: a LineString with 400 vertices becomes 400 rows that share a <code>placemark</code> number and count up in <code>vertex</code>. The report calls the extra rows “line vertices expanded”. A timed <code>gx:Track</code> is the same, with one <code>time_utc</code> per row. Google describes <code>gx:Track</code> in the <a href="https://developers.google.com/kml/documentation/kmlreference#gxtrack">KML reference</a> as pairing each <code>when</code> with a <code>gx:coord</code>.</p>
+  <p>Choose <strong>one row per placemark</strong> if you want a list of places, not a list of points. Each geometry then gets one row with its <em>first</em> vertex and a <code>vertex_count</code>. The rest of the line is not in that CSV. Use it for counting and sorting, not for rebuilding a path.</p>
+  <ul>
+    <li><strong>Polygons.</strong> A <code>Polygon</code> is written from its <em>outer boundary</em>: one row per vertex in vertex mode (the last vertex repeats the first, as KML rings do), or one row with the first vertex and a count in placemark mode. Inner boundaries (holes) are not written, and the report counts them.</li>
+    <li><strong>MultiGeometry.</strong> Its parts are numbered 1, 2, 3 in the <code>part</code> column, in file order. A <code>gx:MultiTrack</code> is numbered the same way.</li>
+    <li><strong>No geometry.</strong> A placemark with no usable coordinates has nothing to put in a row, so it is skipped and counted.</li>
+  </ul>
+  <p>The Google <a href="https://developers.google.com/kml/documentation/kmlreference">KML reference</a> defines each of these elements.</p>
+</section>
+
+<section aria-labelledby="coordinate-order">
+  <h2 id="coordinate-order">KML is longitude first</h2>
+  <p>In KML, a coordinate is written <code>longitude,latitude[,altitude]</code>, with no spaces inside a tuple and a space between tuples. The Google <a href="https://developers.google.com/kml/documentation/kmlreference">KML reference</a> states this order for <code>coordinates</code>. Most spreadsheets, and most people, say latitude first. Copying the numbers across unchanged is the commonest way to end up with points in the wrong place.</p>
+  <p>This tool does the swap for you and labels the result. A KML coordinate <code>-73.9654,40.7829,15</code> becomes <code>latitude</code> 40.7829, <code>longitude</code> -73.9654 and <code>altitude_m</code> 15. Going the other way, a CSV row with latitude 40.7829 and longitude -73.9654 is written <code>-73.9654,40.7829</code>. The digits are copied as written, not rounded. Check the local plot in the report: a swapped pair would show up in a different place. A latitude outside −90 to 90, or a longitude outside −180 to 180, is rejected and counted, which also catches many swaps.</p>
+</section>
+
+<section aria-labelledby="kmz">
+  <h2 id="kmz">KMZ files: what’s inside, and what is skipped</h2>
+  <p>A KMZ is a ZIP archive that holds a KML file and, often, the files it refers to, such as icons and overlay images. Google’s <a href="https://developers.google.com/kml/documentation/kmzarchives">KMZ archives guide</a> says the KML at the top level is normally named <code>doc.kml</code>. The tool reads <code>doc.kml</code> and, if there is none, the first <code>.kml</code> at the top level of the archive, the same way the <a href="/tools/kml-viewer/">KML and KMZ viewer</a> does. It does this in your browser, with no library and no upload. Both stored and deflate-compressed entries work, and the file is recognised by its ZIP signature, so a KMZ renamed <code>.zip</code> or <code>.kml</code> still opens.</p>
+  <p>What is not converted is listed in the report, with counts and a reason:</p>
+  <ul>
+    <li><strong>Images and other files in the archive.</strong> Icons, overlay pictures and photos. A CSV has no place for them.</li>
+    <li><strong>NetworkLink.</strong> It points to content somewhere else. The tool makes no network requests, so it is not followed.</li>
+    <li><strong>GroundOverlay, PhotoOverlay, ScreenOverlay, Model and Tour.</strong> They are not points or lines, so there is nothing to write.</li>
+    <li><strong>Style and StyleMap.</strong> Colours, icons and line widths are not carried into a CSV.</li>
+    <li><strong>TimeSpan.</strong> Only <code>TimeStamp</code> and <code>gx:Track</code> times are written.</li>
+  </ul>
+  <p>Encrypted or ZIP64 archives, and files with a <code>DOCTYPE</code> or entity declaration, are refused with a message.</p>
+</section>
+
+<section aria-labelledby="excel">
+  <h2 id="excel">Open the CSV in Excel or Google Sheets</h2>
+  <p>A CSV is plain text. Any spreadsheet program can read it, but each one decides how to split the columns and how to guess the type of each cell, so open it with an import step if you can, not by double-clicking.</p>
+  <ol>
+    <li>Look for the program’s import command rather than opening the file directly. Excel has <em>Data → From Text/CSV</em>, which Microsoft’s <a href="https://support.microsoft.com/en-us/excel/get-started/import-or-export-text-txt-or-csv-files">text and CSV import guide</a> describes. Google Sheets has its own import command; check Google’s help for the current steps.</li>
+    <li>Choose UTF-8 and a comma separator, and make sure the header becomes the column names.</li>
+    <li>Keep <code>time_utc</code> as text at first if you want to see the exact value. Spreadsheets often reformat dates.</li>
+    <li>Check the first rows against the report: <code>latitude</code> should be between −90 and 90.</li>
+  </ol>
+  <p>We have not tested a particular version of any spreadsheet program, so these are general steps.</p>
+  <h3>Why there is a UTF-8 BOM, and an apostrophe</h3>
+  <ul>
+    <li><strong>The BOM.</strong> The optional byte-order mark is three bytes at the start of the file that say it is UTF-8. Some programs use it to choose the right character set, so names with accents show correctly; others ignore it. It is on by default. If your program shows odd characters in front of the first header, run the conversion again with it off.</li>
+    <li><strong>The apostrophe.</strong> A cell that starts with <code>=</code>, <code>+</code>, <code>-</code> or <code>@</code> can be run as a formula by a spreadsheet. <a href="https://owasp.org/www-community/attacks/CSV_Injection">OWASP’s CSV injection page</a> describes the risk. Names, descriptions, folders and ExtendedData values like that get a leading apostrophe, so you see them as text. The numbers in <code>latitude</code>, <code>longitude</code> and <code>altitude_m</code> are not touched, so negative values stay numbers, and neither is an ExtendedData value that is a plain number. When you convert such a CSV back to KML here, the apostrophe is removed.</li>
+  </ul>
+  <p>Values that contain a comma, a double quote or a line break are put in double quotes, and a quote inside is doubled, as in <a href="https://www.rfc-editor.org/rfc/rfc4180">RFC 4180</a>. Lines end with CRLF.</p>
+</section>
+
+<section aria-labelledby="csv-to-kml">
+  <h2 id="csv-to-kml">Make a KML from a spreadsheet</h2>
+  <p>Save the sheet as a CSV (in most spreadsheet programs, <em>File → Save As</em> or <em>Download</em> offers it), then drop it above. The file needs a header row and two columns of <strong>decimal degrees</strong>: latitude from −90 to 90 and longitude from −180 to 180. Degrees-minutes-seconds text such as <code>40°46′58″N</code> is not converted; those rows are skipped and listed by row number.</p>
+  <div class="table-scroll" role="region" aria-label="Recognised column names" tabindex="0"><table>
+    <thead><tr><th scope="col">Field</th><th scope="col">Header names recognised</th><th scope="col">Written to KML as</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Latitude (required)</th><td><code>lat</code>, <code>latitude</code>, <code>y</code></td><td>The second number of <code>coordinates</code></td></tr>
+      <tr><th scope="row">Longitude (required)</th><td><code>lon</code>, <code>lng</code>, <code>long</code>, <code>longitude</code>, <code>x</code></td><td>The first number of <code>coordinates</code></td></tr>
+      <tr><th scope="row">Name</th><td><code>name</code>, <code>title</code>, <code>label</code></td><td><code>&lt;name&gt;</code></td></tr>
+      <tr><th scope="row">Altitude</th><td><code>ele</code>, <code>elevation</code>, <code>elevation_m</code>, <code>alt</code>, <code>altitude</code>, <code>altitude_m</code></td><td>The third number of <code>coordinates</code></td></tr>
+      <tr><th scope="row">Time</th><td><code>time</code>, <code>timestamp</code>, <code>time_utc</code>, <code>date</code>, <code>datetime</code></td><td><code>&lt;TimeStamp&gt;</code>, in UTC. A time with no zone is treated as UTC and counted in the report.</td></tr>
+      <tr><th scope="row">Description</th><td><code>description</code>, <code>desc</code>, <code>notes</code>, <code>comment</code></td><td><code>&lt;description&gt;</code></td></tr>
+      <tr><th scope="row">Every other column</th><td>Any header</td><td>A <code>&lt;Data name="…"&gt;</code> in <code>ExtendedData</code>, when the cell is not empty</td></tr>
+    </tbody>
+  </table></div>
+  <p>The output is KML 2.2, with coordinates in <code>longitude,latitude[,altitude]</code> order. <strong>Points</strong> writes one Placemark per row. <strong>One line</strong> writes a single LineString through the rows in file order. If you convert a CSV that this page wrote, the third option groups the rows back into the same placemarks, folders and parts. A placemark that was exported in one-row-per-placemark mode has only its first vertex in the CSV, so it comes back as a Point, and the report says so.</p>
+  <p><strong>KMZ download.</strong> The page can also write a KMZ. It builds the ZIP itself with the stored method (no compression) and one entry, <code>doc.kml</code>, with no library. The KML download is the same content without the ZIP.</p>
+  <h3>Open the result in Google Earth or My Maps</h3>
+  <p>For Google Earth, check <a href="https://support.google.com/earth/">Google Earth Help</a> for the current import steps. For My Maps, Google lists the supported file types in its <a href="https://support.google.com/mymaps/answer/3024836">import help</a>; check it before you rely on a file type or size. The site’s guide to <a href="/blog/gpx-to-google-maps/">opening a GPX file in Google Maps</a> shows the My Maps steps on a computer. We have not tested these apps with this tool’s output, so open a small file first.</p>
+  <h3>Round trip</h3>
+  <p>CSV written by this tool comes back as equivalent placemarks: the same names, the same coordinates in the same order, and the same ExtendedData values. The site’s tests check this with the synthetic sample. Styles are not in the CSV, so they are not in the result, and polygon holes are not kept. Folder names containing “ / ” come back as nested folders.</p>
+</section>
+
+<section aria-labelledby="limits">
+  <h2 id="limits">Limits</h2>
+  <ul>
+    <li><strong>One file at a time, up to 10 MiB, 50,000 coordinates and 50,000 CSV rows</strong>, the same limits as the other tools here. The whole file is read into memory, so a very large file can make the page slow; we have not benchmarked it, so we do not promise a speed.</li>
+    <li><strong>No NetworkLinks.</strong> A KML that only links to other content converts to nothing, and the report says so.</li>
+    <li><strong>No styles.</strong> Colours, icons and line widths are not carried into the CSV or restored from it.</li>
+    <li><strong>No reprojection.</strong> KML coordinates are WGS 84 longitude and latitude. Values are copied as written, not converted from another coordinate system.</li>
+    <li><strong>Altitude is copied as written.</strong> KML altitude modes are not interpreted.</li>
+    <li><strong>Not every field is kept.</strong> Polygon holes, <code>TimeSpan</code>, overlays and models are not written, and the report counts them.</li>
+    <li><strong>Browsers.</strong> Opening a KMZ needs <code>DecompressionStream</code>; if your browser lacks it, the page says so and you can unzip the file and choose the <code>doc.kml</code> inside. We have not tested every browser.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="open-it">
+  <h2 id="open-it">Related tools and guides</h2>
+  <ul>
+    <li><a href="/tools/kml-viewer/">KML and KMZ viewer</a>: see what is inside a file first.</li>
+    <li><a href="/tools/kml-to-gpx/">KML to GPX</a>: for apps that want GPX.</li>
+    <li><a href="/tools/csv-to-gpx/">CSV to GPX</a>: for a GPX track or waypoints.</li>
+    <li><a href="/tools/gpx-viewer/">GPX viewer</a>: check a GPX file and save it as CSV.</li>
+    <li><a href="/blog/gpx-kml-geojson-location-history/">GPX, KML, GeoJSON and CSV compared</a></li>
+    <li><a href="/blog/gpx-to-google-maps/">Open a GPX file in Google Maps</a></li>
+    <li><a href="/tools/">All tools</a></li>
+  </ul>
+</section>
+
+<section aria-labelledby="faq">
+  <h2 id="faq">Questions</h2>
+  <h3>Is it free?</h3>
+  <p>Yes. There is no account, no limit on how many files you convert and nothing to install.</p>
+  <h3>Does it upload my file?</h3>
+  <p>No. The file is read, converted and saved in your browser. The page blocks network connections and loads no analytics, so it cannot send the file anywhere. The web server sees an ordinary request for the page and its scripts, not your file or its name.</p>
+  <h3>Can I convert a KMZ to CSV?</h3>
+  <p>Yes. Drop the KMZ as it is. The tool unzips it in your browser and converts the <code>doc.kml</code> inside. Images in the archive are listed as skipped.</p>
+  <h3>Can I convert to Excel (.xlsx)?</h3>
+  <p>Not directly. The tool writes CSV, which Excel and other spreadsheet programs open, and has no .xlsx writer. Open the CSV in your spreadsheet program and save it as a workbook there if you need one.</p>
+  <h3>Why does my KML have more rows than placemarks in the CSV?</h3>
+  <p>Lines and tracks are written one row per vertex. See <a href="#lines">why there are more rows than placemarks</a>, or choose one row per placemark.</p>
+</section>
+
+<section aria-labelledby="sources">
+  <h2 id="sources">Sources</h2>
+  <ul>
+    <li><a href="https://developers.google.com/kml/documentation/kmlreference">Google KML reference</a>: Placemark, Point, LineString, Polygon, MultiGeometry, ExtendedData, TimeStamp and the order of <code>coordinates</code></li>
+    <li><a href="https://developers.google.com/kml/documentation/kmzarchives">Google KMZ archives guide</a></li>
+    <li><a href="https://developers.google.com/kml/documentation/kmlreference#gxtrack">Google KML reference: gx:Track</a></li>
+    <li><a href="https://www.rfc-editor.org/rfc/rfc4180">RFC 4180: Common Format and MIME Type for CSV Files</a></li>
+    <li><a href="https://owasp.org/www-community/attacks/CSV_Injection">OWASP: CSV injection</a></li>
+    <li>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/API/File_API">File API</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/DecompressionStream">DecompressionStream</a></li>
+    <li><a href="https://support.google.com/mymaps/answer/3024836">Google My Maps: import help</a> (supported file types)</li>
+  </ul>
+</section>
+
+<section class="closing" aria-labelledby="record-your-own"><h2 id="record-your-own">Make your own KML or CSV of where you’ve been.</h2><p>Whereday records visits and routes on your iPhone and exports KML, CSV, GPX, GeoJSON and more. Exporting to a file requires export access, and existing users keep the access they already have; see <a href="/#pricing">current pricing</a>.</p><a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a></section>
+<script type="module" src="/assets/kml-csv.mjs?v=20261126a"></script>

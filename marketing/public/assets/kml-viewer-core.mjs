@@ -205,3 +205,6 @@ export function plotShapes(model, width = 800, height = 360, pad = 24, maxVertic
   for (const p of model.placemarks) for (const part of p.parts) shapes.push({ id: p.id, kind: part.kind === 'ring' ? 'polygon' : part.kind === 'point' ? 'point' : 'line', inner: Boolean(part.inner), points: thin(part.coords).map(project) });
   return shapes;
 }
+
+// Shared with the KML to CSV converter. Exports only; behaviour is unchanged.
+export { KML_NAMESPACES, GX, elementsOf, kmlName, gxName, clean, childText };
