@@ -107,7 +107,7 @@ Unzipping, parsing and plotting all happen in this page. Its content security po
 
 ## Make your own KML of where you’ve been
 
-Whereday records your visits and routes on iPhone and exports KML, GPX, GeoJSON, CSV and more. Convert a file with the [KML ⇄ GPX converter](https://whereday.com/tools/kml-to-gpx/), check a GPX in the [GPX viewer](https://whereday.com/tools/gpx-viewer/), read [what a GPX file is](https://whereday.com/blog/what-is-a-gpx-file/), or browse all the [location file tools](https://whereday.com/tools/).
+Whereday records your visits and routes on iPhone and exports KML, GPX, GeoJSON, CSV and more. Convert a file with the [KML ⇄ GPX converter](https://whereday.com/tools/kml-to-gpx/) or the [KML to CSV converter](https://whereday.com/tools/kml-to-csv/), check a GPX in the [GPX viewer](https://whereday.com/tools/gpx-viewer/), read [what a GPX file is](https://whereday.com/blog/what-is-a-gpx-file/), or browse all the [location file tools](https://whereday.com/tools/).
 
 ## Make your own KML of where you’ve been.
 

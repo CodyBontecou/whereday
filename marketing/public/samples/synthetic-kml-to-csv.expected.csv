@@ -1,0 +1,19 @@
+placemark,name,description,folder,geometry,part,vertex,vertex_count,latitude,longitude,altitude_m,time_utc,original_time,category,visitors
+1,Made-up fountain,"Invented landmark
+Water is off in winter & spring",Invented park,Point,,1,1,40.7829,-73.9654,15,2000-01-01T14:30:00Z,2000-01-01T09:30:00-05:00,landmark,120
+2,"Bench, ""north"" side",Plain text description,Invented park,Point,,1,1,40.7835,-73.9660,,,,seating,8
+3,'=SUM(1+1) invented formula,,Invented park,Point,,1,1,40.7821,-73.9650,12,,,,
+4,Made-up loop path,,Invented park,LineString,,1,3,40.7829,-73.9654,15,,,path,
+4,Made-up loop path,,Invented park,LineString,,2,3,40.7832,-73.9658,16,,,path,
+4,Made-up loop path,,Invented park,LineString,,3,3,40.7834,-73.9663,17,,,path,
+5,Invented lawn with a pond,,Invented park,Polygon,,1,5,40.7800,-73.9680,0,,,,
+5,Invented lawn with a pond,,Invented park,Polygon,,2,5,40.7800,-73.9670,0,,,,
+5,Invented lawn with a pond,,Invented park,Polygon,,3,5,40.7810,-73.9670,0,,,,
+5,Invented lawn with a pond,,Invented park,Polygon,,4,5,40.7810,-73.9680,0,,,,
+5,Invented lawn with a pond,,Invented park,Polygon,,5,5,40.7800,-73.9680,0,,,,
+6,Invented gate and trail,,Invented park,Point,1,1,1,40.7790,-73.9690,,,,,
+6,Invented gate and trail,,Invented park,LineString,2,1,2,40.7790,-73.9690,,,,,
+6,Invented gate and trail,,Invented park,LineString,2,2,2,40.7794,-73.9692,,,,,
+7,Timed invented walk,,Invented park,gx:Track,,1,3,40.7780,-73.9700,20,2000-01-01T14:00:00Z,,,
+7,Timed invented walk,,Invented park,gx:Track,,2,3,40.7783,-73.9702,21,2000-01-01T14:01:00Z,,,
+7,Timed invented walk,,Invented park,gx:Track,,3,3,40.7786,-73.9705,22,2000-01-01T14:02:00Z,,,

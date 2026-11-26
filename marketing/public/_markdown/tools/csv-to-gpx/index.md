@@ -163,6 +163,7 @@ The output is checked against the official [GPX 1.1 schema](https://www.topograf
 - [GPX editor](https://whereday.com/tools/gpx-editor/): trim, split by day or hide your home.
 - [Merge GPX files](https://whereday.com/tools/merge-gpx/): join several converted files.
 - [KML to GPX](https://whereday.com/tools/kml-to-gpx/): for files that are KML rather than CSV.
+- [CSV to KML](https://whereday.com/tools/kml-to-csv/): need KML instead of GPX? Convert the CSV to a KML or KMZ.
 - [Open a GPX file in Google Maps](https://whereday.com/blog/gpx-to-google-maps/)
 - [What is a GPX file?](https://whereday.com/blog/what-is-a-gpx-file/)
 - [Opening a GPX-derived CSV](https://whereday.com/blog/gpx-kml-geojson-location-history/#spreadsheet): the CSV checklist.

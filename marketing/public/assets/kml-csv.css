@@ -1,0 +1,12 @@
+.kc-tool .gpx-actions { margin:8px 0; }
+.kc-tool h4 { margin:20px 0 6px; font-family:var(--serif); font-size:18px; font-weight:500; }
+.kc-plot { display:block; width:100%; height:auto; background:var(--paper-warm, #F7F4EC); border:1px solid var(--rule, #D8D2C3); border-radius:8px; }
+.kc-plot polyline { fill:none; stroke:var(--ink, #1E2B45); stroke-width:3; stroke-linejoin:round; stroke-linecap:round; }
+.kc-plot polyline.alt { stroke:var(--accent, #A8381F); }
+.kc-plot circle { fill:var(--ink, #1E2B45); }
+.kc-plot circle.alt { fill:var(--accent, #A8381F); }
+.kc-tool .kc-preview { font-size:13px; white-space:nowrap; }
+.kc-tool .kc-preview td, .kc-tool .kc-preview th { overflow-wrap:normal; max-width:18em; overflow:hidden; text-overflow:ellipsis; }
+.kc-tool .csvgpx-download button + button { margin-left:0; }
+.kc-tool .csvgpx-download button { font-weight:600; background:var(--ink, #1E2B45); color:var(--paper, #F3EFE6); }
+.kc-tool .csvgpx-download button:disabled { background:var(--card, #FBF9F4); color:var(--ink, #16203A); }

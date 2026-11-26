@@ -33,6 +33,12 @@ Turn a CSV of latitude and longitude, from a spreadsheet or a GPS logger, into a
 
 Then [check the GPX in the viewer](https://whereday.com/tools/gpx-viewer/).
 
+## [KML to CSV converter](https://whereday.com/tools/kml-to-csv/)
+
+Turn a KML or KMZ file into a CSV for Excel or Google Sheets, with one row per placemark or per vertex, or turn a CSV of coordinates into a KML or KMZ. A report shows what was read, written and skipped before you download. Your file stays in your browser.
+
+Then [look inside a KML file](https://whereday.com/tools/kml-viewer/) or [convert it to GPX](https://whereday.com/tools/kml-to-gpx/).
+
 ## [KML and KMZ viewer](https://whereday.com/tools/kml-viewer/)
 
 Open a KML or KMZ file and see its placemarks, lines, polygons and timed gx:Track points, plus a list of what the viewer skips. Your file stays in your browser.
