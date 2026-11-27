@@ -89,7 +89,7 @@ The trade-off is effort: you run, secure and back up the server yourself. Whered
 
 ## Family sharing apps
 
-Life360 and Find My do a different job: they share live location with people you choose, and aren’t built as a personal journal. The [Life360 listing](https://apps.apple.com/us/app/life360-find-family-friends/id384830320) describes family safety and location sharing. If that is what you need, use them. Read [does Find My keep location history](https://whereday.com/blog/find-my-location-history/) for what Apple keeps.
+Life360 and Find My do a different job: they share live location with people you choose, and aren’t built as a personal journal. The [Life360 listing](https://apps.apple.com/us/app/life360-find-family-friends/id384830320) describes family safety and location sharing. See [what Life360 keeps](https://whereday.com/blog/life360-location-history/) for its history window by plan. If that is what you need, use them. Read [does Find My keep location history](https://whereday.com/blog/find-my-location-history/) for what Apple keeps.
 
 ## Questions to ask before you commit
 

@@ -135,6 +135,14 @@ See where workout routes, Find My and your iPhone store Watch location data, and
 
 [Read the Apple Watch guide](https://whereday.com/blog/apple-watch-location-history/)
 
+Life360
+
+### [Life360 location history: how far back it goes](https://whereday.com/blog/life360-location-history/)
+
+2 days on Free, 7 on Silver, 30 on Gold and Platinum. Why history has gaps, and how to keep your own longer record.
+
+[Read what Life360 keeps](https://whereday.com/blog/life360-location-history/)
+
 Find My
 
 ### [Does Find My show location history?](https://whereday.com/blog/find-my-location-history/)

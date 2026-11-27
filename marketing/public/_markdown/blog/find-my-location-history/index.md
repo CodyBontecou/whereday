@@ -131,6 +131,8 @@ Find My shows only where the Watch is or was last seen. See [Apple Watch locatio
 
 No. Significant Locations & Routes is a Location Services setting that learns places that matter to you, and it can’t be exported. Find My locates devices, people and items. See the [Significant Locations guide](https://whereday.com/blog/significant-locations-iphone/).
 
+Life360 history works differently: it shows a rolling window of days that depends on the plan. See [how far back Life360 location history goes](https://whereday.com/blog/life360-location-history/).
+
 Choosing an app to keep your own history? [Compare location history apps for iPhone](https://whereday.com/compare/location-history-apps-iphone/).
 
 ## Start a location history you keep yourself.

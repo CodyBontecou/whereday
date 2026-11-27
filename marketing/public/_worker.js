@@ -16,6 +16,7 @@ const pages = {
   "/blog/iphone-location-journal-obsidian/": "/_markdown/blog/iphone-location-journal-obsidian/index.md",
   "/blog/iphone-location-tracking-battery/": "/_markdown/blog/iphone-location-tracking-battery/index.md",
   "/blog/iphone-photos-map/": "/_markdown/blog/iphone-photos-map/index.md",
+  "/blog/life360-location-history/": "/_markdown/blog/life360-location-history/index.md",
   "/blog/missing-location-history-iphone/": "/_markdown/blog/missing-location-history-iphone/index.md",
   "/blog/private-location-journal-iphone/": "/_markdown/blog/private-location-journal-iphone/index.md",
   "/blog/record-iphone-route-gpx/": "/_markdown/blog/record-iphone-route-gpx/index.md",
