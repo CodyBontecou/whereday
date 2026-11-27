@@ -280,6 +280,17 @@ PAGES.append({
 })
 
 PAGES.append({
+    "path": "/blog/life360-location-history/", "section": "Guides", "section_path": "/blog/", "breadcrumb": "Life360 history",
+    "type": "BlogPosting",
+    "title": "Life360 Location History: How Far Back It Goes — Whereday",
+    "headline": "Life360 location history: how far back it goes",
+    "description": "Life360 shows 2 days on Free, 7 on Silver and 30 on Gold and Platinum. See why history has gaps and how to keep your own longer record.",
+    "lede": "How many days of history Life360 shows on each plan, why you may see gaps or only 2 days, what it documents about exports, and how to keep a longer record of your own days.",
+    "published": "2026-11-27", "modified": "2026-11-27",
+    "source": "life360-location-history.html",
+})
+
+PAGES.append({
     "path": "/blog/apple-watch-location-history/", "section": "Guides", "section_path": "/blog/", "breadcrumb": "Apple Watch location history",
     "type": "BlogPosting",
     "title": "Apple Watch Location History: What It Keeps and How to Log It — Whereday",
@@ -524,6 +535,10 @@ RELATED = {
       'See the two Apple features that do remember places, and why neither exports.'),
      ('/blog/view-location-history-iphone/', 'Find any iPhone location history',
       'Check Apple Maps, Google Timeline and Whereday, and choose the right download.')],
+ '/blog/life360-location-history/': [
+     ('/blog/find-my-location-history/', 'Looking in Find My instead?', 'Find My keeps no history, only a current or last known location.'),
+     ('/compare/location-history-apps-iphone/', 'Compare location history apps', 'Family sharing apps and personal journals, side by side.'),
+     ('/blog/iphone-location-history-by-date/', 'Looking for one specific day?', 'Which sources can jump to a date, and how to rebuild a day without them.')],
  '/blog/apple-watch-location-history/': [
      ('/docs/apple-watch/', 'Record on the Watch', 'Start, sync and check a Watch recording.'),
      ('/blog/record-iphone-route-gpx/', 'Export a route as GPX', 'Save and check a GPX file from the phone copy.'),
