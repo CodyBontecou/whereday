@@ -1,0 +1,163 @@
+<link rel="stylesheet" href="/assets/gpx-viewer.css">
+<link rel="stylesheet" href="/assets/gpx-merge.css">
+<link rel="stylesheet" href="/assets/kml-gpx.css">
+<link rel="stylesheet" href="/assets/kmz-gpx.css">
+<section class="gpx-tool merge-tool kg-tool kz-tool" aria-labelledby="convert">
+  <h2 id="convert">Drop a KMZ, KML or GPX file. It stays on this device.</h2>
+  <p>A KMZ becomes a GPX 1.1 file. A GPX becomes a KMZ, with a plain KML as a second download. The direction comes from the file’s content, not its name: a zip signature means KMZ, and a <code>&lt;gpx&gt;</code> root means GPX. A plain <code>.kml</code> is converted to GPX too. Before you download, a report lists which file inside the KMZ was read, what was converted and what was left out. No account, upload or analytics. The file is read with your browser’s <a href="https://developer.mozilla.org/en-US/docs/Web/API/File_API">File API</a>, and a KMZ is unzipped with the browser’s built-in <a href="https://developer.mozilla.org/en-US/docs/Web/API/DecompressionStream">DecompressionStream</a>.</p>
+  <noscript><p>JavaScript is needed to convert files in your browser. The explanations and sample downloads below work without it.</p></noscript>
+  <div id="kz-tool" hidden>
+    <div id="kz-drop" class="merge-drop">
+      <label for="kz-file"><strong>Choose a KMZ, KML or GPX file</strong> or drop it here · one file, up to 10 MiB and 50,000 coordinates</label>
+      <input id="kz-file" type="file" accept=".kmz,.kml,.gpx,application/vnd.google-earth.kmz,application/vnd.google-earth.kml+xml,application/gpx+xml,application/xml,text/xml" aria-describedby="kz-status">
+    </div>
+    <label class="merge-option" for="kz-keep"><input id="kz-keep" type="checkbox" checked><span><strong>Keep timestamps (gx:Track)</strong><span class="gpx-small">Applies to GPX → KMZ. A segment where every point has a time becomes a gx:Track; a plain KML LineString cannot carry time.</span></span></label>
+    <div class="gpx-actions"><button id="kz-demo-kmz" type="button">Try the synthetic KMZ</button><button id="kz-demo-gpx" type="button">Try the synthetic GPX</button><button id="kz-clear" type="button">Clear</button></div>
+    <p id="kz-status" class="merge-status" role="status" aria-live="polite">Choose a file, or try one of the synthetic samples first. They are invented and contain no personal data.</p>
+    <p id="kz-error" class="kz-error" role="alert" hidden></p>
+    <div id="kz-results" hidden>
+      <h3>Conversion report</h3>
+      <p id="kz-direction"></p>
+      <div id="kz-files-box"><h4>Inside the KMZ</h4><ul id="kz-files"></ul></div>
+      <div class="kg-report">
+        <div><h4>In your file</h4><dl id="kz-in"></dl></div>
+        <div><h4>In the result</h4><dl id="kz-out"></dl></div>
+      </div>
+      <p id="kz-times"></p>
+      <h3>Skipped or changed</h3>
+      <ul id="kz-skipped"></ul>
+      <ul id="kz-notes"></ul>
+      <div class="merge-download"><span id="kz-buttons"></span><span id="kz-filename" class="gpx-small"></span></div>
+      <p id="kz-viewer" class="gpx-small" hidden>Next: open the downloaded GPX in the <a href="/tools/gpx-viewer/">GPX viewer</a> to check it.</p>
+      <p id="kz-kmz-note" class="gpx-small" hidden>Next: open the KMZ in the <a href="/tools/kml-viewer/">KML and KMZ viewer</a> to check its placemarks and lines.</p>
+    </div>
+  </div>
+</section>
+
+<nav class="article-toc" aria-label="On this page"><strong>On this page</strong><ol>
+  <li><a href="#samples">Synthetic samples</a></li><li><a href="#what-is-kmz">What a KMZ is</a></li><li><a href="#kept">What is kept</a></li><li><a href="#google-earth">Using the result</a></li><li><a href="#limits">Limits</a></li><li><a href="#file-privacy">File privacy</a></li><li><a href="#faq">Questions</a></li><li><a href="#sources">Sources</a></li>
+</ol></nav>
+
+<section aria-labelledby="samples">
+  <h2 id="samples">Synthetic samples and the counts to expect</h2>
+  <p>These files are <strong>synthetic, invented data</strong> near 0° N 10° E. They are not anyone’s recording. The buttons above load the same files. The numbers below are checked against the tool’s real output in the site’s tests.</p>
+  <p><a href="/samples/synthetic-kmz-to-gpx.kmz" download>synthetic-kmz-to-gpx.kmz</a> holds <code>doc.kml</code> and <code>files/legend.png</code>. The KML has two Point placemarks, one LineString and one <code>gx:Track</code> with four <code>&lt;when&gt;</code> times. The same KML on its own is <a href="/samples/synthetic-kmz-to-gpx.kml" download>synthetic-kmz-to-gpx.kml</a>.</p>
+  <div class="table-scroll" role="region" aria-label="Expected report for the synthetic KMZ" tabindex="0"><table>
+    <thead><tr><th scope="col">Report line</th><th scope="col">Expected</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">KML file read</th><td><code>doc.kml</code></td></tr>
+      <tr><th scope="row">Other KML files ignored</th><td>0</td></tr>
+      <tr><th scope="row">Images ignored</th><td>1 (<code>files/legend.png</code>)</td></tr>
+      <tr><th scope="row">Placemarks read</th><td>4</td></tr>
+      <tr><th scope="row">Placemarks with a Point → waypoints</th><td>2</td></tr>
+      <tr><th scope="row">LineString + gx:Track → tracks</th><td>2 tracks, 2 segments, 7 track points</td></tr>
+      <tr><th scope="row">Positions with a time</th><td>4 (2000-01-01 12:00 to 12:03 UTC)</td></tr>
+      <tr><th scope="row">Skipped KML elements</th><td>None</td></tr>
+    </tbody>
+  </table></div>
+  <p><a href="/samples/synthetic-gpx-to-kmz.gpx" download>synthetic-gpx-to-kmz.gpx</a> has two waypoints and one track with two segments, every point timed (3 and 2 points).</p>
+  <div class="table-scroll" role="region" aria-label="Expected report for the synthetic GPX" tabindex="0"><table>
+    <thead><tr><th scope="col">Report line</th><th scope="col">Expected</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Waypoints → Placemarks with a Point</th><td>2</td></tr>
+      <tr><th scope="row">Track with two segments → one Placemark</th><td>1 Placemark holding a <code>gx:MultiTrack</code> of 2 <code>gx:Track</code> elements</td></tr>
+      <tr><th scope="row">Positions written</th><td>7, of which 5 have a time</td></tr>
+      <tr><th scope="row">Files offered</th><td><code>.kmz</code> (one <code>doc.kml</code>) and <code>.kml</code></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section aria-labelledby="what-is-kmz">
+  <h2 id="what-is-kmz">What a KMZ is</h2>
+  <p>A KMZ is a zip archive. Google’s <a href="https://developers.google.com/kml/documentation/kmzarchives">KMZ archives guide</a> describes it as a KML file packaged together with the files it refers to, such as icons and overlay images, so they travel as one file. The KML at the top level is normally called <code>doc.kml</code>. This tool reads <code>doc.kml</code> and, if there is none, the first <code>.kml</code> at the top level of the archive. If you got a <code>.kmz</code> from Google Earth, a map you exported or a download link, the coordinates are in that KML, and a GPS app or watch that only reads GPX cannot open the archive.</p>
+  <p>You can rename a KMZ to <code>.zip</code> and look inside, but you do not need to: drop the KMZ as it is. To see what is in it before converting, use the <a href="/tools/kml-viewer/">KML and KMZ viewer</a>.</p>
+</section>
+
+<section aria-labelledby="kept">
+  <h2 id="kept">What survives each conversion</h2>
+  <p>KML writes a coordinate as <code>longitude,latitude[,altitude]</code>; GPX uses separate <code>lat</code> and <code>lon</code> attributes. The tool swaps them for you and copies the digits as written. The same converter is used by <a href="/tools/kml-to-gpx/">KML to GPX</a>, which explains each element in more depth.</p>
+  <h3>KMZ (or KML) to GPX</h3>
+  <div class="table-scroll" role="region" aria-label="KMZ to GPX element mapping" tabindex="0"><table>
+    <thead><tr><th scope="col">In the KMZ</th><th scope="col">In the GPX</th><th scope="col">Result</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Placemark with a <code>Point</code></th><td><code>&lt;wpt&gt;</code> with name, description and <code>&lt;ele&gt;</code></td><td>Kept</td></tr>
+      <tr><th scope="row"><code>LineString</code></th><td><code>&lt;trk&gt;</code> with one <code>&lt;trkseg&gt;</code></td><td>Kept; no times, since a LineString has none</td></tr>
+      <tr><th scope="row"><code>gx:Track</code> with <code>&lt;when&gt;</code></th><td><code>&lt;trkseg&gt;</code> whose <code>&lt;trkpt&gt;</code> have <code>&lt;time&gt;</code></td><td>Kept, times written in UTC</td></tr>
+      <tr><th scope="row">Polygons, models</th><td>None</td><td>Skipped and counted</td></tr>
+      <tr><th scope="row">Styles, icons, folders, ExtendedData, overlays, NetworkLinks</th><td>None</td><td>Skipped and counted</td></tr>
+      <tr><th scope="row">Images, extra KML files and other files in the archive</th><td>None</td><td>Ignored and counted</td></tr>
+    </tbody>
+  </table></div>
+  <h3>GPX to KMZ</h3>
+  <div class="table-scroll" role="region" aria-label="GPX to KMZ element mapping" tabindex="0"><table>
+    <thead><tr><th scope="col">In the GPX</th><th scope="col">In the KMZ</th><th scope="col">Result</th></tr></thead>
+    <tbody>
+      <tr><th scope="row"><code>&lt;wpt&gt;</code></th><td>Placemark with a <code>Point</code></td><td>Kept; the waypoint’s time is not carried</td></tr>
+      <tr><th scope="row"><code>&lt;trkseg&gt;</code>, every point has a time</th><td>One <code>gx:Track</code> per segment</td><td>Kept with times, when “Keep timestamps” is on</td></tr>
+      <tr><th scope="row"><code>&lt;trkseg&gt;</code> otherwise</th><td>One <code>LineString</code> per segment</td><td>Changed: times are lost</td></tr>
+      <tr><th scope="row">A track with several segments</th><td>One Placemark: a <code>gx:MultiTrack</code> (or <code>MultiGeometry</code>) of one line per segment</td><td>Kept</td></tr>
+      <tr><th scope="row"><code>&lt;rte&gt;</code></th><td><code>LineString</code></td><td>Changed: times are lost</td></tr>
+      <tr><th scope="row">Segments or routes with one point</th><td>None</td><td>Dropped and reported</td></tr>
+      <tr><th scope="row">Extensions, links, comments, symbols, accuracy fields</th><td>None</td><td>Dropped and counted</td></tr>
+    </tbody>
+  </table></div>
+  <p>The KMZ this tool writes has one entry, <code>doc.kml</code>, stored without compression. The KML download is the same content without the zip. The output is the same every time for the same input.</p>
+</section>
+
+<section aria-labelledby="google-earth">
+  <h2 id="google-earth">Using the result</h2>
+  <ul>
+    <li><strong>GPS apps and watches</strong> that ask for GPX: use the GPX from a KMZ. Open it in the <a href="/tools/gpx-viewer/">GPX viewer</a> first and compare its counts with the report. To join several, use <a href="/tools/merge-gpx/">Merge GPX</a>.</li>
+    <li><strong>Google Earth or Google My Maps</strong> from a GPX: use the KMZ or KML. For Earth, check <a href="https://support.google.com/earth/">Google Earth Help</a> for the current import steps. For My Maps, Google lists the supported file types in its <a href="https://support.google.com/mymaps/answer/3024836">import help</a>. The site’s guide to <a href="/blog/gpx-to-google-maps/">opening a GPX file in Google Maps</a> shows the My Maps steps on a computer.</li>
+  </ul>
+  <p>We have not tested every app or device with this tool’s output, so open a small file first. The GPX is checked against the GPX 1.1 schema in the site’s tests, and the KMZ is reopened in the KML viewer’s reader with the same placemark and line counts. Want a spreadsheet instead? <a href="/tools/kml-to-csv/">Convert KML or KMZ to CSV</a>. Choosing between formats? Read <a href="/blog/gpx-kml-geojson-location-history/">how GPX, KML, GeoJSON and CSV compare</a>, or <a href="/blog/what-is-a-gpx-file/">what a GPX file is</a>.</p>
+</section>
+
+<section aria-labelledby="limits">
+  <h2 id="limits">Limits</h2>
+  <ul>
+    <li><strong>One file</strong>, up to 10 MiB and 50,000 coordinates, the same limits as the sibling tools. A file inside the KMZ is also limited to 10 MiB uncompressed.</li>
+    <li><strong>ZIP64 KMZ files</strong> are refused with a message. Re-save the file as a standard KMZ, or unzip it and choose the <code>doc.kml</code> inside. Encrypted archives and compression methods other than stored and deflate are refused too.</li>
+    <li><strong>Browsers without DecompressionStream</strong> cannot unzip a KMZ; the page says so. Use a current Safari, Chrome, Edge or Firefox, or unzip the file yourself. GPX and plain KML do not need it. See MDN’s <a href="https://developer.mozilla.org/en-US/docs/Web/API/DecompressionStream">DecompressionStream</a> page.</li>
+    <li><strong>Several KML files.</strong> Only one is converted: <code>doc.kml</code>, or else the first top-level <code>.kml</code>. The others are counted as ignored.</li>
+    <li><strong>Linked files.</strong> A KMZ includes files it carries. A KML that points to files elsewhere (a <code>NetworkLink</code>, an image URL) is not followed, because the page makes no network requests.</li>
+    <li><strong>Polygons</strong> are skipped; GPX has no area shape.</li>
+    <li><strong>Altitudes</strong> are copied as written. KML altitude modes are not interpreted.</li>
+    <li>Files with a DOCTYPE or entity declaration are refused.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="file-privacy">
+  <h2 id="file-privacy">File privacy</h2>
+  <p>Your file is read, unzipped, converted and saved in this page. The page’s content security policy blocks network connections and it loads no analytics, so it cannot send the file anywhere. The web server sees an ordinary request for the page and its scripts, not your file or its name. Keep your original file: the tool never changes it.</p>
+</section>
+
+<section aria-labelledby="faq">
+  <h2 id="faq">Questions</h2>
+  <h3>Is my file uploaded?</h3>
+  <p>No. See <a href="#file-privacy">file privacy</a>.</p>
+  <h3>Why are my photos missing?</h3>
+  <p>GPX holds points, routes and tracks, not pictures. Images inside the KMZ (icons, overlays, photos) are not converted and the report counts them under “Images ignored”. Your original KMZ still has them.</p>
+  <h3>Can I convert KMZ to CSV?</h3>
+  <p>Yes, with the <a href="/tools/kml-to-csv/">KML or KMZ to CSV converter</a>, which writes one row per placemark or per vertex.</p>
+  <h3>My KMZ has several layers. Which one is converted?</h3>
+  <p>A KMZ has one KML that is read: <code>doc.kml</code>, or the first <code>.kml</code> at the top level. Folders inside that KML are all converted, but GPX has no folders, so their names are lost and the report counts them. If the layers are separate KML files, only the chosen one is converted and the rest are listed as ignored; unzip the KMZ and convert the others one at a time with <a href="/tools/kml-to-gpx/">KML to GPX</a>.</p>
+  <h3>Why is my polygon missing?</h3>
+  <p>GPX has no area shape, and the tool does not turn an outline into a track. Polygons are skipped and counted in the report.</p>
+  <h3>Does Whereday import KMZ or GPX?</h3>
+  <p>No. Whereday exports GPX, KML and other formats; it does not import GPX or KMZ.</p>
+</section>
+
+<section aria-labelledby="sources">
+  <h2 id="sources">Sources</h2>
+  <ul>
+    <li><a href="https://developers.google.com/kml/documentation/kmzarchives">Google KML documentation: KMZ files</a></li>
+    <li><a href="https://developers.google.com/kml/documentation/kmlreference">Google KML reference</a>, which defines <code>gx:Track</code> and <code>gx:MultiTrack</code></li>
+    <li><a href="https://www.topografix.com/GPX/1/1/">GPX 1.1 schema documentation (Topografix)</a></li>
+    <li>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/API/DecompressionStream">DecompressionStream</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/File_API">File API</a></li>
+    <li><a href="https://support.google.com/mymaps/answer/3024836">Google My Maps: import help</a></li>
+  </ul>
+</section>
+
+<section class="closing" aria-labelledby="record-next"><h2 id="record-next">Record your own routes.</h2><p>Record routes on your iPhone and export them as GPX, KML, GeoJSON, CSV, JSON or Markdown for any date range.</p><a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a></section>
+<script type="module" src="/assets/kmz-gpx.mjs?v=20261127a"></script>

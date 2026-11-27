@@ -42,7 +42,7 @@ Elements found in the file that this viewer does not draw.
 
 ### Next steps
 
-[Convert this to GPX](https://whereday.com/tools/kml-to-gpx/) · [Check a GPX file](https://whereday.com/tools/gpx-viewer/)
+[Convert this to GPX](https://whereday.com/tools/kml-to-gpx/) · [Convert this KMZ to GPX](https://whereday.com/tools/kmz-to-gpx/) · [Check a GPX file](https://whereday.com/tools/gpx-viewer/)
 
 On this page
 - [KML vs KMZ](https://whereday.com/tools/kml-viewer/#what-is-kml)
@@ -129,6 +129,10 @@ Whereday keeps your location history on your iPhone and exports it in the format
 - [Convert this to GPX](https://whereday.com/tools/kml-to-gpx/)
 
 Turn KML into GPX locally, keeping gx:Track times.
+
+- [Convert this KMZ to GPX](https://whereday.com/tools/kmz-to-gpx/)
+
+Unzip a KMZ in your browser and convert it, or turn a GPX into a KMZ.
 
 - [Check a GPX file](https://whereday.com/tools/gpx-viewer/)
 

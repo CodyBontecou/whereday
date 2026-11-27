@@ -30,9 +30,11 @@ def build_kmz_samples():
     import io, struct, zipfile, zlib
     chunk = lambda kind, data: struct.pack(">I", len(data)) + kind + data + struct.pack(">I", zlib.crc32(kind + data))
     png = b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", struct.pack(">IIBBBBB", 1, 1, 8, 2, 0, 0, 0)) + chunk(b"IDAT", zlib.compress(b"\x00\xc8\xc8\xc8")) + chunk(b"IEND", b"")
-    for source, deflated, stored in (("synthetic-kml-viewer", "synthetic-kml-viewer.kmz", "synthetic-kml-viewer-stored.kmz"), ("synthetic-kml-to-csv", "synthetic-kml-to-csv.kmz", "synthetic-kml-to-csv-stored.kmz")):
+    for source, deflated, stored in (("synthetic-kml-viewer", "synthetic-kml-viewer.kmz", "synthetic-kml-viewer-stored.kmz"), ("synthetic-kml-to-csv", "synthetic-kml-to-csv.kmz", "synthetic-kml-to-csv-stored.kmz"), ("synthetic-kmz-to-gpx", "synthetic-kmz-to-gpx.kmz", None)):
         kml = (PUBLIC / f"samples/{source}.kml").read_bytes()
         for name, method in ((deflated, zipfile.ZIP_DEFLATED), (stored, zipfile.ZIP_STORED)):
+            if name is None:
+                continue
             target = PUBLIC / "samples" / name
             if target.exists():
                 with zipfile.ZipFile(target) as z:
@@ -90,6 +92,8 @@ def build():
     for key, name in (("kmz", "synthetic-kml-to-csv.kmz"), ("kmzStored", "synthetic-kml-to-csv-stored.kmz")):
         kml_csv[key] = {"name": name, "base64": base64.b64encode((PUBLIC / "samples" / name).read_bytes()).decode("ascii")}
     (PUBLIC / "assets/kml-csv-demo.mjs").write_text("export const KML_CSV_SAMPLES = " + json.dumps(kml_csv) + ";\n")
+    kmz_gpx = {"kmz": {"name": "synthetic-kmz-to-gpx.kmz", "base64": base64.b64encode((PUBLIC / "samples/synthetic-kmz-to-gpx.kmz").read_bytes()).decode("ascii")}, "gpx": {"name": "synthetic-gpx-to-kmz.gpx", "text": (PUBLIC / "samples/synthetic-gpx-to-kmz.gpx").read_text()}}
+    (PUBLIC / "assets/kmz-gpx-demo.mjs").write_text("export const KMZ_GPX_SAMPLES = " + json.dumps(kmz_gpx) + ";\n")
     (PUBLIC / "assets/kml-viewer-demo.mjs").write_text("export const KML_VIEWER_SAMPLES = " + json.dumps(viewer_samples) + ";\n")
     geojson_sample = {"name": "synthetic-geojson-viewer.geojson", "text": (PUBLIC / "samples/synthetic-geojson-viewer.geojson").read_text()}
     (PUBLIC / "assets/geojson-viewer-demo.mjs").write_text("export const GEOJSON_VIEWER_SAMPLE = " + json.dumps(geojson_sample) + ";\n")

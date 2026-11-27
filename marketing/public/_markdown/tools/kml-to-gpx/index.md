@@ -8,11 +8,11 @@ iPhone location journals
 
 See what was kept and what was dropped before you download. Google Earth gx:Track timestamps become GPX times, and GPX times come back out as gx:Track.
 
-By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed November 22, 2026
+By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed November 27, 2026
 
 ## Choose a KML or GPX file. It is converted on this device.
 
-The direction is detected from the file’s content, not its name. KML becomes GPX 1.1; GPX becomes KML 2.2. You see a report of what was kept, changed and skipped before you download. No account, upload or analytics. The file is read with your browser’s [File API](https://developer.mozilla.org/en-US/docs/Web/API/File_API) and never leaves the page. Have a KMZ? [Open it in the KML/KMZ viewer](https://whereday.com/tools/kml-viewer/).
+The direction is detected from the file’s content, not its name. KML becomes GPX 1.1; GPX becomes KML 2.2. You see a report of what was kept, changed and skipped before you download. No account, upload or analytics. The file is read with your browser’s [File API](https://developer.mozilla.org/en-US/docs/Web/API/File_API) and never leaves the page. Have a KMZ? [Convert it to GPX here](https://whereday.com/tools/kmz-to-gpx/), or [look inside it in the KML/KMZ viewer](https://whereday.com/tools/kml-viewer/) first.
 
 JavaScript is needed to convert files in your browser. The explanations and sample downloads below work without it.
 
@@ -90,7 +90,7 @@ Times are written as UTC date-times ([RFC 3339](https://www.rfc-editor.org/rfc/r
 ## Limits
 
 - One file, up to 10 MiB and 50,000 points, the same limits as the [GPX viewer](https://whereday.com/tools/gpx-viewer/).
-- KMZ is not supported. A KMZ is a zip with a `doc.kml` inside; this page has no unzip step. Have a KMZ? [Open it in the KML/KMZ viewer](https://whereday.com/tools/kml-viewer/), or unzip it yourself and choose the KML. Images inside a KMZ are never converted. Need a CSV instead? [Convert KML or KMZ to CSV](https://whereday.com/tools/kml-to-csv/), which reads KMZ directly.
+- This page reads KML, not KMZ. A KMZ is a zip with a `doc.kml` inside, and this page has no unzip step. Have a KMZ? [Convert KMZ to GPX (or GPX to KMZ)](https://whereday.com/tools/kmz-to-gpx/), which unzips it in your browser and lists the images and other files it ignores. You can also [open it in the KML/KMZ viewer](https://whereday.com/tools/kml-viewer/). Need a CSV instead? [Convert KML or KMZ to CSV](https://whereday.com/tools/kml-to-csv/), which reads KMZ directly.
 - Polygons are skipped and reported; GPX has no area shape.
 - Styles, icons, ExtendedData, folders and overlays are dropped.
 - NetworkLinks are not followed; this page makes no network requests.
@@ -113,7 +113,7 @@ Yes. KML altitude becomes GPX `<ele>` and back, as written. When only some point
 
 ### Can I convert KMZ?
 
-Not directly. Have a KMZ? [Open it in the KML/KMZ viewer](https://whereday.com/tools/kml-viewer/), or unzip it and choose the `doc.kml` inside.
+Yes, on a sister page: [KMZ to GPX and GPX to KMZ](https://whereday.com/tools/kmz-to-gpx/) unzips the KMZ in your browser and converts the KML inside. To look inside a KMZ first, [open it in the KML/KMZ viewer](https://whereday.com/tools/kml-viewer/).
 
 ### Why are my times missing?
 
@@ -144,6 +144,10 @@ Record routes once and export them as GPX or KML for any date range. Whereday ke
 [Download free for iPhone](https://apps.apple.com/app/id6761960794)
 
 ## Read next
+
+- [Have a KMZ? Convert it to GPX](https://whereday.com/tools/kmz-to-gpx/)
+
+Unzip the KMZ in your browser and see which files were ignored.
 
 - [Check the converted GPX](https://whereday.com/tools/gpx-viewer/)
 

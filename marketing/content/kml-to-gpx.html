@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="/assets/kml-gpx.css">
 <section class="gpx-tool merge-tool kg-tool" aria-labelledby="kg-title">
   <h2 id="kg-title">Choose a KML or GPX file. It is converted on this device.</h2>
-  <p>The direction is detected from the file’s content, not its name. KML becomes GPX 1.1; GPX becomes KML 2.2. You see a report of what was kept, changed and skipped before you download. No account, upload or analytics. The file is read with your browser’s <a href="https://developer.mozilla.org/en-US/docs/Web/API/File_API">File API</a> and never leaves the page. Have a KMZ? <a href="/tools/kml-viewer/">Open it in the KML/KMZ viewer</a>.</p>
+  <p>The direction is detected from the file’s content, not its name. KML becomes GPX 1.1; GPX becomes KML 2.2. You see a report of what was kept, changed and skipped before you download. No account, upload or analytics. The file is read with your browser’s <a href="https://developer.mozilla.org/en-US/docs/Web/API/File_API">File API</a> and never leaves the page. Have a KMZ? <a href="/tools/kmz-to-gpx/">Convert it to GPX here</a>, or <a href="/tools/kml-viewer/">look inside it in the KML/KMZ viewer</a> first.</p>
   <noscript><p>JavaScript is needed to convert files in your browser. The explanations and sample downloads below work without it.</p></noscript>
   <div id="kg-tool" hidden>
     <div id="kg-drop" class="merge-drop">
@@ -90,7 +90,7 @@
   <h2 id="limits">Limits</h2>
   <ul>
     <li><strong>One file</strong>, up to 10 MiB and 50,000 points, the same limits as the <a href="/tools/gpx-viewer/">GPX viewer</a>.</li>
-    <li><strong>KMZ is not supported.</strong> A KMZ is a zip with a <code>doc.kml</code> inside; this page has no unzip step. Have a KMZ? <a href="/tools/kml-viewer/">Open it in the KML/KMZ viewer</a>, or unzip it yourself and choose the KML. Images inside a KMZ are never converted. Need a CSV instead? <a href="/tools/kml-to-csv/">Convert KML or KMZ to CSV</a>, which reads KMZ directly.</li>
+    <li><strong>This page reads KML, not KMZ.</strong> A KMZ is a zip with a <code>doc.kml</code> inside, and this page has no unzip step. Have a KMZ? <a href="/tools/kmz-to-gpx/">Convert KMZ to GPX (or GPX to KMZ)</a>, which unzips it in your browser and lists the images and other files it ignores. You can also <a href="/tools/kml-viewer/">open it in the KML/KMZ viewer</a>. Need a CSV instead? <a href="/tools/kml-to-csv/">Convert KML or KMZ to CSV</a>, which reads KMZ directly.</li>
     <li><strong>Polygons</strong> are skipped and reported; GPX has no area shape.</li>
     <li><strong>Styles, icons, ExtendedData, folders and overlays</strong> are dropped.</li>
     <li><strong>NetworkLinks</strong> are not followed; this page makes no network requests.</li>
@@ -111,7 +111,7 @@
   <h3>Does it keep elevation?</h3>
   <p>Yes. KML altitude becomes GPX <code>&lt;ele&gt;</code> and back, as written. When only some points in a KML line have an altitude, that line is written without altitudes.</p>
   <h3>Can I convert KMZ?</h3>
-  <p>Not directly. Have a KMZ? <a href="/tools/kml-viewer/">Open it in the KML/KMZ viewer</a>, or unzip it and choose the <code>doc.kml</code> inside.</p>
+  <p>Yes, on a sister page: <a href="/tools/kmz-to-gpx/">KMZ to GPX and GPX to KMZ</a> unzips the KMZ in your browser and converts the KML inside. To look inside a KMZ first, <a href="/tools/kml-viewer/">open it in the KML/KMZ viewer</a>.</p>
   <h3>Why are my times missing?</h3>
   <p>Plain KML LineStrings and GPX routes cannot carry per-point times, and KML Placemark points here are not given times. Only <code>gx:Track</code> and GPX track points do. Check that “Keep timestamps (gx:Track)” is on, and read the report for times without a time zone.</p>
   <h3>Does Garmin or Google Earth accept the output?</h3>

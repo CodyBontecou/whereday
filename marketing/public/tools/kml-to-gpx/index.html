@@ -121,7 +121,7 @@ pre code { overflow-wrap: normal; }
       "name": "KML to GPX Converter (and GPX to KML), Free and Private — Whereday",
       "description": "Convert KML to GPX or GPX to KML in your browser. Keeps gx:Track times and elevation, reports what was skipped, and nothing is uploaded. Free, no account.",
       "inLanguage": "en",
-      "dateModified": "2026-11-22",
+      "dateModified": "2026-11-27",
       "author": {
         "@type": "Person",
         "name": "Cody Bontecou",
@@ -253,13 +253,13 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
   <main id="main">
     <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Whereday</a></li><li><a href="/tools/">Tools</a></li><li>KML ⇄ GPX</li></ol></nav>
     
-    <header><p class="eyebrow">iPhone location journals</p><h1 id="article-title">Convert KML to GPX, or GPX to KML, in your browser</h1><p class="lede">See what was kept and what was dropped before you download. Google Earth gx:Track timestamps become GPX times, and GPX times come back out as gx:Track.</p><p class="byline">By <a href="https://isolated.tech">Cody Bontecou</a>, Whereday’s developer · Reviewed <time datetime="2026-11-22">November 22, 2026</time></p></header>
+    <header><p class="eyebrow">iPhone location journals</p><h1 id="article-title">Convert KML to GPX, or GPX to KML, in your browser</h1><p class="lede">See what was kept and what was dropped before you download. Google Earth gx:Track timestamps become GPX times, and GPX times come back out as gx:Track.</p><p class="byline">By <a href="https://isolated.tech">Cody Bontecou</a>, Whereday’s developer · Reviewed <time datetime="2026-11-27">November 27, 2026</time></p></header>
     <link rel="stylesheet" href="/assets/gpx-viewer.css">
 <link rel="stylesheet" href="/assets/gpx-merge.css">
 <link rel="stylesheet" href="/assets/kml-gpx.css">
 <section class="gpx-tool merge-tool kg-tool" aria-labelledby="kg-title">
   <h2 id="kg-title">Choose a KML or GPX file. It is converted on this device.</h2>
-  <p>The direction is detected from the file’s content, not its name. KML becomes GPX 1.1; GPX becomes KML 2.2. You see a report of what was kept, changed and skipped before you download. No account, upload or analytics. The file is read with your browser’s <a href="https://developer.mozilla.org/en-US/docs/Web/API/File_API">File API</a> and never leaves the page. Have a KMZ? <a href="/tools/kml-viewer/">Open it in the KML/KMZ viewer</a>.</p>
+  <p>The direction is detected from the file’s content, not its name. KML becomes GPX 1.1; GPX becomes KML 2.2. You see a report of what was kept, changed and skipped before you download. No account, upload or analytics. The file is read with your browser’s <a href="https://developer.mozilla.org/en-US/docs/Web/API/File_API">File API</a> and never leaves the page. Have a KMZ? <a href="/tools/kmz-to-gpx/">Convert it to GPX here</a>, or <a href="/tools/kml-viewer/">look inside it in the KML/KMZ viewer</a> first.</p>
   <noscript><p>JavaScript is needed to convert files in your browser. The explanations and sample downloads below work without it.</p></noscript>
   <div id="kg-tool" hidden>
     <div id="kg-drop" class="merge-drop">
@@ -346,7 +346,7 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
   <h2 id="limits">Limits</h2>
   <ul>
     <li><strong>One file</strong>, up to 10 MiB and 50,000 points, the same limits as the <a href="/tools/gpx-viewer/">GPX viewer</a>.</li>
-    <li><strong>KMZ is not supported.</strong> A KMZ is a zip with a <code>doc.kml</code> inside; this page has no unzip step. Have a KMZ? <a href="/tools/kml-viewer/">Open it in the KML/KMZ viewer</a>, or unzip it yourself and choose the KML. Images inside a KMZ are never converted. Need a CSV instead? <a href="/tools/kml-to-csv/">Convert KML or KMZ to CSV</a>, which reads KMZ directly.</li>
+    <li><strong>This page reads KML, not KMZ.</strong> A KMZ is a zip with a <code>doc.kml</code> inside, and this page has no unzip step. Have a KMZ? <a href="/tools/kmz-to-gpx/">Convert KMZ to GPX (or GPX to KMZ)</a>, which unzips it in your browser and lists the images and other files it ignores. You can also <a href="/tools/kml-viewer/">open it in the KML/KMZ viewer</a>. Need a CSV instead? <a href="/tools/kml-to-csv/">Convert KML or KMZ to CSV</a>, which reads KMZ directly.</li>
     <li><strong>Polygons</strong> are skipped and reported; GPX has no area shape.</li>
     <li><strong>Styles, icons, ExtendedData, folders and overlays</strong> are dropped.</li>
     <li><strong>NetworkLinks</strong> are not followed; this page makes no network requests.</li>
@@ -367,7 +367,7 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
   <h3>Does it keep elevation?</h3>
   <p>Yes. KML altitude becomes GPX <code>&lt;ele&gt;</code> and back, as written. When only some points in a KML line have an altitude, that line is written without altitudes.</p>
   <h3>Can I convert KMZ?</h3>
-  <p>Not directly. Have a KMZ? <a href="/tools/kml-viewer/">Open it in the KML/KMZ viewer</a>, or unzip it and choose the <code>doc.kml</code> inside.</p>
+  <p>Yes, on a sister page: <a href="/tools/kmz-to-gpx/">KMZ to GPX and GPX to KMZ</a> unzips the KMZ in your browser and converts the KML inside. To look inside a KMZ first, <a href="/tools/kml-viewer/">open it in the KML/KMZ viewer</a>.</p>
   <h3>Why are my times missing?</h3>
   <p>Plain KML LineStrings and GPX routes cannot carry per-point times, and KML Placemark points here are not given times. Only <code>gx:Track</code> and GPX track points do. Check that “Keep timestamps (gx:Track)” is on, and read the report for times without a time zone.</p>
   <h3>Does Garmin or Google Earth accept the output?</h3>
@@ -392,7 +392,7 @@ nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-
 <script type="module" src="/assets/kml-gpx.mjs?v=20261123a"></script>
 
     
-    <nav class="article-toc" aria-labelledby="read-next-title"><h2 id="read-next-title">Read next</h2><ul><li><a href="/tools/gpx-viewer/">Check the converted GPX</a><p>Open it in the GPX viewer and compare points, segments and times.</p></li><li><a href="/tools/merge-gpx/">Merge several converted files</a><p>Combine GPX files into one, without uploading them.</p></li><li><a href="/blog/gpx-kml-geojson-location-history/">Choose between GPX, KML, GeoJSON and CSV</a><p>See what each format keeps, with the same invented trip.</p></li><li><a href="/blog/gpx-to-google-maps/">Put it on Google Maps</a><p>Import the GPX into My Maps on a computer, then view it on iPhone.</p></li></ul></nav>
+    <nav class="article-toc" aria-labelledby="read-next-title"><h2 id="read-next-title">Read next</h2><ul><li><a href="/tools/kmz-to-gpx/">Have a KMZ? Convert it to GPX</a><p>Unzip the KMZ in your browser and see which files were ignored.</p></li><li><a href="/tools/gpx-viewer/">Check the converted GPX</a><p>Open it in the GPX viewer and compare points, segments and times.</p></li><li><a href="/tools/merge-gpx/">Merge several converted files</a><p>Combine GPX files into one, without uploading them.</p></li><li><a href="/blog/gpx-kml-geojson-location-history/">Choose between GPX, KML, GeoJSON and CSV</a><p>See what each format keeps, with the same invented trip.</p></li><li><a href="/blog/gpx-to-google-maps/">Put it on Google Maps</a><p>Import the GPX into My Maps on a computer, then view it on iPhone.</p></li></ul></nav>
   </main>
   <footer class="site-footer"><a class="brand" href="/">Whereday · isolated.tech</a><div class="footer-links"><a href="/blog/">Guides</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:cody.bontecou@gmail.com">Support</a></div></footer>
   

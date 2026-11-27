@@ -193,6 +193,7 @@ CSV written by this tool comes back as equivalent placemarks: the same names, th
 
 - [KML and KMZ viewer](https://whereday.com/tools/kml-viewer/): see what is inside a file first.
 - [KML to GPX](https://whereday.com/tools/kml-to-gpx/): for apps that want GPX.
+- [KMZ to GPX and GPX to KMZ](https://whereday.com/tools/kmz-to-gpx/): for a KMZ that a GPS app or watch will not open.
 - [CSV to GPX](https://whereday.com/tools/csv-to-gpx/): for a GPX track or waypoints.
 - [GPX viewer](https://whereday.com/tools/gpx-viewer/): check a GPX file and save it as CSV.
 - [GPX, KML, GeoJSON and CSV compared](https://whereday.com/blog/gpx-kml-geojson-location-history/)
