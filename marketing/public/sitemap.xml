@@ -217,11 +217,15 @@
   </url>
   <url>
     <loc>https://whereday.com/tools/kml-to-gpx/</loc>
-    <lastmod>2026-11-22</lastmod>
+    <lastmod>2026-11-27</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/tools/kml-viewer/</loc>
     <lastmod>2026-11-23</lastmod>
+  </url>
+  <url>
+    <loc>https://whereday.com/tools/kmz-to-gpx/</loc>
+    <lastmod>2026-11-27</lastmod>
   </url>
   <url>
     <loc>https://whereday.com/tools/merge-gpx/</loc>

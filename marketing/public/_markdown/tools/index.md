@@ -39,6 +39,12 @@ Turn a KML or KMZ file into a CSV for Excel or Google Sheets, with one row per p
 
 Then [look inside a KML file](https://whereday.com/tools/kml-viewer/) or [convert it to GPX](https://whereday.com/tools/kml-to-gpx/).
 
+## [KMZ to GPX and GPX to KMZ converter](https://whereday.com/tools/kmz-to-gpx/)
+
+Drop a KMZ to get a GPX 1.1 file, or a GPX to get a KMZ or KML. A report lists the KML file read, the images and extra files ignored and what was converted or skipped. Your file stays in your browser.
+
+Then [look inside the KMZ](https://whereday.com/tools/kml-viewer/) or [check the GPX](https://whereday.com/tools/gpx-viewer/).
+
 ## [KML and KMZ viewer](https://whereday.com/tools/kml-viewer/)
 
 Open a KML or KMZ file and see its placemarks, lines, polygons and timed gx:Track points, plus a list of what the viewer skips. Your file stays in your browser.

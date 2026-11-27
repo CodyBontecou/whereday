@@ -1,0 +1,4 @@
+.kz-tool .gpx-actions { margin:8px 0; }
+#kz-skipped li, #kz-notes li, #kz-files li { margin-bottom:8px; }
+.kz-tool .merge-download { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+.kz-error { color:var(--accent, #A8381F); font-weight:600; }

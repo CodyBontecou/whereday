@@ -92,7 +92,7 @@ Files stores the file; a GPX-capable app or the viewer draws it. This page does 
 
 ## If it won’t open
 
-- Wrong format. A FIT, KML or JSON file renamed to .gpx is still not GPX. Renaming does not convert it.
+- Wrong format. A FIT, KML or JSON file renamed to .gpx is still not GPX. Renaming does not convert it. Have a KMZ? [Convert KMZ to GPX](https://whereday.com/tools/kmz-to-gpx/).
 - Too large for the viewer. The viewer takes files up to 10 MiB and 50,000 points. Export a shorter range.
 - Malformed XML. A cut-off download or hand edit can break the file. The viewer also rejects DTD and entity declarations.
 - Missing times. Routes and waypoints often have none, so there is nothing to date.

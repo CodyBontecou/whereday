@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="Whereday synthetic example" xmlns="http://www.topografix.com/GPX/1/1">
+  <metadata>
+    <name>Synthetic GPX example</name>
+    <desc>Invented points for the Whereday KMZ to GPX tool. Not a real recording.</desc>
+  </metadata>
+  <wpt lat="0.0020" lon="10.0010">
+    <ele>12</ele>
+    <name>Trailhead (synthetic)</name>
+  </wpt>
+  <wpt lat="0.0050" lon="10.0040">
+    <name>Lookout (synthetic)</name>
+  </wpt>
+  <trk>
+    <name>Synthetic walk</name>
+    <trkseg>
+      <trkpt lat="0.0300" lon="10.0200"><ele>20</ele><time>2000-01-01T12:00:00Z</time></trkpt>
+      <trkpt lat="0.0310" lon="10.0210"><ele>21</ele><time>2000-01-01T12:01:00Z</time></trkpt>
+      <trkpt lat="0.0330" lon="10.0220"><ele>23</ele><time>2000-01-01T12:02:00Z</time></trkpt>
+    </trkseg>
+    <trkseg>
+      <trkpt lat="0.0400" lon="10.0300"><ele>30</ele><time>2000-01-01T12:10:00Z</time></trkpt>
+      <trkpt lat="0.0410" lon="10.0320"><ele>31</ele><time>2000-01-01T12:11:00Z</time></trkpt>
+    </trkseg>
+  </trk>
+</gpx>

@@ -56,6 +56,7 @@ const pages = {
   "/tools/kml-to-csv/": "/_markdown/tools/kml-to-csv/index.md",
   "/tools/kml-to-gpx/": "/_markdown/tools/kml-to-gpx/index.md",
   "/tools/kml-viewer/": "/_markdown/tools/kml-viewer/index.md",
+  "/tools/kmz-to-gpx/": "/_markdown/tools/kmz-to-gpx/index.md",
   "/tools/merge-gpx/": "/_markdown/tools/merge-gpx/index.md",
   "/tools/substantial-presence-test-calculator/": "/_markdown/tools/substantial-presence-test-calculator/index.md",
   "/tools/visited-countries-map/": "/_markdown/tools/visited-countries-map/index.md",
