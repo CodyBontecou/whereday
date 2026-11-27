@@ -325,11 +325,11 @@ PAGES.append({
 
 PAGES.append({
     "path": "/tools/merge-gpx/", "section": "Tools", "section_path": "/tools/", "breadcrumb": "Merge GPX",
-    "title": "Merge GPX Files Online, Free and Private — Whereday",
-    "headline": "Merge GPX files in your browser. Nothing is uploaded.",
-    "description": "Combine GPX files into one in your browser. Keep tracks separate or join segments, drop duplicate points and check gaps before you download. Nothing is uploaded.",
-    "lede": "Join a recording split across days, devices or app restarts, or turn daily exports into one trip file. Choose what the merge does and check the result first.",
-    "published": "2026-11-19", "modified": "2026-11-19", "local_file_tool": True, "source": "merge-gpx.html",
+    "title": "Merge GPX Files: Combine or Join Tracks Free, No Upload — Whereday",
+    "headline": "Merge, combine or join GPX files in your browser. Nothing is uploaded.",
+    "description": "Combine or join GPX files in your browser. Three merge modes, duplicates dropped, gaps checked before you download. Nothing is uploaded.",
+    "lede": "Join a recording split across days, devices or app restarts, a ride Strava split in two, or turn daily exports into one trip file. Choose what the merge does and check the result first.",
+    "published": "2026-11-19", "modified": "2026-11-27", "local_file_tool": True, "source": "merge-gpx.html",
 })
 
 PAGES.append({
@@ -488,6 +488,8 @@ RELATED = {
      ('/tools/merge-gpx/', 'Merge several files first',
       'Combine daily GPX files into one before you map them.')],
  '/tools/merge-gpx/': [
+     ('/tools/kmz-to-gpx/', 'Have KMZ? Convert it to GPX first',
+      'Convert KMZ to GPX in your browser and see what was kept.'),
      ('/tools/kml-to-gpx/', 'Have KML? Convert it to GPX first',
       'Convert KML to GPX in your browser and see what was kept.'),
      ('/tools/gpx-viewer/', 'Check the merged file',

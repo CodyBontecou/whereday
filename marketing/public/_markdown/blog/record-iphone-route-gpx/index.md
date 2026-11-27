@@ -82,7 +82,7 @@ A GPX export with only visits can be valid but show pins instead of a line. Pick
 
 Want the file on Google Maps? Follow [how to open a GPX file in Google Maps via My Maps](https://whereday.com/blog/gpx-to-google-maps/).
 
-Exporting a trip with One file per day turned on under Output? [Merge the daily GPX files into one trip file](https://whereday.com/tools/merge-gpx/#daily-exports) in your browser.
+Exporting a trip with One file per day turned on under Output? [Combine the daily GPX files into one trip file](https://whereday.com/tools/merge-gpx/#daily-exports) in your browser.
 
 Sharing the file? Your route probably starts and ends at home. [Hide your home zone](https://whereday.com/tools/gpx-editor/#hide-home) in your browser first.
 

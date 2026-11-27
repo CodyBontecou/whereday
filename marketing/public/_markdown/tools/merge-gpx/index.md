@@ -4,13 +4,15 @@
 
 iPhone location journals
 
-# Merge GPX files in your browser. Nothing is uploaded.
+# Merge, combine or join GPX files in your browser. Nothing is uploaded.
 
-Join a recording split across days, devices or app restarts, or turn daily exports into one trip file. Choose what the merge does and check the result first.
+Join a recording split across days, devices or app restarts, a ride Strava split in two, or turn daily exports into one trip file. Choose what the merge does and check the result first.
 
-By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed November 19, 2026
+By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed November 27, 2026
 
 ## Add your GPX files. They stay on this device.
+
+You can combine or join GPX files into one GPX file right here, free, in your browser, with nothing uploaded. Keep separate is the safe default; pick One track, separate segments if an app shows only the first track. [Which mode should I pick?](https://whereday.com/tools/merge-gpx/#which-mode) A ride Strava split in two? [See the Strava steps](https://whereday.com/tools/merge-gpx/#strava).
 
 Choose two or more GPX files, pick what the merge should do, check the summary and preview, then download one GPX 1.1 file. No account, upload or analytics. Files are read with your browser’s [File API](https://developer.mozilla.org/en-US/docs/Web/API/File_API) and never leave the page.
 
@@ -33,6 +35,14 @@ Order Sort files by their first timestampFiles without timestamps keep the order
 ### Preview
 
 Download merged GPX
+
+## Which mode to pick
+
+| Situation | Mode | Why
+| Recording split by a dead battery or an app restart | One track, separate segments | One track in a list, with no line drawn across the break. [More on gaps](https://whereday.com/tools/merge-gpx/#gaps).
+| Multi-day trip from daily files | Keep separate, or One track, separate segments | Nothing is lost either way; the second gives one trip track that still breaks at each pause. [Daily exports](https://whereday.com/tools/merge-gpx/#daily-exports).
+| Two devices recorded the same walk | Keep one file instead | The times overlap, and the tool warns about it. It often means two copies of the same recording.
+| An app or site that needs exactly one segment | One continuous segment | Check the largest gap in the summary first: every gap becomes a straight line.
 
 ## Sample files: an invented three-day walk
 
@@ -87,6 +97,18 @@ A GPX file is XML with exactly one root element, `<gpx>`. Pasting two files toge
 
 That is not well-formed XML, so strict apps refuse it and lenient ones may read only the first file. Doing it by hand means removing the extra headers and moving every `<wpt>` before the routes and tracks, because GPX 1.1 requires waypoints, then routes, then tracks. This tool does that for you and checks each file first. Its output is checked against the official [GPX 1.1 XSD](https://www.topografix.com/GPX/1/1/gpx.xsd) in the site’s tests.
 
+## Merge two Strava activities into one
+
+Strava has no built-in way to merge activities. Its support article says there is no way to merge two or more activities on Strava and points to third-party tools: [How do I merge or combine activities on Strava?](https://support.strava.com/en-us/articles/15401839-how-do-i-merge-or-combine-activities-on-strava) If your ride or run was split in two, the workflow is:
+
+- Export each activity’s original file from Strava, following the instructions in that article.
+- Check the format. If the originals are GPX, add them here. If they are FIT or TCX, this tool can’t read them; Strava’s article lists other tools for those formats.
+- Merge, check the summary and gaps, then download. Each point keeps its original time. Vendor `<extensions>` are copied where GPX 1.1 allows them, but there’s no guarantee every app will read them.
+- Delete the original activities on Strava before uploading the merged file. Strava’s article says you will lose all the kudos and comments on those activities.
+- Upload the merged GPX on Strava’s upload page. Per Strava, it [accepts GPX, TCX and FIT files up to 25 MB](https://support.strava.com/en-us/articles/15402066-how-do-i-get-my-activities-to-strava) that contain actual workout data; see also [bulk uploading](https://support.strava.com/en-us/articles/15402173-how-do-i-bulk-upload-activities-to-strava).
+
+Check the activity on Strava after upload; if a straight line appears across a gap, merge again with One track, separate segments.
+
 ## Merge Whereday’s one-file-per-day GPX into a trip file
 
 Whereday can write a separate GPX for each calendar day. Each daily file holds one track called “Whereday track”, with a new segment wherever points are more than 10 minutes apart. To turn a week of them into one file:
@@ -108,7 +130,7 @@ Open the download in the [GPX viewer](https://whereday.com/tools/gpx-viewer/) an
 - GPX 1.0 and 1.1 only. Output is always GPX 1.1. GPX 1.0 fields with no 1.1 equivalent, such as speed and course, are left out and counted.
 - Up to 50 files, each up to 10 MiB and 50,000 points (the same limit as the viewer), and 50 MiB or 250,000 points in total.
 - Not Google Timeline JSON. Convert it to GPX first with the [Timeline JSON inspector](https://whereday.com/tools/google-timeline-inspector/).
-- GPX only. Renaming a file does not convert it. Turn KML into GPX with the [KML to GPX converter](https://whereday.com/tools/kml-to-gpx/) first; the [formats guide](https://whereday.com/blog/gpx-kml-geojson-location-history/) explains the differences.
+- GPX only. Renaming a file does not convert it. Turn KML into GPX with the [KML to GPX converter](https://whereday.com/tools/kml-to-gpx/), KMZ with the [KMZ to GPX converter](https://whereday.com/tools/kmz-to-gpx/), or a spreadsheet with the [CSV to GPX converter](https://whereday.com/tools/csv-to-gpx/) first; the [formats guide](https://whereday.com/blog/gpx-kml-geojson-location-history/) explains the differences.
 - Problem files are listed, not merged. A file that is empty, not GPX, malformed or too large shows its error in the list. The other files still merge.
 - Points with missing or out-of-range coordinates, and values that are not valid GPX (such as an unreadable time), are left out and counted in the checks.
 
@@ -117,6 +139,18 @@ Open the download in the [GPX viewer](https://whereday.com/tools/gpx-viewer/) an
 Reading, merging, the preview and the download all happen in your browser. This page blocks network connections and does not load the website’s analytics. The web server receives an ordinary request when you open the page and its scripts, but not your files, their names or the result. Clear all, or closing the tab, removes them from the page; your original files are never changed.
 
 ## Questions
+
+### Can Strava merge activities?
+
+No. Strava says it has no way to merge activities and points to third-party tools. [Steps for merging a split activity with a GPX file](https://whereday.com/tools/merge-gpx/#strava).
+
+### Is this the same as combining or joining GPX files?
+
+Yes. Merge, combine and join all mean the same here: several GPX files in, one GPX file out.
+
+### Can I merge FIT or TCX files?
+
+No. This tool reads GPX only. Strava’s [merge article](https://support.strava.com/en-us/articles/15401839-how-do-i-merge-or-combine-activities-on-strava) lists tools for those formats.
 
 ### Are my files uploaded?
 
@@ -145,6 +179,10 @@ Want routes and places recorded automatically, then exported as GPX, KML, GeoJSO
 [Download free for iPhone](https://apps.apple.com/app/id6761960794)
 
 ## Read next
+
+- [Have KMZ? Convert it to GPX first](https://whereday.com/tools/kmz-to-gpx/)
+
+Convert KMZ to GPX in your browser and see what was kept.
 
 - [Have KML? Convert it to GPX first](https://whereday.com/tools/kml-to-gpx/)
 

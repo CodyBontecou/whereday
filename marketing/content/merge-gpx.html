@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="/assets/gpx-merge.css">
 <section class="gpx-tool merge-tool" aria-labelledby="merge-files">
   <h2 id="merge-files">Add your GPX files. They stay on this device.</h2>
+  <p><strong>You can combine or join GPX files into one GPX file right here, free, in your browser, with nothing uploaded.</strong> <strong>Keep separate</strong> is the safe default; pick <strong>One track, separate segments</strong> if an app shows only the first track. <a href="#which-mode">Which mode should I pick?</a> A ride Strava split in two? <a href="#strava">See the Strava steps</a>.</p>
   <p>Choose two or more GPX files, pick what the merge should do, check the summary and preview, then download one GPX 1.1 file. No account, upload or analytics. Files are read with your browser’s <a href="https://developer.mozilla.org/en-US/docs/Web/API/File_API">File API</a> and never leave the page.</p>
   <noscript><p>JavaScript is needed to read and merge files in your browser. The explanations and sample downloads below work without it.</p></noscript>
   <div id="merge-tool" hidden>
@@ -37,6 +38,19 @@
     </div>
     <div class="merge-download"><button id="merge-download" type="button" disabled>Download merged GPX</button><span id="merge-filename" class="gpx-small"></span></div>
   </div>
+</section>
+
+<section aria-labelledby="which-mode">
+  <h2 id="which-mode">Which mode to pick</h2>
+  <div class="table-scroll" role="region" aria-label="Which merge mode to pick for each situation" tabindex="0"><table>
+    <thead><tr><th scope="col">Situation</th><th scope="col">Mode</th><th scope="col">Why</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Recording split by a dead battery or an app restart</th><td>One track, separate segments</td><td>One track in a list, with no line drawn across the break. <a href="#gaps">More on gaps</a>.</td></tr>
+      <tr><th scope="row">Multi-day trip from daily files</th><td>Keep separate, or One track, separate segments</td><td>Nothing is lost either way; the second gives one trip track that still breaks at each pause. <a href="#daily-exports">Daily exports</a>.</td></tr>
+      <tr><th scope="row">Two devices recorded the same walk</th><td>Keep one file instead</td><td>The times overlap, and the tool warns about it. It often means two copies of the same recording.</td></tr>
+      <tr><th scope="row">An app or site that needs exactly one segment</th><td>One continuous segment</td><td>Check the largest gap in the summary first: every gap becomes a straight line.</td></tr>
+    </tbody>
+  </table></div>
 </section>
 
 <section aria-labelledby="samples">
@@ -92,6 +106,19 @@
   <p>That is not well-formed XML, so strict apps refuse it and lenient ones may read only the first file. Doing it by hand means removing the extra headers and moving every <code>&lt;wpt&gt;</code> before the routes and tracks, because GPX 1.1 requires waypoints, then routes, then tracks. This tool does that for you and checks each file first. Its output is checked against the official <a href="https://www.topografix.com/GPX/1/1/gpx.xsd">GPX 1.1 XSD</a> in the site’s tests.</p>
 </section>
 
+<section aria-labelledby="strava">
+  <h2 id="strava">Merge two Strava activities into one</h2>
+  <p>Strava has no built-in way to merge activities. Its support article says there is no way to merge two or more activities on Strava and points to third-party tools: <a href="https://support.strava.com/en-us/articles/15401839-how-do-i-merge-or-combine-activities-on-strava">How do I merge or combine activities on Strava?</a> If your ride or run was split in two, the workflow is:</p>
+  <ol>
+    <li><strong>Export each activity’s original file</strong> from Strava, following the instructions in that article.</li>
+    <li><strong>Check the format.</strong> If the originals are GPX, add them here. If they are FIT or TCX, this tool can’t read them; Strava’s article lists other tools for those formats.</li>
+    <li><strong>Merge, check the summary and gaps, then download.</strong> Each point keeps its original time. Vendor <code>&lt;extensions&gt;</code> are copied where GPX 1.1 allows them, but there’s no guarantee every app will read them.</li>
+    <li><strong>Delete the original activities on Strava before uploading the merged file.</strong> Strava’s article says you will lose all the kudos and comments on those activities.</li>
+    <li><strong>Upload the merged GPX</strong> on Strava’s upload page. Per Strava, it <a href="https://support.strava.com/en-us/articles/15402066-how-do-i-get-my-activities-to-strava">accepts GPX, TCX and FIT files up to 25 MB</a> that contain actual workout data; see also <a href="https://support.strava.com/en-us/articles/15402173-how-do-i-bulk-upload-activities-to-strava">bulk uploading</a>.</li>
+  </ol>
+  <p>Check the activity on Strava after upload; if a straight line appears across a gap, merge again with <strong>One track, separate segments</strong>.</p>
+</section>
+
 <section aria-labelledby="daily-exports">
   <h2 id="daily-exports">Merge Whereday’s one-file-per-day GPX into a trip file</h2>
   <p>Whereday can write a separate GPX for each calendar day. Each daily file holds one track called “Whereday track”, with a new segment wherever points are more than 10 minutes apart. To turn a week of them into one file:</p>
@@ -116,7 +143,7 @@
     <li><strong>GPX 1.0 and 1.1 only.</strong> Output is always GPX 1.1. GPX 1.0 fields with no 1.1 equivalent, such as speed and course, are left out and counted.</li>
     <li><strong>Up to 50 files</strong>, each up to 10 MiB and 50,000 points (the same limit as the viewer), and 50 MiB or 250,000 points in total.</li>
     <li><strong>Not Google Timeline JSON.</strong> Convert it to GPX first with the <a href="/tools/google-timeline-inspector/">Timeline JSON inspector</a>.</li>
-    <li><strong>GPX only.</strong> Renaming a file does not convert it. Turn KML into GPX with the <a href="/tools/kml-to-gpx/">KML to GPX converter</a> first; the <a href="/blog/gpx-kml-geojson-location-history/">formats guide</a> explains the differences.</li>
+    <li><strong>GPX only.</strong> Renaming a file does not convert it. Turn KML into GPX with the <a href="/tools/kml-to-gpx/">KML to GPX converter</a>, KMZ with the <a href="/tools/kmz-to-gpx/">KMZ to GPX converter</a>, or a spreadsheet with the <a href="/tools/csv-to-gpx/">CSV to GPX converter</a> first; the <a href="/blog/gpx-kml-geojson-location-history/">formats guide</a> explains the differences.</li>
     <li><strong>Problem files are listed, not merged.</strong> A file that is empty, not GPX, malformed or too large shows its error in the list. The other files still merge.</li>
     <li>Points with missing or out-of-range coordinates, and values that are not valid GPX (such as an unreadable time), are left out and counted in the checks.</li>
   </ul>
@@ -129,6 +156,12 @@
 
 <section aria-labelledby="faq">
   <h2 id="faq">Questions</h2>
+  <h3>Can Strava merge activities?</h3>
+  <p>No. Strava says it has no way to merge activities and points to third-party tools. <a href="#strava">Steps for merging a split activity with a GPX file</a>.</p>
+  <h3>Is this the same as combining or joining GPX files?</h3>
+  <p>Yes. Merge, combine and join all mean the same here: several GPX files in, one GPX file out.</p>
+  <h3>Can I merge FIT or TCX files?</h3>
+  <p>No. This tool reads GPX only. Strava’s <a href="https://support.strava.com/en-us/articles/15401839-how-do-i-merge-or-combine-activities-on-strava">merge article</a> lists tools for those formats.</p>
   <h3>Are my files uploaded?</h3>
   <p>No. The page reads files with your browser’s File API and builds the merged file in memory. Its security policy blocks network connections, so the page could not send your files even if it tried.</p>
   <h3>Will times and elevation be kept?</h3>
