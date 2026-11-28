@@ -77,6 +77,8 @@ The France and Spain rows are one trip with a border crossing, so together the e
 
 Count each date carefully. A late flight can land on a different calendar day than it left, and time zones can move a date. Decide which local date you use and use it for every row. To count days from a CSV, use the [days-in-country calculator](https://whereday.com/tools/country-days-calculator/).
 
+Applying for citizenship? Form N-400 asks for trips outside the United States. Once your list is checked, the [citizenship physical presence calculator](https://whereday.com/tools/naturalization-physical-presence-calculator/) counts days present, flags long absences and finds the earliest filing date, in your browser.
+
 ## 6. Keep it automatically from now on
 
 In Whereday, open Timeline → Country Days. It counts the local dates covered by your recorded visits, route points and manual stays. If a past trip is missing, use Add stay to enter the country and dates. A manual stay records your account of a trip; it does not create a GPS path.
@@ -100,6 +102,10 @@ Want to keep a journal of future trips? See [travel journal apps for iPhone comp
 [Download free for iPhone](https://apps.apple.com/app/id6761960794)
 
 ## Read next
+
+- [Counting for US citizenship?](https://whereday.com/tools/naturalization-physical-presence-calculator/)
+
+Turn a checked trip list into physical presence and continuous residence counts.
 
 - [Record the dates automatically](https://whereday.com/blog/track-days-in-country-iphone/)
 

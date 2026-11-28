@@ -14,6 +14,8 @@ By [Cody Bontecou](https://isolated.tech), Whereday’s developer · Reviewed No
 
 This is a count, not a ruling. It is not tax or immigration advice and does not say whether you are a US tax resident. It applies one IRS formula to the days you give it. Missing dates make the count too low, and exceptions such as the closer connection exception or a tax treaty can change the outcome. Take the count to a qualified adviser. [Read what the test does not decide](https://whereday.com/tools/substantial-presence-test-calculator/#meeting-the-test-is-not-the-end).
 
+Not a tax question? Counting days for a US citizenship application is a different rule: use the [citizenship physical presence calculator](https://whereday.com/tools/naturalization-physical-presence-calculator/).
+
 Load a Country Days CSV, add US stays by hand, or type a number of days for a year. Pick the year to test and the page shows the days, the weights, the total and the result. No account, upload or analytics.
 
 JavaScript is needed to read files and count dates in your browser. The explanations and worked examples below work without it.
@@ -150,5 +152,9 @@ Find past trips to fill gaps before you rely on a count.
 - [Record the dates automatically](https://whereday.com/blog/track-days-in-country-iphone/)
 
 See how Whereday records country days and exports the CSV.
+
+- [Counting for US citizenship?](https://whereday.com/tools/naturalization-physical-presence-calculator/)
+
+Physical presence, continuous residence and the earliest N-400 filing date.
 
 Source: https://whereday.com/tools/substantial-presence-test-calculator/

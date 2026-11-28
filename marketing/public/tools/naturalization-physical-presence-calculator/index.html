@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <meta name="referrer" content="no-referrer">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>US Citizenship Physical Presence Calculator (N-400) — Whereday</title>
+  <meta name="description" content="Check 913 days of physical presence, continuous residence breaks and your earliest N-400 filing date from your trips abroad. Local-only: nothing is uploaded.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://whereday.com/tools/naturalization-physical-presence-calculator/">
+  <meta name="theme-color" content="#F3EFE6" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0F1626" media="(prefers-color-scheme: dark)">
+  <meta property="og:title" content="US Citizenship Physical Presence Calculator (N-400) — Whereday">
+  <meta property="og:description" content="Check 913 days of physical presence, continuous residence breaks and your earliest N-400 filing date from your trips abroad. Local-only: nothing is uploaded.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://whereday.com/tools/naturalization-physical-presence-calculator/">
+  <meta property="og:image" content="https://whereday.com/screenshots/map-home.png">
+  <meta property="og:image:alt" content="Whereday’s map home, with today’s route coloured by place">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="US Citizenship Physical Presence Calculator (N-400) — Whereday">
+  <meta name="twitter:description" content="Check 913 days of physical presence, continuous residence breaks and your earliest N-400 filing date from your trips abroad. Local-only: nothing is uploaded.">
+  <meta name="twitter:image" content="https://whereday.com/screenshots/map-home.png">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <style>:root {
+  color-scheme: light dark;
+  --paper: #F3EFE6;
+  --card: #FBF9F4;
+  --ink: #1E2B45;
+  --muted: #66645D;
+  --rule: #D8D2C3;
+  --rule-soft: #E4DED0;
+  --accent: #A8381F;
+  --rust: #C2462A;
+  --serif: "Geist", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--ink); background: var(--paper); font-family: var(--sans); font-size: 17px; line-height: 1.6; }
+a { color: var(--accent); text-underline-offset: 4px; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--rust); outline-offset: 4px; }
+.skip-link { position: absolute; left: 16px; top: -80px; padding: 12px; background: var(--card); z-index: 10; }
+.skip-link:focus { top: 16px; }
+.site-nav, .site-footer { max-width: 1120px; margin: auto; padding: 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.brand { display: inline-flex; align-items: center; gap: 12px; color: var(--ink); font-family: var(--serif); font-size: 1.3rem; font-weight: 500; text-decoration: none; }
+.brand img { border-radius: 7px; }
+.nav-links, .footer-links { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+.nav-links a, .footer-links a { font-size: 14px; line-height: 20px; }
+.footer-links a { color: var(--ink); }
+.button { display: inline-flex; justify-content: center; align-items: center; min-height: 44px; padding: 10px 20px; border: 1px solid var(--ink); border-radius: 999px; background: var(--ink); color: var(--paper); font-size: 15px; line-height: 22px; font-weight: 600; text-decoration: none; }
+.button:hover { background: #8E2E19; border-color: #8E2E19; text-decoration: none; }
+.button:active { transform: translateY(1px); }
+main { max-width: 960px; margin: auto; padding: 32px 24px 72px; }
+.breadcrumbs { font-family: var(--mono); font-size: 12px; line-height: 20px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 32px; }
+.breadcrumbs a { color: var(--muted); }
+.breadcrumbs ol { padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.breadcrumbs li { margin: 0; }
+.breadcrumbs li + li::before { content: "·"; margin-right: 8px; }
+.eyebrow, .byline, .source-note { color: var(--muted); font-size: 14px; line-height: 20px; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; }
+h1, h2, h3 { font-family: var(--serif); text-wrap: balance; letter-spacing: -0.01em; color: var(--ink); }
+h1 { max-width: 760px; font-size: 52px; line-height: 1.05; margin: 16px 0 24px; font-weight: 400; }
+h2 { font-size: 32px; line-height: 1.15; font-weight: 400; margin: 0 0 16px; }
+h3 { font-size: 22px; line-height: 1.25; font-weight: 500; margin: 0 0 12px; }
+p { text-wrap: pretty; margin: 0 0 16px; }
+.lede { max-width: 680px; font-size: 20px; line-height: 1.55; color: var(--ink-soft, #3A465F); }
+header { padding-bottom: 40px; border-bottom: 1px solid var(--rule); }
+section { margin-top: 56px; }
+li { margin-bottom: 12px; }
+ul, ol { padding-left: 24px; }
+li::marker { color: var(--rust); }
+.table-scroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: 18px; margin-bottom: 16px; background: var(--card); }
+table { width: 100%; border-collapse: collapse; background: var(--card); }
+caption { text-align: left; font-family: var(--serif); font-size: 19px; font-weight: 500; padding: 16px; }
+th, td { text-align: left; vertical-align: top; padding: 16px; border-bottom: 1px solid var(--rule-soft); min-width: 160px; }
+th + th, td + td { border-left: 1px solid var(--rule-soft); }
+thead { background: var(--paper-deep, #ECE6D8); }
+thead th { font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.product-example { margin: 48px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 24px; }
+.product-example img { width: 240px; max-width: 100%; height: auto; border-radius: 28px; border: 6px solid var(--ink); }
+.route-example { margin: 48px 0; }
+.route-example img { display: block; width: 100%; height: auto; border-radius: 18px; border: 1px solid var(--rule); }
+.route-example figcaption { max-width: none; margin-top: 12px; }
+figcaption { max-width: 320px; color: var(--muted); font-size: 14px; line-height: 20px; }
+.closing { padding: 36px; border-radius: 22px; background: var(--ink); color: var(--paper); }
+.closing h2, .closing h3 { color: var(--paper); font-size: 36px; line-height: 1.1; }
+.closing a:not(.button) { color: #F08A6B; }
+.closing .button { background: var(--paper); border-color: var(--paper); color: var(--ink); }
+.closing .button:hover { background: #ECE6D8; border-color: #ECE6D8; }
+.card { padding: 24px; border: 1px solid var(--rule); border-radius: 18px; background: var(--card); }
+.site-footer { border-top: 1px solid var(--rule); }
+.article-toc { padding: 24px; border: 1px solid var(--rule); border-radius: 18px; background: var(--card); margin-top: 24px; }
+.article-toc ol { margin-bottom: 0; }
+pre { padding: 16px; border: 1px solid var(--rule); border-radius: 14px; background: var(--card); overflow-x: auto; font-size: 14px; line-height: 20px; }
+code, pre { font-family: var(--mono); }
+code { overflow-wrap: anywhere; font-size: 0.92em; }
+pre code { overflow-wrap: normal; }
+@media (max-width: 640px) {
+  .site-nav, .site-footer { padding: 16px; gap: 16px; }
+  .nav-links { gap: 12px; }
+  .nav-links a:not(.button) { display: none; }
+  main { padding: 24px 16px 48px; }
+  h1 { font-size: 38px; line-height: 1.08; }
+  h2 { font-size: 26px; line-height: 1.2; }
+  .lede { font-size: 18px; line-height: 28px; }
+  .closing { padding: 24px; }
+  .closing h2 { font-size: 30px; line-height: 36px; }
+  .product-example { flex-direction: column; align-items: flex-start; }
+}
+</style>
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://whereday.com/tools/naturalization-physical-presence-calculator/",
+      "url": "https://whereday.com/tools/naturalization-physical-presence-calculator/",
+      "name": "US Citizenship Physical Presence Calculator (N-400) — Whereday",
+      "description": "Check 913 days of physical presence, continuous residence breaks and your earliest N-400 filing date from your trips abroad. Local-only: nothing is uploaded.",
+      "inLanguage": "en",
+      "dateModified": "2026-11-28",
+      "author": {
+        "@type": "Person",
+        "name": "Cody Bontecou",
+        "url": "https://isolated.tech"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Whereday",
+          "item": "https://whereday.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Tools",
+          "item": "https://whereday.com/tools/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Citizenship physical presence",
+          "item": "https://whereday.com/tools/naturalization-physical-presence-calculator/"
+        }
+      ]
+    }
+  ]
+}</script>
+<style id="shared-navigation-styles">/* Whereday "Reimagined" theme — shared fonts, tokens and base type. Inlined on every page by build_navigation.py, after each page's own styles, so these tokens win. */
+@font-face { font-family: "Inter"; src: url("/assets/fonts/inter-latin-var.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Geist"; src: url("/assets/fonts/geist-var.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "IBM Plex Mono"; src: url("/assets/fonts/ibm-plex-mono-latin-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "IBM Plex Mono"; src: url("/assets/fonts/ibm-plex-mono-latin-500.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+:root {
+  color-scheme: light dark;
+  --paper: #F3EFE6; --paper-deep: #ECE6D8; --paper-warm: #F7F4EC; --card: #FBF9F4;
+  --ink: #1E2B45; --ink-soft: #3A465F; --mute: #66645D; --muted: #66645D;
+  --rule: #D8D2C3; --rule-soft: #E4DED0;
+  --accent: #A8381F; --accent-deep: #8E2E19; --accent-soft: rgba(194, 70, 42, 0.10); --rust: #C2462A;
+  --ochre: #B7862B; --sage: #5E7F5A; --slate: #7A86A8;
+  --lcd: #3F5C3C; --lcd-bright: #5E7F5A; --lcd-bg: #DFE6D6;
+  --danger: #A8381F; --warning: #8A6420;
+  --serif: "Geist", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  --display: var(--serif);
+  --radius: 14px; --radius-lg: 22px;
+  --shadow: 0 18px 50px -30px rgba(30, 43, 69, 0.45);
+}
+html { background: var(--paper); }
+body { font-family: var(--sans); color: var(--ink); background: var(--paper); }
+::selection { background: rgba(194, 70, 42, 0.18); }
+:where(h1, h2, h3) { font-family: var(--serif); letter-spacing: -0.02em; }
+:where(h1, h2, h3) em { font-style: normal; }
+:where(a):focus-visible { outline: 2px solid var(--rust); outline-offset: 3px; border-radius: 4px; }
+/* Shared components across hand-built pages */
+.btn { border-radius: 999px; font-family: var(--sans); text-transform: none; letter-spacing: 0; font-weight: 600; }
+.btn-primary, .btn.btn-primary { background: var(--ink); border-color: var(--ink); color: var(--paper) !important; }
+.btn-primary:hover { background: var(--accent-deep); border-color: var(--accent-deep); }
+.btn-ghost { border-color: var(--ink); }
+.eyebrow::before { background: var(--rust); }
+.ticker { background: var(--ink); border-color: var(--ink); }
+.ticker-track { color: var(--paper); }
+.ticker-track span::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #F08A6B; }
+/* Navigation */
+.shared-navigation .brand { font-family: var(--serif); font-size: 1.3rem; font-weight: 500; letter-spacing: -0.01em; text-transform: none; color: var(--ink); }
+.shared-navigation .brand img { border-radius: 7px; border: 0; }
+.shared-navigation .brand-dot { display: none; }
+nav.top.shared-navigation { background: rgba(243, 239, 230, 0.9); border-bottom-color: var(--rule); }
+.shared-navigation .nav-links > .btn, .shared-navigation .nav-links > .button { border-radius: 999px; padding-inline: 18px; background: var(--ink); border-color: var(--ink); color: var(--paper) !important; font-family: var(--sans); text-transform: none; letter-spacing: 0; font-weight: 600; }
+.shared-navigation .nav-links > .btn:hover, .shared-navigation .nav-links > .button:hover { background: var(--accent-deep); border-color: var(--accent-deep); transform: none; }
+.shared-navigation .nav-links { display:flex; align-items:center; gap:16px; margin-left:auto; position:relative; }
+.shared-navigation .desktop-navigation { display:flex; align-items:center; gap:16px; }
+.shared-navigation .desktop-navigation a { display:inline-block; font:inherit; font-size:14px; line-height:20px; letter-spacing:normal; text-transform:none; color:var(--ink, #1E2B45); text-decoration:none; }
+.shared-navigation .desktop-navigation a:hover { text-decoration:underline; }
+.shared-navigation a[aria-current] { text-decoration:underline; text-underline-offset:4px; }
+.shared-navigation .mobile-navigation { display:none; }
+.shared-navigation summary { cursor:pointer; padding:8px 12px; min-height:44px; border:1px solid var(--rule, #D8D2C3); border-radius:999px; background:var(--paper, #F3EFE6); color:var(--ink, #1E2B45); font:inherit; font-size:14px; line-height:24px; font-weight:600; }
+.shared-navigation summary:active { transform:translateY(1px); }
+.shared-navigation summary:focus-visible, .shared-navigation a:focus-visible { outline:2px solid var(--rust, #C2462A); outline-offset:4px; }
+.shared-navigation .nav-links > .btn, .shared-navigation .nav-links > .button { min-height:44px; font-size:14px; line-height:20px; }
+.shared-navigation .mobile-navigation-links { position:absolute; right:0; top:calc(100% + 8px); width:min(320px, calc(100vw - 32px)); max-height:70vh; max-height:calc(100dvh - 160px); overflow-y:auto; background:var(--paper, #F3EFE6); border:1px solid var(--rule, #D8D2C3); border-radius:8px; padding:8px; z-index:100; }
+.shared-navigation .mobile-navigation-links a { display:block; font:inherit; font-size:16px; line-height:24px; letter-spacing:normal; text-transform:none; color:var(--ink, #1E2B45); padding:12px 16px; min-height:44px; text-decoration:none; border-radius:4px; }
+.shared-navigation .mobile-navigation-links a[aria-current] { text-decoration:underline; }
+.shared-navigation .mobile-navigation-links a:active { background:#ECE6D8; }
+@media (hover:hover) and (pointer:fine) { .shared-navigation summary:hover, .shared-navigation .mobile-navigation-links a:hover { background:#ECE6D8; } }
+@media (max-width:960px) {
+  .shared-navigation .desktop-navigation { display:none; }
+  .shared-navigation .mobile-navigation { display:block; }
+  .shared-navigation .nav-inner { flex-wrap:wrap; gap:12px; padding:16px; }
+  nav.site-nav.shared-navigation { padding:16px; gap:12px; }
+  .shared-navigation .nav-links { gap:8px; flex-wrap:nowrap; }
+}
+/* Night ink: dark appearance follows the system setting */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --paper: #0F1626; --paper-deep: #141C30; --paper-warm: #121A2C; --card: #18213A;
+    --ink: #ECE6D8; --ink-soft: #C9CEDA; --mute: #9AA3B8; --muted: #9AA3B8;
+    --rule: #2C3754; --rule-soft: #222C46;
+    --accent: #F0805F; --accent-deep: #F4A088; --accent-soft: rgba(240, 128, 95, 0.14); --rust: #F0805F;
+    --ochre: #E0B565; --sage: #9DC097; --slate: #8E9BC2;
+    --lcd: #9DC097; --lcd-bright: #9DC097; --lcd-bg: #1F2D24;
+    --danger: #F0805F; --warning: #E0B565; --warn-bg: #2A2416;
+    --shadow: 0 18px 50px -30px rgba(0, 0, 0, 0.8);
+  }
+  /* Panels that are ink-on-paper inverted in light mode stay dark here, one step above the page */
+  .privacy-strip, .trust-card, footer, .ticker, .closing, .cta-panel {
+    --paper: #ECE6D8; --ink: #1B2540; --card: #1B2540; --rule: #2C3754;
+    border: 1px solid #2C3754;
+  }
+  .privacy-readout { background: #141C30 !important; }
+  nav.top, nav.top.shared-navigation { background: rgba(15, 22, 38, 0.9); }
+  .hero-stats { background: var(--card); }
+  .phone { box-shadow: 0 40px 80px -36px rgba(0, 0, 0, 0.9); outline: 1px solid #2C3754; }
+  img[src*="app-store-qr"] { background: #FBF9F4; padding: 8px; border-radius: 10px; }
+  .shared-navigation .nav-links > .btn, .shared-navigation .nav-links > .button { color: #0F1626 !important; }
+  .btn-primary, .btn.btn-primary { color: #0F1626 !important; }
+  .pricing-side .anti-features li::before, .checklist li::before { background-color: #3F5C3C; }
+}
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <nav class="site-nav shared-navigation" aria-label="Primary navigation"><a class="brand" href="/"><img src="/app-icon-28.webp" srcset="/app-icon-28.webp 1x, /app-icon-84.webp 3x" width="28" height="28" alt="">Whereday</a><div class="nav-links"><div class="desktop-navigation"><a href="/blog/">Guides</a><a href="/tools/" aria-current="true">Tools</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/#pricing">Pricing</a></div><details class="mobile-navigation"><summary>Explore</summary><div class="mobile-navigation-links"><a href="/blog/">Guides</a><a href="/tools/" aria-current="true">Tools</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/#pricing">Pricing</a></div></details><a class="button" href="https://apps.apple.com/app/id6761960794">Download free</a></div></nav>
+  <main id="main">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Whereday</a></li><li><a href="/tools/">Tools</a></li><li>Citizenship physical presence</li></ol></nav>
+    
+    <header><p class="eyebrow">iPhone location journals</p><h1 id="article-title">US citizenship physical presence calculator (N-400)</h1><p class="lede">List your trips and see days present, absences that risk continuous residence and the 90-day early filing date, with the working. A count, not legal advice.</p><p class="byline">By <a href="https://isolated.tech">Cody Bontecou</a>, Whereday’s developer · Reviewed <time datetime="2026-11-28">November 28, 2026</time></p></header>
+    <link rel="stylesheet" href="/assets/gpx-viewer.css">
+<link rel="stylesheet" href="/assets/country-days.css">
+<section aria-labelledby="answer">
+  <h2 id="answer">Three numbers for your N-400: days present, absences that matter and the earliest filing date</h2>
+  <p>List your trips abroad and this calculator gives you three results, each with its working and a link to the USCIS or eCFR source: your <strong>physical presence</strong> in the statutory window (at least 913 days on the general 5-year path), any <strong>absence that breaks or risks breaking continuous residence</strong>, and your <strong>earliest filing date</strong> under the 90-day early filing rule. Choose the 5-year path or the 3-year path for spouses of US citizens. Nothing is uploaded.</p>
+</section>
+
+<section class="gpx-tool cdc-tool" aria-labelledby="calculator">
+  <h2 id="calculator">Calculate physical presence and continuous residence</h2>
+  <p class="cdc-limits" id="limits-summary"><strong>This is a count, not legal advice; USCIS decides.</strong> It applies the counting rules below to the dates you enter. Missing or wrong trips change every result. It does not assess good moral character, the marital union test (see <a href="https://www.uscis.gov/policy-manual/volume-12-part-g-chapter-2">Policy Manual Vol. 12, Part G, Ch. 2</a>), military or other special paths, Form N-470 or the 3-month state residence. <a href="#what-this-does-not-cover">Read what is out of scope</a>.</p>
+  <noscript><p>JavaScript is needed to count dates in your browser. The explanations and the worked example below work without it.</p></noscript>
+  <div id="npp-tool" hidden>
+    <fieldset>
+      <legend>Your path and dates</legend>
+      <label for="npp-path">Path</label>
+      <select id="npp-path"><option value="general">General path, 5 years (INA 316(a))</option><option value="spouse">Spouse of a US citizen, 3 years (INA 319(a))</option></select>
+      <div class="cdc-row">
+        <div><label for="npp-since">Resident since <span class="gpx-small">(date on your green card)</span></label><input id="npp-since" type="date" min="1900-01-01" max="2100-12-31" required></div>
+        <div><label for="npp-filing">Intended filing date <span class="gpx-small">(today by default)</span></label><input id="npp-filing" type="date" min="1900-01-01" max="2100-12-31" required></div>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Add a trip abroad</legend>
+      <form id="npp-trip-form" novalidate>
+        <div class="cdc-row">
+          <div><label for="npp-dep">Departure date</label><input id="npp-dep" type="date" min="1900-01-01" max="2100-12-31" required></div>
+          <div><label for="npp-ret">Return date</label><input id="npp-ret" type="date" min="1900-01-01" max="2100-12-31" required></div>
+          <div><label for="npp-note">Note <span class="gpx-small">(optional)</span></label><input id="npp-note" type="text" maxlength="200"></div>
+        </div>
+        <div class="gpx-actions"><button type="submit">Add trip</button></div>
+        <p id="npp-trip-error" class="cdc-error" role="alert"></p>
+      </form>
+      <h3 id="npp-trips-title">Your trips</h3>
+      <p id="npp-trips-empty" class="gpx-small">None yet. A trip that returns on the day it left counts no days away.</p>
+      <ul id="npp-trips" aria-labelledby="npp-trips-title"></ul>
+    </fieldset>
+    <fieldset>
+      <legend>Or load a CSV</legend>
+      <label for="npp-file">Choose a CSV <span class="gpx-small">(columns <code>departure_date</code>, <code>return_date</code>, optional <code>note</code>; dates as YYYY-MM-DD; up to 1 MiB)</span></label>
+      <input id="npp-file" type="file" accept=".csv,text/csv" aria-describedby="npp-status">
+    </fieldset>
+    <div class="gpx-actions"><button id="npp-example" type="button">Try the invented example</button><button id="npp-sample" type="button">Download an invented sample CSV</button><button id="npp-clear" type="button" disabled>Clear trips</button></div>
+    <p class="gpx-small">The sample CSV and the example contain invented dates, not anyone’s real trips.</p>
+    <p id="npp-status" role="status" aria-live="polite">Add trips or load a CSV. Trips that overlap are refused; trips that cross the edge of the window are clipped.</p>
+    <div id="npp-rejected" hidden>
+      <h3 id="npp-rejected-title">Rows that were not used</h3>
+      <div class="table-scroll" role="region" aria-labelledby="npp-rejected-title" tabindex="0"><table><thead><tr><th scope="col">File line</th><th scope="col">Problem</th><th scope="col">Row text</th></tr></thead><tbody id="npp-rejected-rows"></tbody></table></div>
+    </div>
+    <h3>Result</h3>
+    <div id="npp-result" aria-live="polite"></div>
+    <div class="gpx-actions"><button id="npp-download-trips" type="button" disabled>Download per-trip counts (CSV)</button><button id="npp-download-summary" type="button" disabled>Download summary (CSV)</button></div>
+  </div>
+</section>
+
+<section aria-labelledby="worked-example">
+  <h2 id="worked-example">Worked example (invented)</h2>
+  <p>An invented applicant on the general path has been a permanent resident since 2021-02-15 and plans to file on 2026-06-01. The four trips are invented too, and the calculator’s output is checked against this table.</p>
+  <div class="table-scroll" role="region" aria-labelledby="trips-caption" tabindex="0"><table id="npp-example-trips"><caption id="trips-caption">Four invented trips</caption><thead><tr><th scope="col">Departure</th><th scope="col">Return</th><th scope="col">Full days away</th><th scope="col">Continuous residence</th></tr></thead><tbody>
+    <tr><th scope="row">2022-07-01</th><td>2022-07-15</td><td>13</td><td>No flag</td></tr>
+    <tr><th scope="row">2023-05-20</th><td>2023-12-30</td><td>223</td><td>Presumed break, can be rebutted with evidence</td></tr>
+    <tr><th scope="row">2024-08-03</th><td>2024-08-24</td><td>20</td><td>No flag</td></tr>
+    <tr><th scope="row">2025-12-20</th><td>2026-01-04</td><td>14</td><td>No flag</td></tr>
+  </tbody></table></div>
+  <div class="table-scroll" role="region" aria-labelledby="results-caption" tabindex="0"><table id="npp-example-results"><caption id="results-caption">Results for the invented example</caption><thead><tr><th scope="col">Result</th><th scope="col">Value</th><th scope="col">Working</th></tr></thead><tbody>
+    <tr><th scope="row">Window</th><td data-key="window">2021-06-02 to 2026-06-01</td><td>The 5 years ending on the filing date: 1,826 days</td></tr>
+    <tr><th scope="row">Days abroad</th><td data-key="abroad">270</td><td>13 + 223 + 20 + 14</td></tr>
+    <tr><th scope="row">Physical presence total</th><td data-key="present">1556</td><td>1,826 − 270 = 1,556 days present, against 913 required</td></tr>
+    <tr><th scope="row">Surplus</th><td data-key="diff">643</td><td>1,556 − 913</td></tr>
+    <tr><th scope="row">Presumed-break flag</th><td data-key="presumed">1</td><td>The 2023 trip: 223 full days, more than 6 months and less than 1 year</td></tr>
+    <tr><th scope="row">Earliest filing date</th><td data-key="earliest">2025-11-17</td><td>5 years reached 2026-02-15, minus 90 days</td></tr>
+  </tbody></table></div>
+  <p>Press <strong>Try the invented example</strong> to load it. Physical presence is comfortably met here, but the 2023 trip still needs evidence that residence was not broken.</p>
+</section>
+
+<section aria-labelledby="how-uscis-counts-days">
+  <h2 id="how-uscis-counts-days">How USCIS counts days</h2>
+  <p>USCIS counts the day you depart and the day you return as days of physical presence (<a href="https://www.uscis.gov/policy-manual/volume-12-part-d-chapter-4">Policy Manual Vol. 12, Part D, Ch. 4</a>). For continuous residence, USCIS does not count the dates of travel among the dates spent outside the United States (<a href="https://www.uscis.gov/policy-manual/volume-12-part-d-chapter-3">Ch. 3</a>). Both rules point the same way: only the full days between departure and return are days away. This tool shows the two views side by side.</p>
+  <div class="table-scroll" role="region" aria-labelledby="count-caption" tabindex="0"><table><caption id="count-caption">One trip, two views (depart 2023-05-20, return 2023-12-30)</caption><thead><tr><th scope="col">Question</th><th scope="col">Rule</th><th scope="col">Count</th></tr></thead><tbody>
+    <tr><th scope="row">Days present on the trip’s span</th><td>Departure and return days count as present (Ch. 4)</td><td>2 (20 May and 30 Dec)</td></tr>
+    <tr><th scope="row">Days away</th><td>Travel dates are not counted as days outside the US (Ch. 3)</td><td>223 full days, 21 May to 29 Dec</td></tr>
+  </tbody></table></div>
+  <p>The tool measures the length of each absence from your unclipped dates, and the days inside the window after clipping. 6 months and 1 year are calendar periods from the departure date: <a href="https://www.uscis.gov/policy-manual/volume-12-part-d-chapter-3">Ch. 3</a>’s own example of leaving 1 January 2010 and returning 2 January 2011 is exactly 1 year. Leap years are handled by the calendar, not by a fixed 365 days.</p>
+  <p>The window is the 3 or 5 years ending on the filing date, both ends included. The requirement is at least 30 months (913 days) on the 5-year path (<a href="https://www.uscis.gov/policy-manual/volume-12-part-d-chapter-4">Ch. 4</a>) and 18 months on the 3-year path (<a href="https://www.ecfr.gov/current/title-8/chapter-I/subchapter-C">8 CFR 319.1</a>). USCIS gives no day count for 18 months, so the tool counts the days from 18 months before the filing date to the filing date, and shows that number.</p>
+</section>
+
+<section aria-labelledby="long-absences">
+  <h2 id="long-absences">Absences of 6 to 12 months and of 1 year or more</h2>
+  <p><strong>More than 6 months and less than 1 year:</strong> an absence is presumed to break the continuity of residence. You can rebut the presumption with evidence. <a href="https://www.uscis.gov/policy-manual/volume-12-part-d-chapter-3">Ch. 3</a> says evidence may include, but is not limited to, documentation that during the absence you did not terminate your US employment, kept your immediate family in the US, or retained full access to, or continued to own or lease, a home in the US. This tool only flags the trip; it cannot judge the evidence.</p>
+  <p><strong>1 year or more:</strong> the absence breaks continuous residence automatically, unless you have an approved Form N-470 (Application to Preserve Residence for Naturalization Purposes). On the 5-year path, Ch. 3 says you must then wait at least 4 years and 1 day after returning, and still rebut the presumption, because the absence is within the past 5 years. If you apply at least 4 years and 6 months after re-establishing residence, the 6-month presumption no longer applies. The tool shows both dates from your return date for the general path.</p>
+  <p>Two caveats: the tool does not model N-470, and a break found in one absence does not tell you what other rules, such as abandonment of residence, would decide.</p>
+</section>
+
+<section aria-labelledby="early-filing">
+  <h2 id="early-filing">The 90-day early filing rule</h2>
+  <p>You may file up to 90 days before you first meet the required 5-year period (or 3-year period for spouses). The rule is in INA 334 and <a href="https://www.ecfr.gov/current/title-8/chapter-I/subchapter-C">8 CFR 334.2(b)</a>, and <a href="https://www.uscis.gov/policy-manual/volume-12-part-d-chapter-6">Policy Manual Vol. 12, Part D, Ch. 6</a> explains it. The tool takes your resident-since date, adds 5 (or 3) years and subtracts 90 days.</p>
+  <p>Filing early does not make you eligible sooner: you must still complete the residence period. Physical presence still has to add up, and the 3-month state residence is a separate check. Ch. 6 says that when the three months overlap with early filing, jurisdiction is based on the three months before the examination. This tool does not compute state residence.</p>
+</section>
+
+<section aria-labelledby="where-your-dates-come-from">
+  <h2 id="where-your-dates-come-from">Where to get your trip dates</h2>
+  <p>Form N-400 asks about trips outside the United States (see the <a href="https://www.uscis.gov/n-400">Form N-400 page</a>). <a href="/blog/find-your-travel-history/">Find your travel history</a> explains how to get your CBP I-94 history, and how to check it against passports and booking records. Keeping your own record as you travel avoids rebuilding it from memory later.</p>
+  <p>The <a href="/tools/substantial-presence-test-calculator/">substantial presence test calculator</a> is for a different question: the IRS tax test has its own 183-day weighted formula and is unrelated to these immigration counts. To count days in each country, use the <a href="/tools/country-days-calculator/">days-in-country calculator</a>, and see <a href="/blog/track-days-in-country-iphone/">how Whereday records country days</a>.</p>
+  <p>Everything happens in your browser. This page blocks network connections and includes no analytics.</p>
+</section>
+
+<section aria-labelledby="what-this-does-not-cover">
+  <h2 id="what-this-does-not-cover">What this does not cover</h2>
+  <ul>
+    <li>Good moral character.</li>
+    <li>The marital union test for the 3-year path, beyond this reminder that it exists (<a href="https://www.uscis.gov/policy-manual/volume-12-part-g-chapter-2">Policy Manual Vol. 12, Part G, Ch. 2</a>).</li>
+    <li>Military and other special paths, and Form N-470.</li>
+    <li>The 3-month state residence, which is named here and not computed.</li>
+  </ul>
+  <p>Sources for the counting rules: <a href="https://www.uscis.gov/policy-manual/volume-12-part-d-chapter-3">Ch. 3</a>, <a href="https://www.uscis.gov/policy-manual/volume-12-part-d-chapter-4">Ch. 4</a>, <a href="https://www.uscis.gov/policy-manual/volume-12-part-d-chapter-6">Ch. 6</a> and 8 CFR <a href="https://www.ecfr.gov/current/title-8/chapter-I/subchapter-C">316.2, 316.5, 319.1 and 334.2</a>.</p>
+</section>
+
+<section class="closing" aria-labelledby="record-next"><h2 id="record-next">Stop rebuilding trips from passport stamps.</h2><p>Whereday records the countries you’re in on your iPhone and shows the dates behind each country total. Its Country Days export lists country codes and local dates, not departure and return pairs, so you still read your trips from those dates.</p><a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a></section>
+<script type="module" src="/assets/npp.mjs?v=20261128a"></script>
+
+    
+    <nav class="article-toc" aria-labelledby="read-next-title"><h2 id="read-next-title">Read next</h2><ul><li><a href="/tools/substantial-presence-test-calculator/">Asking about US tax instead?</a><p>The IRS substantial presence test is a different 183-day weighted rule.</p></li><li><a href="/tools/country-days-calculator/">Count days in other countries</a><p>Check Schengen 90/180, any rolling window and calendar-year totals.</p></li><li><a href="/blog/find-your-travel-history/">Find the dates for your trips</a><p>Get your I-94 travel history and check it against other records.</p></li><li><a href="/blog/track-days-in-country-iphone/">Record the dates automatically</a><p>See how Whereday records country days instead of rebuilding them later.</p></li></ul></nav>
+  </main>
+  <footer class="site-footer"><a class="brand" href="/">Whereday · isolated.tech</a><div class="footer-links"><a href="/blog/">Guides</a><a href="/compare/">Compare</a><a href="/docs/">Docs</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:cody.bontecou@gmail.com">Support</a></div></footer>
+  
+<script id="shared-navigation-script" type="module" src="/assets/navigation.mjs?v=20261030"></script>
+</body>
+</html>
