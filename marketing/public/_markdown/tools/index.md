@@ -75,6 +75,12 @@ Apply the IRS weighted three-year formula (31 days this year, 183 weighted days)
 
 Then [count days in other countries](https://whereday.com/tools/country-days-calculator/).
 
+## [US citizenship physical presence calculator](https://whereday.com/tools/naturalization-physical-presence-calculator/)
+
+List your trips abroad and check 913 days of physical presence on the 5-year path (or 18 months for spouses of US citizens), absences that risk continuous residence and the earliest N-400 filing date, with the working for each. This is a count, not legal advice. Your dates stay in your browser.
+
+Not a citizenship question? [Check the IRS tax test](https://whereday.com/tools/substantial-presence-test-calculator/).
+
 ## [GPX viewer and file inspector](https://whereday.com/tools/gpx-viewer/)
 
 Plot tracks and routes, check timestamps and invalid coordinates, and save CSV or GeoJSON with documented field limits. Your chosen file stays in your browser.

@@ -1,0 +1,118 @@
+<link rel="stylesheet" href="/assets/gpx-viewer.css">
+<link rel="stylesheet" href="/assets/country-days.css">
+<section aria-labelledby="answer">
+  <h2 id="answer">Three numbers for your N-400: days present, absences that matter and the earliest filing date</h2>
+  <p>List your trips abroad and this calculator gives you three results, each with its working and a link to the USCIS or eCFR source: your <strong>physical presence</strong> in the statutory window (at least 913 days on the general 5-year path), any <strong>absence that breaks or risks breaking continuous residence</strong>, and your <strong>earliest filing date</strong> under the 90-day early filing rule. Choose the 5-year path or the 3-year path for spouses of US citizens. Nothing is uploaded.</p>
+</section>
+
+<section class="gpx-tool cdc-tool" aria-labelledby="calculator">
+  <h2 id="calculator">Calculate physical presence and continuous residence</h2>
+  <p class="cdc-limits" id="limits-summary"><strong>This is a count, not legal advice; USCIS decides.</strong> It applies the counting rules below to the dates you enter. Missing or wrong trips change every result. It does not assess good moral character, the marital union test (see <a href="https://www.uscis.gov/policy-manual/volume-12-part-g-chapter-2">Policy Manual Vol. 12, Part G, Ch. 2</a>), military or other special paths, Form N-470 or the 3-month state residence. <a href="#what-this-does-not-cover">Read what is out of scope</a>.</p>
+  <noscript><p>JavaScript is needed to count dates in your browser. The explanations and the worked example below work without it.</p></noscript>
+  <div id="npp-tool" hidden>
+    <fieldset>
+      <legend>Your path and dates</legend>
+      <label for="npp-path">Path</label>
+      <select id="npp-path"><option value="general">General path, 5 years (INA 316(a))</option><option value="spouse">Spouse of a US citizen, 3 years (INA 319(a))</option></select>
+      <div class="cdc-row">
+        <div><label for="npp-since">Resident since <span class="gpx-small">(date on your green card)</span></label><input id="npp-since" type="date" min="1900-01-01" max="2100-12-31" required></div>
+        <div><label for="npp-filing">Intended filing date <span class="gpx-small">(today by default)</span></label><input id="npp-filing" type="date" min="1900-01-01" max="2100-12-31" required></div>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Add a trip abroad</legend>
+      <form id="npp-trip-form" novalidate>
+        <div class="cdc-row">
+          <div><label for="npp-dep">Departure date</label><input id="npp-dep" type="date" min="1900-01-01" max="2100-12-31" required></div>
+          <div><label for="npp-ret">Return date</label><input id="npp-ret" type="date" min="1900-01-01" max="2100-12-31" required></div>
+          <div><label for="npp-note">Note <span class="gpx-small">(optional)</span></label><input id="npp-note" type="text" maxlength="200"></div>
+        </div>
+        <div class="gpx-actions"><button type="submit">Add trip</button></div>
+        <p id="npp-trip-error" class="cdc-error" role="alert"></p>
+      </form>
+      <h3 id="npp-trips-title">Your trips</h3>
+      <p id="npp-trips-empty" class="gpx-small">None yet. A trip that returns on the day it left counts no days away.</p>
+      <ul id="npp-trips" aria-labelledby="npp-trips-title"></ul>
+    </fieldset>
+    <fieldset>
+      <legend>Or load a CSV</legend>
+      <label for="npp-file">Choose a CSV <span class="gpx-small">(columns <code>departure_date</code>, <code>return_date</code>, optional <code>note</code>; dates as YYYY-MM-DD; up to 1 MiB)</span></label>
+      <input id="npp-file" type="file" accept=".csv,text/csv" aria-describedby="npp-status">
+    </fieldset>
+    <div class="gpx-actions"><button id="npp-example" type="button">Try the invented example</button><button id="npp-sample" type="button">Download an invented sample CSV</button><button id="npp-clear" type="button" disabled>Clear trips</button></div>
+    <p class="gpx-small">The sample CSV and the example contain invented dates, not anyone’s real trips.</p>
+    <p id="npp-status" role="status" aria-live="polite">Add trips or load a CSV. Trips that overlap are refused; trips that cross the edge of the window are clipped.</p>
+    <div id="npp-rejected" hidden>
+      <h3 id="npp-rejected-title">Rows that were not used</h3>
+      <div class="table-scroll" role="region" aria-labelledby="npp-rejected-title" tabindex="0"><table><thead><tr><th scope="col">File line</th><th scope="col">Problem</th><th scope="col">Row text</th></tr></thead><tbody id="npp-rejected-rows"></tbody></table></div>
+    </div>
+    <h3>Result</h3>
+    <div id="npp-result" aria-live="polite"></div>
+    <div class="gpx-actions"><button id="npp-download-trips" type="button" disabled>Download per-trip counts (CSV)</button><button id="npp-download-summary" type="button" disabled>Download summary (CSV)</button></div>
+  </div>
+</section>
+
+<section aria-labelledby="worked-example">
+  <h2 id="worked-example">Worked example (invented)</h2>
+  <p>An invented applicant on the general path has been a permanent resident since 2021-02-15 and plans to file on 2026-06-01. The four trips are invented too, and the calculator’s output is checked against this table.</p>
+  <div class="table-scroll" role="region" aria-labelledby="trips-caption" tabindex="0"><table id="npp-example-trips"><caption id="trips-caption">Four invented trips</caption><thead><tr><th scope="col">Departure</th><th scope="col">Return</th><th scope="col">Full days away</th><th scope="col">Continuous residence</th></tr></thead><tbody>
+    <tr><th scope="row">2022-07-01</th><td>2022-07-15</td><td>13</td><td>No flag</td></tr>
+    <tr><th scope="row">2023-05-20</th><td>2023-12-30</td><td>223</td><td>Presumed break, can be rebutted with evidence</td></tr>
+    <tr><th scope="row">2024-08-03</th><td>2024-08-24</td><td>20</td><td>No flag</td></tr>
+    <tr><th scope="row">2025-12-20</th><td>2026-01-04</td><td>14</td><td>No flag</td></tr>
+  </tbody></table></div>
+  <div class="table-scroll" role="region" aria-labelledby="results-caption" tabindex="0"><table id="npp-example-results"><caption id="results-caption">Results for the invented example</caption><thead><tr><th scope="col">Result</th><th scope="col">Value</th><th scope="col">Working</th></tr></thead><tbody>
+    <tr><th scope="row">Window</th><td data-key="window">2021-06-02 to 2026-06-01</td><td>The 5 years ending on the filing date: 1,826 days</td></tr>
+    <tr><th scope="row">Days abroad</th><td data-key="abroad">270</td><td>13 + 223 + 20 + 14</td></tr>
+    <tr><th scope="row">Physical presence total</th><td data-key="present">1556</td><td>1,826 − 270 = 1,556 days present, against 913 required</td></tr>
+    <tr><th scope="row">Surplus</th><td data-key="diff">643</td><td>1,556 − 913</td></tr>
+    <tr><th scope="row">Presumed-break flag</th><td data-key="presumed">1</td><td>The 2023 trip: 223 full days, more than 6 months and less than 1 year</td></tr>
+    <tr><th scope="row">Earliest filing date</th><td data-key="earliest">2025-11-17</td><td>5 years reached 2026-02-15, minus 90 days</td></tr>
+  </tbody></table></div>
+  <p>Press <strong>Try the invented example</strong> to load it. Physical presence is comfortably met here, but the 2023 trip still needs evidence that residence was not broken.</p>
+</section>
+
+<section aria-labelledby="how-uscis-counts-days">
+  <h2 id="how-uscis-counts-days">How USCIS counts days</h2>
+  <p>USCIS counts the day you depart and the day you return as days of physical presence (<a href="https://www.uscis.gov/policy-manual/volume-12-part-d-chapter-4">Policy Manual Vol. 12, Part D, Ch. 4</a>). For continuous residence, USCIS does not count the dates of travel among the dates spent outside the United States (<a href="https://www.uscis.gov/policy-manual/volume-12-part-d-chapter-3">Ch. 3</a>). Both rules point the same way: only the full days between departure and return are days away. This tool shows the two views side by side.</p>
+  <div class="table-scroll" role="region" aria-labelledby="count-caption" tabindex="0"><table><caption id="count-caption">One trip, two views (depart 2023-05-20, return 2023-12-30)</caption><thead><tr><th scope="col">Question</th><th scope="col">Rule</th><th scope="col">Count</th></tr></thead><tbody>
+    <tr><th scope="row">Days present on the trip’s span</th><td>Departure and return days count as present (Ch. 4)</td><td>2 (20 May and 30 Dec)</td></tr>
+    <tr><th scope="row">Days away</th><td>Travel dates are not counted as days outside the US (Ch. 3)</td><td>223 full days, 21 May to 29 Dec</td></tr>
+  </tbody></table></div>
+  <p>The tool measures the length of each absence from your unclipped dates, and the days inside the window after clipping. 6 months and 1 year are calendar periods from the departure date: <a href="https://www.uscis.gov/policy-manual/volume-12-part-d-chapter-3">Ch. 3</a>’s own example of leaving 1 January 2010 and returning 2 January 2011 is exactly 1 year. Leap years are handled by the calendar, not by a fixed 365 days.</p>
+  <p>The window is the 3 or 5 years ending on the filing date, both ends included. The requirement is at least 30 months (913 days) on the 5-year path (<a href="https://www.uscis.gov/policy-manual/volume-12-part-d-chapter-4">Ch. 4</a>) and 18 months on the 3-year path (<a href="https://www.ecfr.gov/current/title-8/chapter-I/subchapter-C">8 CFR 319.1</a>). USCIS gives no day count for 18 months, so the tool counts the days from 18 months before the filing date to the filing date, and shows that number.</p>
+</section>
+
+<section aria-labelledby="long-absences">
+  <h2 id="long-absences">Absences of 6 to 12 months and of 1 year or more</h2>
+  <p><strong>More than 6 months and less than 1 year:</strong> an absence is presumed to break the continuity of residence. You can rebut the presumption with evidence. <a href="https://www.uscis.gov/policy-manual/volume-12-part-d-chapter-3">Ch. 3</a> says evidence may include, but is not limited to, documentation that during the absence you did not terminate your US employment, kept your immediate family in the US, or retained full access to, or continued to own or lease, a home in the US. This tool only flags the trip; it cannot judge the evidence.</p>
+  <p><strong>1 year or more:</strong> the absence breaks continuous residence automatically, unless you have an approved Form N-470 (Application to Preserve Residence for Naturalization Purposes). On the 5-year path, Ch. 3 says you must then wait at least 4 years and 1 day after returning, and still rebut the presumption, because the absence is within the past 5 years. If you apply at least 4 years and 6 months after re-establishing residence, the 6-month presumption no longer applies. The tool shows both dates from your return date for the general path.</p>
+  <p>Two caveats: the tool does not model N-470, and a break found in one absence does not tell you what other rules, such as abandonment of residence, would decide.</p>
+</section>
+
+<section aria-labelledby="early-filing">
+  <h2 id="early-filing">The 90-day early filing rule</h2>
+  <p>You may file up to 90 days before you first meet the required 5-year period (or 3-year period for spouses). The rule is in INA 334 and <a href="https://www.ecfr.gov/current/title-8/chapter-I/subchapter-C">8 CFR 334.2(b)</a>, and <a href="https://www.uscis.gov/policy-manual/volume-12-part-d-chapter-6">Policy Manual Vol. 12, Part D, Ch. 6</a> explains it. The tool takes your resident-since date, adds 5 (or 3) years and subtracts 90 days.</p>
+  <p>Filing early does not make you eligible sooner: you must still complete the residence period. Physical presence still has to add up, and the 3-month state residence is a separate check. Ch. 6 says that when the three months overlap with early filing, jurisdiction is based on the three months before the examination. This tool does not compute state residence.</p>
+</section>
+
+<section aria-labelledby="where-your-dates-come-from">
+  <h2 id="where-your-dates-come-from">Where to get your trip dates</h2>
+  <p>Form N-400 asks about trips outside the United States (see the <a href="https://www.uscis.gov/n-400">Form N-400 page</a>). <a href="/blog/find-your-travel-history/">Find your travel history</a> explains how to get your CBP I-94 history, and how to check it against passports and booking records. Keeping your own record as you travel avoids rebuilding it from memory later.</p>
+  <p>The <a href="/tools/substantial-presence-test-calculator/">substantial presence test calculator</a> is for a different question: the IRS tax test has its own 183-day weighted formula and is unrelated to these immigration counts. To count days in each country, use the <a href="/tools/country-days-calculator/">days-in-country calculator</a>, and see <a href="/blog/track-days-in-country-iphone/">how Whereday records country days</a>.</p>
+  <p>Everything happens in your browser. This page blocks network connections and includes no analytics.</p>
+</section>
+
+<section aria-labelledby="what-this-does-not-cover">
+  <h2 id="what-this-does-not-cover">What this does not cover</h2>
+  <ul>
+    <li>Good moral character.</li>
+    <li>The marital union test for the 3-year path, beyond this reminder that it exists (<a href="https://www.uscis.gov/policy-manual/volume-12-part-g-chapter-2">Policy Manual Vol. 12, Part G, Ch. 2</a>).</li>
+    <li>Military and other special paths, and Form N-470.</li>
+    <li>The 3-month state residence, which is named here and not computed.</li>
+  </ul>
+  <p>Sources for the counting rules: <a href="https://www.uscis.gov/policy-manual/volume-12-part-d-chapter-3">Ch. 3</a>, <a href="https://www.uscis.gov/policy-manual/volume-12-part-d-chapter-4">Ch. 4</a>, <a href="https://www.uscis.gov/policy-manual/volume-12-part-d-chapter-6">Ch. 6</a> and 8 CFR <a href="https://www.ecfr.gov/current/title-8/chapter-I/subchapter-C">316.2, 316.5, 319.1 and 334.2</a>.</p>
+</section>
+
+<section class="closing" aria-labelledby="record-next"><h2 id="record-next">Stop rebuilding trips from passport stamps.</h2><p>Whereday records the countries you’re in on your iPhone and shows the dates behind each country total. Its Country Days export lists country codes and local dates, not departure and return pairs, so you still read your trips from those dates.</p><a class="button" href="https://apps.apple.com/app/id6761960794">Download free for iPhone</a></section>
+<script type="module" src="/assets/npp.mjs?v=20261128a"></script>
