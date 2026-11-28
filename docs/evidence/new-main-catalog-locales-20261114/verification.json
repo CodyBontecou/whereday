@@ -1,0 +1,60 @@
+{
+  "base": "2958387f81923206b547a5dab782cc5b39278d6d",
+  "missingKeys": 43,
+  "valuesAdded": 465,
+  "catalogs": [
+    {
+      "catalog": "IsoMe/Localizable.xcstrings",
+      "base": "2958387f81923206b547a5dab782cc5b39278d6d",
+      "keys": 36,
+      "missingValuesAdded": 391,
+      "entryCount": 2416,
+      "allExistingEntriesAndLocaleValuesPreserved": true,
+      "allOriginalCatalogBytesRecoveredByRemovingInsertions": true,
+      "beforeSha256": "c888b5489b78c0254f68bfc557a1abc8ee9160b8dd3391708ad373009b6b2e4e",
+      "afterSha256": "be5218acfad76975359126daa8f556dacb956e0b4252a3f068c0679c75f9da59",
+      "originalBaseSha256": "c888b5489b78c0254f68bfc557a1abc8ee9160b8dd3391708ad373009b6b2e4e"
+    },
+    {
+      "catalog": "IsoMe/InfoPlist.xcstrings",
+      "valuesAdded": 20,
+      "allExistingEntriesAndOriginalBytesPreserved": true,
+      "beforeSha256": "5cb6419738f981517d58221e18b4acd9a47921786fd89b4ab83b0ae3df3eb74d",
+      "afterSha256": "ef79689e01370bf4400005d9ea44d31c21edb1b7c20b0bd4636198cb06be7f4a",
+      "originalBaseSha256": "5cb6419738f981517d58221e18b4acd9a47921786fd89b4ab83b0ae3df3eb74d"
+    },
+    {
+      "catalog": "IsoMe/AppShortcuts.xcstrings",
+      "valuesAdded": 10,
+      "allExistingEntriesAndOriginalBytesPreserved": true,
+      "beforeSha256": "cad7b956ed282352b2036962ff32a457e2aa8bfdbf3e8e1b6c13315e4e99a595",
+      "afterSha256": "4e370a270901deed953cbcecbefa6836ab9be95329598420c58739e42b1e9a87",
+      "kind": "stringSet",
+      "supersedesIncorrectStringUnitCandidate": true,
+      "originalBaseSha256": "cad7b956ed282352b2036962ff32a457e2aa8bfdbf3e8e1b6c13315e4e99a595"
+    },
+    {
+      "catalog": "IsoMeWatch/Localizable.xcstrings",
+      "valuesAdded": 44,
+      "allExistingEntriesAndOriginalBytesPreserved": true,
+      "beforeSha256": "a566b458852dde904dcf0954938bc4ee1773f96bde056eb1eaa34df14d5fff7c",
+      "afterSha256": "ea4037bc181a7720c23c7de98ece2b06f9617a44e164a1199d1198b0c097fa0c",
+      "originalBaseSha256": "a566b458852dde904dcf0954938bc4ee1773f96bde056eb1eaa34df14d5fff7c"
+    }
+  ],
+  "pythonLocalizationTests": 17,
+  "fullAudit": {
+    "activeKeys": 2266,
+    "catalogs": 9,
+    "locales": 11,
+    "errors": 0
+  },
+  "signedIOS": {
+    "xctest": 491,
+    "swiftTesting": 20,
+    "failures": 0,
+    "resultBundle": "artifacts/test-results/IsoMe-20261114-095504-50777.xcresult"
+  },
+  "compiledLookups": 465,
+  "scope": "Resource correction only; not native speaker/UI/spoken/device acceptance or resolution of feature-branch conflicts"
+}
